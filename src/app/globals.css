@@ -1,0 +1,107 @@
+@import 'tailwindcss';
+
+/*------------------------
+   Root Variables & Fonts
+-------------------------*/
+:root {
+  font-family: var(--font-instrument-sans), sans-serif;
+}
+
+body {
+  font-family: var(--font-outfit), sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  font-style: normal;
+  color: #404040;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/*--------------------
+   Dark Mode Variant
+--------------------*/
+@custom-variant dark (&:where(.dark, .dark *));
+
+.dark body {
+  @apply bg-gray-800 text-white transition-colors;
+}
+
+/*----------------------
+   Base Layer Utilities
+------------------------*/
+@layer base {
+  /*Typography colors*/
+  .font-color-theme {
+    font-family: var(--font-instrument-sans), sans-serif;
+    @apply text-blue-900;
+  }
+  .dark .font-color-theme {
+    @apply text-white;
+  }
+
+  /*Background colors*/
+  .bg-color-theme {
+    @apply bg-white;
+  }
+  .dark .bg-color-theme {
+    @apply bg-gray-700;
+  }
+
+  /*Banner Link colors*/
+  .banner-link {
+    @apply text-blue-900 hover:bg-blue-100;
+  }
+  .dark .banner-link {
+    @apply text-white hover:bg-gray-100 hover:text-indigo-700;
+  }
+
+  /*SVG Colors*/
+  svg {
+    @apply text-blue-900;
+  }
+  .dark svg {
+    @apply text-indigo-700;
+  }
+  /*Text colors*/
+  .text-dark-blue {
+    @apply text-blue-800 hover:text-blue-500;
+  }
+
+  .dark .text-dark-blue {
+    @apply text-indigo-600 hover:text-indigo-400;
+  }
+
+  /*Buttons*/
+  .btn-empty-theme {
+    @apply border border-blue-900 bg-white text-blue-900 hover:bg-blue-100;
+  }
+
+  .dark .btn-empty-theme {
+    @apply border border-indigo-700 text-indigo-700 bg-gray-100 hover:bg-indigo-200;
+  }
+
+  .btn-filled-theme {
+    @apply bg-blue-700 text-white hover:bg-blue-900;
+  }
+
+  .dark .btn-filled-theme {
+    @apply bg-indigo-700 hover:bg-indigo-800;
+  }
+
+  /*Inputs*/
+  .input-theme {
+    @apply bg-white placeholder:text-neutral-500 rounded-lg border border-gray-300
+             focus:outline-none focus:border-blue-800 pl-9 sm:pl-10 
+             focus:shadow-xs focus:shadow-blue-400;
+  }
+
+  .dark .input-theme {
+    @apply bg-gray-100 placeholder:text-neutral-500 focus:border-indigo-700;
+  }
+
+  /*Labels*/
+  label {
+    @apply text-neutral-500 dark:text-gray-300;
+  }
+}
