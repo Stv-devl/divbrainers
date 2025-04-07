@@ -11,11 +11,11 @@ export const signupValidationSchema = z
       .string()
       .min(1, 'Email is required')
       .email('Invalid email address'),
-    password: z.string().min(4, 'Password must be at least 4 characters'),
+    password: z.string().min(8, 'At least 8 characters'),
     repeat: z.string(),
   })
   .refine((data) => data.password === data.repeat, {
-    message: 'Passwords must match',
+    message: 'Passwords do not match',
     path: ['repeat'],
   });
 

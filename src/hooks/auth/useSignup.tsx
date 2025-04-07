@@ -3,11 +3,10 @@ import { signIn } from 'next-auth/react';
 import {
   SignupSchemaType,
   signupValidationSchema,
-} from '../../shema/signupShema';
+} from '../../schema/signupShema';
 import postSignup from '../../service/auth/postSignup';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { useEffect } from 'react';
 
 /**
  * Custom hook for handling user sign-up functionality.
@@ -44,7 +43,12 @@ const useSignUp = () => {
         });
       }
     } catch (error) {
-      console.error('Signup error:', error);
+      if (error instanceof Error) {
+        console.error('Signup error:', error.message);
+      } else {
+        console.error('Signup unknown error:', error);
+      }
+
       setError('email', {
         message: 'Something went wrong. Please try again.',
       });

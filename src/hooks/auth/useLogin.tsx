@@ -1,7 +1,7 @@
 import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { LoginSchema, LoginSchemaType } from '@/shema/loginShema';
+import { LoginSchema, LoginSchemaType } from '@/schema/loginShema';
 
 const useLogin = () => {
   const {

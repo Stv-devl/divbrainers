@@ -2,7 +2,7 @@ import { postResetPassword } from '@/service/auth/postResetPassword';
 import {
   newPasswordSchema,
   NewPasswordSchemaType,
-} from '@/shema/newPasswordSchema';
+} from '@/schema/newPasswordSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';

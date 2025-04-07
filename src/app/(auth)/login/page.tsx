@@ -34,6 +34,7 @@ const Login = () => {
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex w-full flex-col gap-[20px]"
+        role="form"
       >
         <div className="flex flex-col gap-[20px]">
           <div className="flex flex-col gap-1">
