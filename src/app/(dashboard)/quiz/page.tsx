@@ -1,8 +1,8 @@
 import UnderConstruction from '@/componants/underConstruction/UnderConstruction';
 import React from 'react';
 
-const Quizz = () => {
+const Quiz = () => {
   return <UnderConstruction />;
 };
 
-export default Quizz;
+export default Quiz;

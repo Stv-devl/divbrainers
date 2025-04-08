@@ -14,8 +14,8 @@ const instrumentSans = Instrument_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'Secure Dashboard',
-  description: 'Secure Dashboard',
+  title: 'DivBrainers',
+  description: 'Divbrainers is a platform for learning and practicing coding',
 };
 
 export default function RootLayout({
@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${outfit.variable} ${instrumentSans.variable} antialiased flex flex-col justify-betweenbg-white sm:bg-gray-100 `}
+        className={`${outfit.variable} ${instrumentSans.variable} antialiased flex flex-col justify-between bg-white sm:bg-gray-100 `}
       >
         <SessionContext>{children}</SessionContext>
       </body>
