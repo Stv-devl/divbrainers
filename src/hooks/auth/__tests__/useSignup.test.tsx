@@ -43,6 +43,7 @@ describe('useSignUp hook', () => {
     expect(result.current).toHaveProperty('handleSubmit');
     expect(result.current).toHaveProperty('onSubmit');
     expect(result.current).toHaveProperty('errors');
+    expect(result.current).toHaveProperty('globalError');
     expect(result.current).toHaveProperty('isSubmitting');
     expect(result.current).toHaveProperty('handleGoogleSignIn');
   });
@@ -94,7 +95,7 @@ describe('useSignUp hook', () => {
   });
 
   it('should handle error thrown by postSignup', async () => {
-    mockPostSignup.mockRejectedValueOnce(new Error('Signup failed'));
+    mockPostSignup.mockRejectedValueOnce(new Error('Email already in use'));
 
     const { result } = renderHook(() => useSignup());
 
@@ -109,6 +110,10 @@ describe('useSignUp hook', () => {
     expect(mockPostSignup).toHaveBeenCalled();
     expect(mockSignIn).not.toHaveBeenCalled();
     expect(mockPush).not.toHaveBeenCalled();
+
+    expect(result.current.globalError).toBe(
+      'Something went wrong. Please try again.'
+    );
   });
 
   it('should call signIn with Google when handleGoogleSignIn is called', async () => {

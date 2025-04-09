@@ -15,16 +15,27 @@ import useLogin from '../../../../hooks/auth/useLogin';
 
 expect.extend(toHaveNoViolations);
 
-type UseLoginReturn = ReturnType<typeof useLogin>;
-const mockedUseLogin = useLogin as jest.MockedFunction<typeof useLogin>;
-
 jest.mock('../../../../hooks/auth/useLogin', () => ({
   __esModule: true,
   default: jest.fn(),
 }));
 
+type UseLoginReturn = ReturnType<typeof useLogin>;
+const mockedUseLogin = useLogin as jest.MockedFunction<typeof useLogin>;
+
 describe('Login Page', () => {
-  let mockUseLogin: jest.Mocked<UseLoginReturn>;
+  let mockedProps: UseLoginReturn;
+
+  const getMockedUseLoginProps = (overrides = {}) => ({
+    register: jest.fn(),
+    handleSubmit: jest.fn(),
+    onSubmit: jest.fn(),
+    errors: {},
+    globalError: '',
+    isSubmitting: false,
+    handleGoogleSignIn: jest.fn(),
+    ...overrides,
+  });
 
   const renderLogin = async () => {
     await act(async () => {
@@ -33,17 +44,8 @@ describe('Login Page', () => {
   };
 
   beforeEach(() => {
-    mockUseLogin = {
-      register: jest.fn(),
-      handleSubmit: jest.fn(),
-      onSubmit: jest.fn(),
-      errors: {},
-      globalError: '',
-      isSubmitting: false,
-      handleGoogleSignIn: jest.fn(),
-    };
-
-    mockedUseLogin.mockReturnValue(mockUseLogin);
+    mockedProps = getMockedUseLoginProps();
+    mockedUseLogin.mockReturnValue(mockedProps);
   });
 
   it('renders all login elements correctly', async () => {
@@ -60,7 +62,7 @@ describe('Login Page', () => {
 
   it('handles form submission correctly', async () => {
     const mockHandleSubmit = jest.fn();
-    mockUseLogin.handleSubmit.mockImplementation(() => mockHandleSubmit);
+    mockedProps.handleSubmit = jest.fn(() => mockHandleSubmit);
 
     await renderLogin();
 
@@ -80,14 +82,13 @@ describe('Login Page', () => {
 
     fireEvent.click(googleButton);
 
-    expect(mockUseLogin.handleGoogleSignIn).toHaveBeenCalled();
+    expect(mockedProps.handleGoogleSignIn).toHaveBeenCalled();
   });
 
   it('disables buttons while submitting', async () => {
-    mockedUseLogin.mockReturnValue({
-      ...mockUseLogin,
-      isSubmitting: true,
-    });
+    mockedUseLogin.mockReturnValue(
+      getMockedUseLoginProps({ isSubmitting: true })
+    );
 
     await renderLogin();
 
@@ -97,19 +98,20 @@ describe('Login Page', () => {
     ).toBeDisabled();
   });
 
-  it('displays email and password error messages on validation fail', async () => {
+  it('displays email and password error messages and global error if validation fails', async () => {
     const emailErrorMessage = 'Invalid email address';
     const passwordErrorMessage = 'At least 8 characters';
     const globalError = 'Email or password incorrect';
 
-    mockedUseLogin.mockReturnValue({
-      ...mockUseLogin,
-      errors: {
-        email: { message: emailErrorMessage, type: 'required' },
-        password: { message: passwordErrorMessage, type: 'required' },
-      },
-      globalError,
-    });
+    mockedUseLogin.mockReturnValue(
+      getMockedUseLoginProps({
+        errors: {
+          email: { message: emailErrorMessage, type: 'required' },
+          password: { message: passwordErrorMessage, type: 'required' },
+        },
+        globalError,
+      })
+    );
 
     await renderLogin();
 

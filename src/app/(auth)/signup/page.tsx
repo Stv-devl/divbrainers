@@ -20,8 +20,11 @@ const SignUp = () => {
     onSubmit,
     handleGoogleSignIn,
     errors,
+    globalError,
     isSubmitting,
   } = useSignUp();
+
+  console.log('globalerror', globalError);
 
   return (
     <>
@@ -57,7 +60,7 @@ const SignUp = () => {
             error={errors.password?.message || ''}
           />
         </div>
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1 relative">
           <InputWithIcon
             registration={register('repeat')}
             name="repeat"
@@ -68,6 +71,11 @@ const SignUp = () => {
             autoComplete="new-password"
             IconComponent={iconsMap.IconPassword}
           />
+          {globalError && (
+            <p className="absolute top-20 right-0 text-red-500 text-sm sm:text-base">
+              {globalError}
+            </p>
+          )}
         </div>
 
         {isSubmitting && <Loading />}

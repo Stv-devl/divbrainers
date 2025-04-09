@@ -7,6 +7,7 @@ import {
 import postSignup from '../../service/auth/postSignup';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 
 /**
  * Custom hook for handling user sign-up functionality.
@@ -16,6 +17,9 @@ import { useForm } from 'react-hook-form';
 const useSignUp = () => {
   const router = useRouter();
 
+  const [globalError, setGlobalError] = useState('');
+
+  console.log('globalerror', globalError);
   const {
     register,
     handleSubmit,
@@ -38,20 +42,16 @@ const useSignUp = () => {
       if (result?.ok) {
         router.push('/home');
       } else {
-        setError('email', {
-          message: 'Signup process encountered an error',
-        });
+        setGlobalError('Signup process encountered an error');
       }
     } catch (error) {
       if (error instanceof Error) {
-        console.error('Signup error:', error.message);
+        console.error('Signup error', error.message);
+        setGlobalError('Something went wrong. Please try again.');
       } else {
         console.error('Signup unknown error:', error);
+        setGlobalError('Something went wrong. Please try again.');
       }
-
-      setError('email', {
-        message: 'Something went wrong. Please try again.',
-      });
     }
   };
 
@@ -65,6 +65,7 @@ const useSignUp = () => {
     onSubmit,
     handleGoogleSignIn,
     errors,
+    globalError,
     isSubmitting,
   };
 };
