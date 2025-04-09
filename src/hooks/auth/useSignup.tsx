@@ -3,7 +3,7 @@ import { signIn } from 'next-auth/react';
 import {
   SignupSchemaType,
   signupValidationSchema,
-} from '../../schema/signupShema';
+} from '../../schema/signupSchema';
 import postSignup from '../../service/auth/postSignup';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';

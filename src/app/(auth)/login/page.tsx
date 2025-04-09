@@ -20,6 +20,7 @@ const Login = () => {
     handleSubmit,
     onSubmit,
     errors,
+    globalError,
     isSubmitting,
     handleGoogleSignIn,
   } = useLogin();
@@ -66,10 +67,15 @@ const Login = () => {
             >
               Forget your password?
             </Link>
+            {globalError && (
+              <p className="absolute top-20 right-0 text-red-500">
+                {globalError}
+              </p>
+            )}
           </div>
         </div>
         {isSubmitting && <Loading />}
-        <div className="h-[46px] w-full ">
+        <div className="mt-4 h-[46px] w-full ">
           <Button
             label="Login"
             type="submit"

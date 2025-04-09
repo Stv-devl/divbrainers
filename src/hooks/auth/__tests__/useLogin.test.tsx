@@ -17,6 +17,7 @@ describe('useLogin hook', () => {
     expect(result.current).toHaveProperty('handleSubmit');
     expect(result.current).toHaveProperty('onSubmit');
     expect(result.current).toHaveProperty('errors');
+    expect(result.current).toHaveProperty('globalError');
     expect(result.current).toHaveProperty('isSubmitting');
     expect(result.current).toHaveProperty('handleGoogleSignIn');
   });
@@ -38,22 +39,20 @@ describe('useLogin hook', () => {
     });
 
     expect(mockSignIn).toHaveBeenCalledWith('credentials', {
-      redirect: true,
+      redirect: false,
       email: validData.email,
       password: validData.password,
       callbackUrl: '/home',
     });
   });
 
-  it('should call setError if signIn returns an error', async () => {
+  it('should set globalError if signIn returns an error', async () => {
     const mockSignIn = signIn as jest.Mock;
 
     const errorMessage = 'Invalid credentials';
     mockSignIn.mockResolvedValueOnce({ error: errorMessage });
 
     const { result } = renderHook(() => useLogin());
-
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
 
     await act(async () => {
       await result.current.onSubmit({
@@ -64,7 +63,7 @@ describe('useLogin hook', () => {
 
     expect(mockSignIn).toHaveBeenCalled();
 
-    consoleSpy.mockRestore();
+    expect(result.current.globalError).toBe('Email or password incorrect');
   });
 
   it('should call signIn with google provider', async () => {

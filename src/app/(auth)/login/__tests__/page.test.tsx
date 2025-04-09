@@ -38,6 +38,7 @@ describe('Login Page', () => {
       handleSubmit: jest.fn(),
       onSubmit: jest.fn(),
       errors: {},
+      globalError: '',
       isSubmitting: false,
       handleGoogleSignIn: jest.fn(),
     };
@@ -99,6 +100,7 @@ describe('Login Page', () => {
   it('displays email and password error messages on validation fail', async () => {
     const emailErrorMessage = 'Invalid email address';
     const passwordErrorMessage = 'At least 8 characters';
+    const globalError = 'Email or password incorrect';
 
     mockedUseLogin.mockReturnValue({
       ...mockUseLogin,
@@ -106,12 +108,14 @@ describe('Login Page', () => {
         email: { message: emailErrorMessage, type: 'required' },
         password: { message: passwordErrorMessage, type: 'required' },
       },
+      globalError,
     });
 
     await renderLogin();
 
     expect(screen.getByText(emailErrorMessage)).toBeInTheDocument();
     expect(screen.getByText(passwordErrorMessage)).toBeInTheDocument();
+    expect(screen.getByText(globalError)).toBeInTheDocument();
   });
 
   it('should have no accessibility violations', async () => {
