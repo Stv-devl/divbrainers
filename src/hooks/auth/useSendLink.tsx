@@ -3,8 +3,7 @@ import { sendLinkSchema, SendLinkSchemaType } from '@/schema/sendLinkSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import { log } from 'console';
-
+  
 const useSendLink = () => {
   const router = useRouter();
 

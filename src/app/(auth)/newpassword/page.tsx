@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Loading from '../../../componants/loading/Loading';
 import Button from '../../../componants/buttons/Button';
 import { iconsMap } from '../../../constante/iconsMap';
 import InputWithIcon from '../../../componants/form/InputWithIcon';
@@ -54,13 +53,12 @@ const NewPassword = () => {
             />
           </div>
         </div>
-
-        {isSubmitting && <Loading />}
         <div className="h-[46px] w-full">
           <Button
             label={'Change password'}
             color={'filled'}
             type="submit"
+            isLoading={isSubmitting}
             disabled={isSubmitting}
           />
         </div>

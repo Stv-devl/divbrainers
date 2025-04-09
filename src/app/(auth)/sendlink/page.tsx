@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Loading from '../../../componants/loading/Loading';
 import Button from '../../../componants/buttons/Button';
 import { iconsMap } from '../../../constante/iconsMap';
 import InputWithIcon from '../../../componants/form/InputWithIcon';
@@ -43,13 +42,13 @@ const SendLink = () => {
             />
           </div>
 
-          {isSubmitting && <Loading />}
           <div className="mt-4 h-[46px] w-full">
             <Button
               label={'Get a link to reset password'}
               color={'filled'}
               type="submit"
               disabled={isSubmitting}
+              isLoading={isSubmitting}
             />
           </div>
         </div>

@@ -37,13 +37,32 @@ describe('useLogin hook', () => {
     await act(async () => {
       await result.current.onSubmit(validData);
     });
-
     expect(mockSignIn).toHaveBeenCalledWith('credentials', {
       redirect: false,
       email: validData.email,
       password: validData.password,
       callbackUrl: '/home',
     });
+  });
+
+  it('should redirect to the correct URL on successful login', async () => {
+    const mockSignIn = signIn as jest.Mock;
+
+    mockSignIn.mockResolvedValueOnce({ ok: true, url: '/home' });
+
+    delete (window as any).location;
+    (window as any).location = { href: '' };
+
+    const { result } = renderHook(() => useLogin());
+
+    await act(async () => {
+      await result.current.onSubmit({
+        email: 'test@test.com',
+        password: 'goodpassword',
+      });
+    });
+
+    expect(window.location.href).toBe('/home');
   });
 
   it('should set globalError if signIn returns an error', async () => {

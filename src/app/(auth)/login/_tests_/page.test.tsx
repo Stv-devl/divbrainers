@@ -23,25 +23,24 @@ jest.mock('../../../../hooks/auth/useLogin', () => ({
 type UseLoginReturn = ReturnType<typeof useLogin>;
 const mockedUseLogin = useLogin as jest.MockedFunction<typeof useLogin>;
 
-describe('Login Page', () => {
-  let mockedProps: UseLoginReturn;
+const getMockedUseLoginProps = (overrides = {}) => ({
+  register: jest.fn(),
+  handleSubmit: jest.fn(),
+  onSubmit: jest.fn(),
+  errors: {},
+  globalError: '',
+  isSubmitting: false,
+  handleGoogleSignIn: jest.fn(),
+  ...overrides,
+});
 
-  const getMockedUseLoginProps = (overrides = {}) => ({
-    register: jest.fn(),
-    handleSubmit: jest.fn(),
-    onSubmit: jest.fn(),
-    errors: {},
-    globalError: '',
-    isSubmitting: false,
-    handleGoogleSignIn: jest.fn(),
-    ...overrides,
+const renderLogin = () =>
+  act(async () => {
+    render(<Login />);
   });
 
-  const renderLogin = async () => {
-    await act(async () => {
-      render(<Login />);
-    });
-  };
+describe('Login Page', () => {
+  let mockedProps: UseLoginReturn;
 
   beforeEach(() => {
     mockedProps = getMockedUseLoginProps();
@@ -98,37 +97,26 @@ describe('Login Page', () => {
     ).toBeDisabled();
   });
 
-  it('displays email and password error messages and global error if validation fails', async () => {
-    const emailErrorMessage = 'Invalid email address';
-    const passwordErrorMessage = 'At least 8 characters';
-    const globalError = 'Email or password incorrect';
-
+  it('displays field and global errors', async () => {
     mockedUseLogin.mockReturnValue(
       getMockedUseLoginProps({
         errors: {
-          email: { message: emailErrorMessage, type: 'required' },
-          password: { message: passwordErrorMessage, type: 'required' },
+          email: { message: 'Invalid email address', type: 'required' },
+          password: { message: 'At least 8 characters', type: 'required' },
         },
-        globalError,
+        globalError: 'Email or password incorrect',
       })
     );
 
     await renderLogin();
 
-    expect(screen.getByText(emailErrorMessage)).toBeInTheDocument();
-    expect(screen.getByText(passwordErrorMessage)).toBeInTheDocument();
-    expect(screen.getByText(globalError)).toBeInTheDocument();
+    expect(screen.getByText('Invalid email address')).toBeInTheDocument();
+    expect(screen.getByText('At least 8 characters')).toBeInTheDocument();
+    expect(screen.getByText('Email or password incorrect')).toBeInTheDocument();
   });
 
-  it('should have no accessibility violations', async () => {
-    const { container } = await (async () => {
-      let rendered;
-      await act(async () => {
-        rendered = render(<Login />);
-      });
-      return rendered!;
-    })();
-
+  it('has no accessibility violations', async () => {
+    const { container } = render(<Login />);
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });

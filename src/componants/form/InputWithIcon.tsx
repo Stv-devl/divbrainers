@@ -52,7 +52,7 @@ const InputWithIcon: React.FC<InputWithIconProps> = ({
         {error && (
           <span
             id={errorId}
-            className="text-red-500 font-light relative right-0 top-auto transform-none sm:absolute sm:right-3 sm:top-1/2 sm:-translate-y-1/2"
+            className="text-red-500 font-light absolute right-0 top-12 transform-none"
           >
             {error}
           </span>

@@ -2,7 +2,13 @@
  * @jest-environment jsdom
  */
 
-import { render, screen, fireEvent } from '@testing-library/react';
+import {
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+  act,
+} from '@testing-library/react';
 import { axe, toHaveNoViolations } from 'jest-axe';
 import SignUp from '../page';
 import useSignUp from '../../../../hooks/auth/useSignup';
@@ -14,37 +20,40 @@ jest.mock('../../../../hooks/auth/useSignup', () => ({
   default: jest.fn(),
 }));
 
-const mockOnSubmit = jest.fn();
-const mockHandleGoogleSignIn = jest.fn();
-const mockHandleSubmit = (cb: any) => (e: any) => cb(e);
-const mockRegisterReturn = {
-  onChange: jest.fn(),
-  onBlur: jest.fn(),
-  ref: jest.fn(),
-  name: 'mockField',
-};
+type UseSignUpReturn = ReturnType<typeof useSignUp>;
+const mockedUseSignUp = useSignUp as jest.MockedFunction<typeof useSignUp>;
+
+const getMockedUseSignUpProps = (overrides = {}): UseSignUpReturn => ({
+  register: jest.fn().mockReturnValue({
+    onChange: jest.fn(),
+    onBlur: jest.fn(),
+    ref: jest.fn(),
+    name: 'mockField',
+  }),
+  handleSubmit: (cb: any) => (e: any) => cb(e),
+  onSubmit: jest.fn(),
+  handleGoogleSignIn: jest.fn(),
+  errors: {},
+  globalError: '',
+  isSubmitting: false,
+  ...overrides,
+});
+
+const renderSignUp = () =>
+  act(async () => {
+    render(<SignUp />);
+  });
 
 describe('SignUp Page', () => {
-  let mockedProps: ReturnType<typeof getMockedUseSignUpProps>;
-
-  const getMockedUseSignUpProps = (overrides = {}) => ({
-    register: jest.fn().mockReturnValue(mockRegisterReturn),
-    handleSubmit: mockHandleSubmit,
-    onSubmit: mockOnSubmit,
-    handleGoogleSignIn: mockHandleGoogleSignIn,
-    errors: {},
-    globalError: '',
-    isSubmitting: false,
-    ...overrides,
-  });
+  let mockedProps: UseSignUpReturn;
 
   beforeEach(() => {
     mockedProps = getMockedUseSignUpProps();
-    (useSignUp as jest.Mock).mockReturnValue(mockedProps);
+    mockedUseSignUp.mockReturnValue(mockedProps);
   });
 
-  it('should render all fields and buttons', () => {
-    render(<SignUp />);
+  it('renders all sign-up elements correctly', async () => {
+    await renderSignUp();
     expect(screen.getByLabelText('Email address')).toBeInTheDocument();
     expect(screen.getByLabelText('Password')).toBeInTheDocument();
     expect(screen.getByLabelText('Confirm password')).toBeInTheDocument();
@@ -54,25 +63,36 @@ describe('SignUp Page', () => {
     expect(
       screen.getByRole('button', { name: /Signup with Google/i })
     ).toBeInTheDocument();
+    expect(screen.getByText(/Already have an account\?/i)).toBeInTheDocument();
   });
 
-  it('should call onSubmit when form is submitted', () => {
-    const { container } = render(<SignUp />);
-    fireEvent.submit(container.querySelector('form')!);
-    expect(mockOnSubmit).toHaveBeenCalled();
+  it('submits the form correctly', async () => {
+    await renderSignUp();
+
+    fireEvent.submit(screen.getByRole('form'));
+
+    await waitFor(() => {
+      expect(mockedProps.onSubmit).toHaveBeenCalled();
+    });
   });
 
-  it('should call Google sign-in handler when clicking button', () => {
-    render(<SignUp />);
+  it('handles Google sign-in when button is clicked', async () => {
+    await renderSignUp();
+
     fireEvent.click(
       screen.getByRole('button', { name: /Signup with Google/i })
     );
-    expect(mockHandleGoogleSignIn).toHaveBeenCalled();
+
+    expect(mockedProps.handleGoogleSignIn).toHaveBeenCalled();
   });
 
-  it('should disable buttons when isSubmitting is true', () => {
-    mockedProps.isSubmitting = true;
-    render(<SignUp />);
+  it('disables buttons while submitting', async () => {
+    mockedUseSignUp.mockReturnValue(
+      getMockedUseSignUpProps({ isSubmitting: true })
+    );
+
+    await renderSignUp();
+
     expect(
       screen.getByRole('button', { name: /Create a new account/i })
     ).toBeDisabled();
@@ -81,28 +101,39 @@ describe('SignUp Page', () => {
     ).toBeDisabled();
   });
 
-  it('should display multiple error messages if validation fails', () => {
-    mockedProps.errors = {
-      email: { message: 'Email is required' },
-      password: { message: 'At least 8 characters' },
-      repeat: { message: 'Passwords do not match' },
-    };
+  it('displays field errors correctly', async () => {
+    mockedUseSignUp.mockReturnValue(
+      getMockedUseSignUpProps({
+        errors: {
+          email: { message: 'Email is required' },
+          password: { message: 'At least 8 characters' },
+          repeat: { message: 'Passwords do not match' },
+        },
+      })
+    );
 
-    render(<SignUp />);
+    await renderSignUp();
+
     expect(screen.getByText('Email is required')).toBeInTheDocument();
     expect(screen.getByText('At least 8 characters')).toBeInTheDocument();
     expect(screen.getByText('Passwords do not match')).toBeInTheDocument();
   });
 
-  it('should display global error message if signup fails', () => {
-    mockedProps.globalError = 'Signup failed';
-    render(<SignUp />);
+  it('displays global error message if signup fails', async () => {
+    mockedUseSignUp.mockReturnValue(
+      getMockedUseSignUpProps({
+        globalError: 'Signup failed',
+      })
+    );
+
+    await renderSignUp();
+
     const error = screen.getByText('Signup failed');
     expect(error).toBeInTheDocument();
     expect(error).toHaveClass('text-red-500');
   });
 
-  it('should have no accessibility violations', async () => {
+  it('has no accessibility violations', async () => {
     const { container } = render(<SignUp />);
     const results = await axe(container);
     expect(results).toHaveNoViolations();

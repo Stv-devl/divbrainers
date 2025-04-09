@@ -35,6 +35,7 @@ const SignUp = () => {
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex w-full flex-col gap-[20px]"
+        role="form"
       >
         <div className="flex flex-col gap-1">
           <InputWithIcon

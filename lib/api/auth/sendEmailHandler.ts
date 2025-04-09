@@ -39,7 +39,7 @@ export async function sendEmailHandler(req: Request) {
     });
 
     if (!user) {
-      return handleError(200, 'If an account exists, an email has been sent.');
+      return handleError(200, 'An error occurred, please try again.');
     }
 
     await prisma.verificationToken.deleteMany({

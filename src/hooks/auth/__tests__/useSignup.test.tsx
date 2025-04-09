@@ -3,7 +3,7 @@
  */
 import { renderHook, act } from '@testing-library/react';
 import { signIn } from 'next-auth/react';
-import useSignup from '../../../hooks/auth/useSignup';
+import useSignUp from '../../../hooks/auth/useSignup';
 import postSignup from '../../../service/auth/postSignup';
 
 jest.mock('next-auth/react', () => ({
@@ -22,12 +22,6 @@ jest.mock('next/navigation', () => ({
   }),
 }));
 
-global.fetch = jest.fn(() =>
-  Promise.resolve({
-    json: () => Promise.resolve({}),
-  })
-) as jest.Mock;
-
 describe('useSignUp hook', () => {
   const mockPostSignup = postSignup as jest.Mock;
   const mockSignIn = signIn as jest.Mock;
@@ -36,8 +30,8 @@ describe('useSignUp hook', () => {
     jest.clearAllMocks();
   });
 
-  it('should expose expected properties', () => {
-    const { result } = renderHook(() => useSignup());
+  it('should initialize with correct values', () => {
+    const { result } = renderHook(() => useSignUp());
 
     expect(result.current).toHaveProperty('register');
     expect(result.current).toHaveProperty('handleSubmit');
@@ -52,16 +46,14 @@ describe('useSignUp hook', () => {
     mockPostSignup.mockResolvedValueOnce({});
     mockSignIn.mockResolvedValueOnce({ ok: true });
 
-    const { result } = renderHook(() => useSignup());
-
-    const validData = {
-      email: 'test@test.com',
-      password: 'goodpassword',
-      repeat: 'goodpassword',
-    };
+    const { result } = renderHook(() => useSignUp());
 
     await act(async () => {
-      await result.current.onSubmit(validData);
+      await result.current.onSubmit({
+        email: 'test@test.com',
+        password: 'goodpassword',
+        repeat: 'goodpassword',
+      });
     });
 
     expect(mockPostSignup).toHaveBeenCalledWith(
@@ -76,11 +68,11 @@ describe('useSignUp hook', () => {
     expect(mockPush).toHaveBeenCalledWith('/home');
   });
 
-  it('should set an error if signIn fails', async () => {
+  it('should not redirect if signIn fails', async () => {
     mockPostSignup.mockResolvedValueOnce({});
     mockSignIn.mockResolvedValueOnce({ ok: false });
 
-    const { result } = renderHook(() => useSignup());
+    const { result } = renderHook(() => useSignUp());
 
     await act(async () => {
       await result.current.onSubmit({
@@ -94,10 +86,10 @@ describe('useSignUp hook', () => {
     expect(mockPush).not.toHaveBeenCalled();
   });
 
-  it('should handle error thrown by postSignup', async () => {
+  it('should set globalError if postSignup throws', async () => {
     mockPostSignup.mockRejectedValueOnce(new Error('Email already in use'));
 
-    const { result } = renderHook(() => useSignup());
+    const { result } = renderHook(() => useSignUp());
 
     await act(async () => {
       await result.current.onSubmit({
@@ -110,19 +102,20 @@ describe('useSignUp hook', () => {
     expect(mockPostSignup).toHaveBeenCalled();
     expect(mockSignIn).not.toHaveBeenCalled();
     expect(mockPush).not.toHaveBeenCalled();
-
     expect(result.current.globalError).toBe(
       'Something went wrong. Please try again.'
     );
   });
 
-  it('should call signIn with Google when handleGoogleSignIn is called', async () => {
-    const { result } = renderHook(() => useSignup());
+  it('should call signIn with Google provider', async () => {
+    const { result } = renderHook(() => useSignUp());
 
     await act(async () => {
       await result.current.handleGoogleSignIn();
     });
 
-    expect(mockSignIn).toHaveBeenCalledWith('google', { callbackUrl: '/home' });
+    expect(mockSignIn).toHaveBeenCalledWith('google', {
+      callbackUrl: '/home',
+    });
   });
 });
