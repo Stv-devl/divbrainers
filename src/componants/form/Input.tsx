@@ -31,7 +31,7 @@ const Input: React.FC<CustomsInputProps> = ({
     'text-sm w-[100px]'
   );
 
-  const { onChange, ...field } = register(name);
+  const field = register(name);
 
   return (
     <>
@@ -45,6 +45,8 @@ const Input: React.FC<CustomsInputProps> = ({
           id={name}
           placeholder={placeholder}
           autoComplete={autoComplete}
+          aria-invalid={!!error}
+          aria-describedby={error ? errorId : undefined}
           {...field}
         />
         {error && (
