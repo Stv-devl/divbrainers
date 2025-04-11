@@ -75,6 +75,7 @@ export interface NavWrapperProps {
   isSelected: boolean;
   link: string;
   onClick?: () => void;
+  icon?: string;
 }
 
 //button component

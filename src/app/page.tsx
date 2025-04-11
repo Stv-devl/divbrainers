@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
-import Loading from '../componants/loading/Loading';
+import Loading from '../components/loading/Loading';
 
 /**
  * Home page component

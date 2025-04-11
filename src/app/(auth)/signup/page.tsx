@@ -2,11 +2,11 @@
 
 import Link from 'next/link';
 import React from 'react';
-import Loading from '../../../componants/loading/Loading';
+import Button from '../../../components/buttons/Button';
+import InputWithIcon from '../../../components/form/InputWithIcon';
+import Loading from '../../../components/loading/Loading';
 import { iconsMap } from '../../../constante/iconsMap';
-import Button from '../../../componants/buttons/Button';
 import useSignUp from '../../../hooks/auth/useSignup';
-import InputWithIcon from '../../../componants/form/InputWithIcon';
 
 /**
  * Signup page component

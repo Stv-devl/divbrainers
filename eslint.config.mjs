@@ -11,12 +11,13 @@ const compat = new FlatCompat({
     extends: ['eslint:recommended'],
   },
 });
+
 const eslintConfig = [
   ...compat.extends(
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
-    'next/core-web-vitals',
-    'plugin:tailwindcss/recommended'
+    'plugin:react-hooks/recommended',
+    'next/core-web-vitals'
   ),
 
   ...compat.config({
@@ -39,12 +40,7 @@ const eslintConfig = [
       'react/prop-types': 'off',
       '@next/next/no-img-element': 'off',
       'prefer-const': 'warn',
-      'no-var': 'off',
-      'react-hooks/rules-of-hooks': 'error',
-      'react-hooks/exhaustive-deps': 'warn',
-      'tailwindcss/classnames-order': ['warn'],
-      'tailwindcss/enforces-shorthand': 'warn',
-      'tailwindcss/no-custom-classname': 'off',
+      'no-var': 'warn',
       'import/order': [
         'warn',
         {
@@ -62,9 +58,6 @@ const eslintConfig = [
             order: 'asc',
             caseInsensitive: true,
           },
-          distinctGroup: true,
-          named: false,
-          warnOnUnassignedImports: false,
         },
       ],
     },
@@ -81,4 +74,5 @@ const eslintConfig = [
     ignorePatterns: ['.next/', 'tailwind.config.ts', 'next.config.js', '*.js'],
   }),
 ];
+
 export default eslintConfig;

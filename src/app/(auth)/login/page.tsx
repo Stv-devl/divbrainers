@@ -2,11 +2,11 @@
 
 import Link from 'next/link';
 import React from 'react';
-import Loading from '../../../componants/loading/Loading';
-import Button from '../../../componants/buttons/Button';
+import Button from '../../../components/buttons/Button';
+import InputWithIcon from '../../../components/form/InputWithIcon';
+import Loading from '../../../components/loading/Loading';
 import { iconsMap } from '../../../constante/iconsMap';
 import useLogin from '../../../hooks/auth/useLogin';
-import InputWithIcon from '../../../componants/form/InputWithIcon';
 
 /**
  * Login page component that handles user authentication

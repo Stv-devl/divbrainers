@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
-import ProfilePictureWrapper from '@/componants/profile/ProfilePictureWrapper';
-import ProfileWrapper from '@/componants/profile/ProfileWrapper';
-import Button from '@/componants/buttons/Button';
+import Button from '@/components/buttons/Button';
+import ProfilePictureWrapper from '@/components/profile/ProfilePictureWrapper';
+import ProfileWrapper from '@/components/profile/ProfileWrapper';
 import useManageProfile from '@/hooks/manage/useManageProfile';
 
 const Profile = () => {
@@ -19,7 +19,7 @@ const Profile = () => {
   } = useManageProfile();
 
   return (
-    <div className="flex size-full flex-col bg-white p-0 sm:max-w-screen-xl sm:rounded-lg sm:px-18 sm:py-12 sm:shadow-md">
+    <div className="flex w-full flex-col bg-white p-0 sm:max-w-screen-xl sm:px-18 sm:py-12 sm:shadow-md">
       <h1 className="font-color-theme text-2xl font-bold mb-4">
         Update your profile :
       </h1>

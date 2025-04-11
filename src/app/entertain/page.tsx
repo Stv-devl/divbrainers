@@ -1,14 +1,14 @@
 'use client';
 
-import LogoutBanner from '@/componants/banners/LogoutBanner';
-import Footer from '@/componants/footer/Footer';
-import AdvertisingSection from '@/componants/landing/AdvertisingSection';
-import FeaturesSection from '@/componants/landing/FeaturesSection';
-import HeroSection from '@/componants/landing/HeroSection';
-import Loading from '@/componants/loading/Loading';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import React, { useEffect } from 'react';
+import LogoutBanner from '@/components/banners/LogoutBanner';
+import Footer from '@/components/footer/Footer';
+import AdvertisingSection from '@/components/landing/AdvertisingSection';
+import FeaturesSection from '@/components/landing/FeaturesSection';
+import HeroSection from '@/components/landing/HeroSection';
+import Loading from '@/components/loading/Loading';
 
 const Entertain = () => {
   const router = useRouter();

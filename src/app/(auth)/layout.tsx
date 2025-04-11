@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import LogoutBanner from '@/componants/banners/LogoutBanner';
+import LogoutBanner from '@/components/banners/LogoutBanner';
 
 export default function AuthLayout({
   children,

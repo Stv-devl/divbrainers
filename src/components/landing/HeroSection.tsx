@@ -1,0 +1,46 @@
+'use client';
+
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import React from 'react';
+import Button from '../buttons/Button';
+
+/**
+ * HeroSection component
+ * Displays a hero section with a title, description and a button
+ * @returns {JSX.Element} The HeroSection component
+ */
+const HeroSection = () => {
+  const router = useRouter();
+
+  return (
+    <div className="flex flex-col sm:flex-row gap-5 justify-around items-center w-full sm:mt-14">
+      <div className="flex flex-col max-w-[90%] sm:max-w-[350px] lg:max-w-[500px] gap-6 items-center justify-center p-10 bg-white rounded-lg border-2 border-gray-200 shadow-lg transform transition-transform duration-300 hover:scale-105">
+        <h1 className="text-lg lg:text-3xl text-center font-bold">
+          Improve your coding skills for free and prepare for interviews
+        </h1>
+        <p className="text-sm lg:text-lg">
+          Train with quizzes, live coding exercises and AI-powered mock
+          interviews.
+        </p>
+        <div className="w-[150px] h-[46px] text-sm sm:text-base">
+          <Button
+            onClick={() => router.push('/signup')}
+            label="Get started!"
+            color="filled"
+          />
+        </div>
+      </div>
+      <Image
+        src="/images/hero_image.png"
+        alt="Code console with instructions"
+        priority
+        width={500}
+        height={500}
+        className="max-w-[80%] sm:w-[350px] lg:w-[500px] sm:h-[350px] lg:h-[500px] rounded-lg"
+      />
+    </div>
+  );
+};
+
+export default HeroSection;

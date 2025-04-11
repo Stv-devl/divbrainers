@@ -1,10 +1,10 @@
 'use client';
 
 import React from 'react';
-import Button from '../../../componants/buttons/Button';
-import { iconsMap } from '../../../constante/iconsMap';
-import InputWithIcon from '../../../componants/form/InputWithIcon';
 import useResetPassword from '@/hooks/auth/useResetPassword';
+import Button from '../../../components/buttons/Button';
+import InputWithIcon from '../../../components/form/InputWithIcon';
+import { iconsMap } from '../../../constante/iconsMap';
 
 /**
  * PswBackup page component that handles user authentication

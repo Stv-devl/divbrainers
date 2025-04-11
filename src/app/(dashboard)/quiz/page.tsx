@@ -1,5 +1,5 @@
-import UnderConstruction from '@/componants/underConstruction/UnderConstruction';
 import React from 'react';
+import UnderConstruction from '@/components/underConstruction/UnderConstruction';
 
 const Quiz = () => {
   return <UnderConstruction />;

@@ -1,11 +1,11 @@
 import { InputFieldProps } from '@/types/type';
-import { iconsMap } from './iconsMap';
 
 export const navItems = [
-  { path: '/home', type: 'Home' },
-  { path: '/quizz', type: 'Quizz' },
-  { path: '/coding', type: 'Coding' },
-  { path: '/interview', type: 'Interview' },
+  { path: '/home', type: 'Home', icon: 'IconHome' },
+  { path: '/quiz', type: 'Quiz', icon: 'IconQuiz' },
+  { path: '/coding', type: 'Coding', icon: 'IconCode' },
+  { path: '/interview', type: 'Interview', icon: 'IconInterview' },
+  { path: '/scan', type: 'ATS scan', icon: 'IconScan' },
 ];
 
 export const inputFields: InputFieldProps[] = [

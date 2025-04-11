@@ -1,6 +1,5 @@
 'use client';
 
-import { useUserStore } from '@/store/useUserStore';
 import React from 'react';
 
 /**
