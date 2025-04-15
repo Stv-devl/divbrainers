@@ -1,10 +1,10 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useUserStore } from '@/store/useUserStore';
 import { UserProfile } from '@/types/type';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { updateUserProfile } from '../../../lib/actions/updateUserProfile';
 import {
   ProfileFormData,
@@ -97,7 +97,12 @@ const useManageProfile = () => {
     if (updatedFields.email) formData.set('email', updatedFields.email);
     if (file) formData.set('image', file);
 
-    await updateUserProfile(formData);
+    try {
+      await updateUserProfile(formData);
+    } catch (error) {
+      console.error('Update failed:', error);
+      setProfilError('Profile update failed. Please try again.');
+    }
   };
 
   return {
