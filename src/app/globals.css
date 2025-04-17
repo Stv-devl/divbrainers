@@ -100,6 +100,17 @@ body {
     @apply bg-gray-100 placeholder:text-neutral-500 focus:border-indigo-700;
   }
 
+  /*Dropdown*/
+  .dropdown-theme {
+    @apply bg-white placeholder:text-neutral-500 rounded-lg border border-gray-300
+             focus:outline-none focus:border-blue-800 px-3 
+             focus:shadow-xs focus:shadow-blue-400;
+  }
+
+  .dark .dropdown-theme {
+    @apply bg-gray-100 placeholder:text-neutral-500 focus:border-indigo-700;
+  }
+
   /*Labels*/
   label {
     @apply text-neutral-500 dark:text-gray-300;

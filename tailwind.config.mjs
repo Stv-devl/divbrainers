@@ -1,4 +1,4 @@
-export default {
+const tailwindConfig = {
   darkMode: 'class',
   theme: {
     extend: {
@@ -18,3 +18,5 @@ export default {
   },
   plugins: [],
 };
+
+export default tailwindConfig;

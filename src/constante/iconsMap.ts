@@ -19,6 +19,8 @@ import IconLogin from '../icons/auth/IconLogin';
 import IconPassword from '../icons/auth/IconPassword';
 import IconLogo from '../icons/banner/IconLogo';
 import IconVector from '../icons/banner/IconVector';
+import IconChevronDown from '../icons/form/IconChevronDown';
+import IconStart from '../icons/interview/IconStart';
 import IconUploadImage from '../icons/profile/IconUploadImage';
 
 export const iconsMap = {
@@ -44,4 +46,6 @@ export const iconsMap = {
   IconScan,
   IconCoding,
   IconLanguage,
+  IconChevronDown,
+  IconStart,
 };

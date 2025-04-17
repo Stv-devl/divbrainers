@@ -1,11 +1,13 @@
-import { ProfileFormData } from '../../lib/shema/profileShema';
 import { FormEvent } from 'react';
 import {
   UseFormRegisterReturn,
   UseFormHandleSubmit,
   FieldErrors,
   UseFormRegister,
+  Control,
 } from 'react-hook-form';
+import { InterviewSchemaType } from '@/schema/interviewShema';
+import { ProfileFormData } from '../../lib/shema/profileShema';
 
 //--------------------------------------------//
 //Users type
@@ -139,6 +141,38 @@ export interface InputFieldProps {
   label: string;
   placeholder: string;
   autoComplete: string;
+}
+
+//input select stack
+export interface InputSelectStackProps {
+  label?: string;
+  options: DropdownOption[];
+  value: string[];
+  onChange: (value: string[]) => void;
+  error?: boolean;
+}
+
+//--------------------------------------------//
+//Dropdown Type
+//--------------------------------------------//
+
+export interface DropdownOption {
+  label: string;
+  value: string;
+}
+
+export interface DropdownProps {
+  label?: string;
+  options: DropdownOption[];
+  value: string;
+  onChange: (value: string) => void;
+}
+
+export interface DropdownControllerParams {
+  name: keyof InterviewSchemaType;
+  label: string;
+  options: DropdownOption[];
+  control: Control<InterviewSchemaType>;
 }
 
 //--------------------------------------------//
