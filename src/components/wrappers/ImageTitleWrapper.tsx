@@ -21,7 +21,7 @@ const ImageTitleWrapper = () => {
           src="/images/speech-bubble.png"
           alt="bubble for write questions"
           width={290}
-          height={245}
+          height={246}
           className="hidden lg:block absolute left-[200px] top-[-120px] object-cover z-80"
           priority
         />

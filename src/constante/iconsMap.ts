@@ -10,7 +10,10 @@ import IconCheck from '@/icons/landing/IconCheck';
 import IconCoding from '@/icons/landing/IconCoding';
 import IconIa from '@/icons/landing/IconIa';
 import IconSats from '@/icons/landing/IconStats';
+import IconBadge from '@/icons/pages/IconBadge';
+import IconCalendar from '@/icons/pages/IconCalendar';
 import IconProfile from '@/icons/pages/IconProfile';
+import IconStar from '@/icons/pages/IconStar';
 import IconDark from '../icons/auth/IconDark';
 import IconEmail from '../icons/auth/IconEmail';
 import IconGoogle from '../icons/auth/IconGoogle';
@@ -50,4 +53,7 @@ export const iconsMap = {
   IconChevronDown,
   IconStart,
   IconClose,
+  IconCalendar,
+  IconBadge,
+  IconStar,
 };

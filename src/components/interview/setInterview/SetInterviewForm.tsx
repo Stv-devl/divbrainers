@@ -23,7 +23,7 @@ type Props = {
  * Form component for setting up an interview
  * @returns {JSX.Element} A form with dropdown selections and stack choices
  */
-const SetInterviewForm = ({ updateUserStackAction }: Props) => {
+const SetInterviewForm = () => {
   const { stack, addToStack } = useInterviewStore();
   const [stackError, setStackError] = React.useState('');
 

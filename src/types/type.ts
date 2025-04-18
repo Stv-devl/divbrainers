@@ -80,16 +80,19 @@ export interface NavWrapperProps {
   icon?: string;
 }
 
-//button component
 export interface ButtonComponent {
   label: string;
   onClick?: () => void;
-  color: 'empty' | 'filled';
+  color?: 'empty' | 'filled';
+  bgColor?: string;
+  hoverColor?: string;
   IconComponent?: React.ComponentType<{ fill?: string }>;
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
   iconColor?: string;
   isLoading?: boolean;
+  textColor?: string;
+  fontSize?: 'text-sm' | 'text-base' | 'text-lg' | 'text-xl';
 }
 
 //--------------------------------------------//
@@ -174,6 +177,21 @@ export interface DropdownControllerParams {
   label: string;
   options: DropdownOption[];
   control: Control<InterviewSchemaType>;
+}
+
+//--------------------------------------------//
+//Interview props
+//--------------------------------------------//
+
+export interface JobInterviewProps {
+  id: string;
+  position: string;
+  type: string;
+  date: string;
+  difficulty: string;
+  score: string;
+  questionsNumber: number;
+  stack: string[];
 }
 
 //--------------------------------------------//

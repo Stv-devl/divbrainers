@@ -1,27 +1,19 @@
 'use client';
 
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import useTechIcons from '@/hooks/ui/useTechIcon';
 import useInterviewStore from '@/store/useStoreInterview';
-import { getTechLogos } from '../../../lib/utils/getTechLogo';
 import { iconsMap } from '../../constante/iconsMap';
 
 /**
  * Component that displays the technical stack with icons
- * @returns {JSX.Element} A component showing tech stack icons
+ * @returns A component showing tech stack icons
  */
 const TechnicalStack = () => {
   const { stack, removeFromStack } = useInterviewStore();
-  const [icons, setIcons] = useState<{ tech: string; url: string }[]>([]);
 
-  useEffect(() => {
-    const fetchIcons = async () => {
-      const logos = await getTechLogos(stack);
-      setIcons(logos);
-    };
-    fetchIcons();
-  }, [stack]);
-
+  const icons = useTechIcons(stack);
   return (
     <div className="flex flex-wrap gap-2 w-[90%] mx-auto lg:mx-0 lg:max-w-[50%]">
       {icons.map((item, index) => (

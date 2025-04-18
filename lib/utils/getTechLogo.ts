@@ -10,13 +10,13 @@ const normalizeTechName = (tech: string) => {
   return key in iconStackMapping ? key : null;
 };
 
-const checkIconExists = async (url: string) => {
-  try {
-    const response = await fetch(url, { method: 'HEAD' });
-    return response.ok;
-  } catch {
-    return false;
-  }
+export const checkIconExists = (url: string): Promise<boolean> => {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve(true);
+    img.onerror = () => resolve(false);
+    img.src = url;
+  });
 };
 
 export const getTechLogos = async (techArray: string[]) => {
