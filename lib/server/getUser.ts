@@ -1,10 +1,10 @@
 'use server';
 
+import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
+import { UserProfile } from '../../src/types/type';
 import { authOptions } from '../api/auth/authOptions';
 import { prisma } from '../prisma';
-import { redirect } from 'next/navigation';
-import { UserProfile } from '../../src/types/type';
 
 export const getUser = async (): Promise<UserProfile> => {
   const session = await getServerSession(authOptions);
