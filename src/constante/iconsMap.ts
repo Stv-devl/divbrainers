@@ -10,7 +10,7 @@ import IconCheck from '@/icons/landing/IconCheck';
 import IconCoding from '@/icons/landing/IconCoding';
 import IconIa from '@/icons/landing/IconIa';
 import IconSats from '@/icons/landing/IconStats';
-import IconProfile from '@/icons/profile/IconProfile';
+import IconProfile from '@/icons/pages/IconProfile';
 import IconDark from '../icons/auth/IconDark';
 import IconEmail from '../icons/auth/IconEmail';
 import IconGoogle from '../icons/auth/IconGoogle';
@@ -19,9 +19,10 @@ import IconLogin from '../icons/auth/IconLogin';
 import IconPassword from '../icons/auth/IconPassword';
 import IconLogo from '../icons/banner/IconLogo';
 import IconVector from '../icons/banner/IconVector';
-import IconChevronDown from '../icons/form/IconChevronDown';
-import IconStart from '../icons/interview/IconStart';
-import IconUploadImage from '../icons/profile/IconUploadImage';
+import IconChevronDown from '../icons/pages/IconChevronDown';
+import IconClose from '../icons/pages/IconClose';
+import IconStart from '../icons/pages/IconStart';
+import IconUploadImage from '../icons/pages/IconUploadImage';
 
 export const iconsMap = {
   IconEmail,
@@ -48,4 +49,5 @@ export const iconsMap = {
   IconLanguage,
   IconChevronDown,
   IconStart,
+  IconClose,
 };

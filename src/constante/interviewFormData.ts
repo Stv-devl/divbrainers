@@ -1,5 +1,5 @@
-import { InterviewSchemaType } from '@/schema/interviewShema';
 import { DropdownOption } from '@/types/type';
+import { InterviewSchemaType } from '../../lib/schema/interviewShema';
 
 const optionsPosition = [
   { label: 'Front-end', value: 'frontend' },

@@ -1,20 +1,32 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import Button from '@/components/buttons/Button';
-import { optionsAddYourStack, dropdowns } from '@/constante/interviewFormData';
-import { interviewSchema, InterviewSchemaType } from '@/schema/interviewShema';
+import { iconStackMapping } from '@/constante/iconStackMap';
+import { dropdowns } from '@/constante/interviewFormData';
+import useInterviewStore from '@/store/useStoreInterview';
+import {
+  interviewSchema,
+  InterviewSchemaType,
+} from '../../../../lib/schema/interviewShema';
 import { iconsMap } from '../../../constante/iconsMap';
-import { dropdownController } from '../../form/DropdownController';
-import InputStackChoice from '../../form/InputStackChoice';
+import { dropdownController } from '../../form/dropdown/DropdownController';
+import InputSelectStack from '../../form/input/InputSelectStack';
+
+type Props = {
+  updateUserStackAction: (formData: FormData) => void;
+};
 
 /**
  * Form component for setting up an interview
  * @returns {JSX.Element} A form with dropdown selections and stack choices
  */
-const SetInterviewForm = () => {
+const SetInterviewForm = ({ updateUserStackAction }: Props) => {
+  const { stack, addToStack } = useInterviewStore();
+  const [stackError, setStackError] = React.useState('');
+
   const {
     control,
     handleSubmit,
@@ -28,19 +40,13 @@ const SetInterviewForm = () => {
       numberOfQuestions: '5',
     },
   });
-  const [selectedStacks, setSelectedStacks] = useState<string[]>([]);
 
   /**
    * Handles form submission
    * @param {InterviewSchemaType} data - Form data from react-hook-form
    */
   const onSubmit = (data: InterviewSchemaType) => {
-    const payload = {
-      ...data,
-      stack: selectedStacks,
-    };
-
-    console.log('send data to api :', payload);
+    console.log('send');
   };
 
   return (
@@ -52,11 +58,13 @@ const SetInterviewForm = () => {
         {dropdowns.map(({ name, label, options }) =>
           dropdownController({ name, label, options, control })
         )}
-        <InputStackChoice
+        <InputSelectStack
           label="Add your stack"
-          options={optionsAddYourStack}
-          value={selectedStacks}
-          onChange={setSelectedStacks}
+          options={iconStackMapping}
+          value={stack}
+          onChange={addToStack}
+          stackError={stackError}
+          setStackError={setStackError}
         />
       </div>
       <div className="flex justify-center items-center w-full max-w-[200px] h-[46px]">

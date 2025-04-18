@@ -6,8 +6,8 @@ import {
   UseFormRegister,
   Control,
 } from 'react-hook-form';
-import { InterviewSchemaType } from '@/schema/interviewShema';
-import { ProfileFormData } from '../../lib/shema/profileShema';
+import { InterviewSchemaType } from '../../lib/schema/interviewShema';
+import { ProfileFormData } from '../../lib/schema/profileShema';
 
 //--------------------------------------------//
 //Users type
@@ -146,10 +146,11 @@ export interface InputFieldProps {
 //input select stack
 export interface InputSelectStackProps {
   label?: string;
-  options: DropdownOption[];
+  options: Record<string, string>;
   value: string[];
-  onChange: (value: string[]) => void;
-  error?: boolean;
+  onChange: (value: string) => void;
+  stackError: string;
+  setStackError: (value: string) => void;
 }
 
 //--------------------------------------------//

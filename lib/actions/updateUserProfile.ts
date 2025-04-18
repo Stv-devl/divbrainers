@@ -1,13 +1,13 @@
 'use server';
 
-import { prisma } from '../prisma';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '../api/auth/authOptions';
-import { uploadFileToCloudinary } from '../utils/fileOperations/uploadFileToCloudinary';
 import { v2 as cloudinary } from 'cloudinary';
 import { revalidatePath } from 'next/cache';
-import { profileSchema } from '../shema/profileShema';
-import { handleError } from '../utils/errors/handleError';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../api/auth/authOptions';
+import { handleError } from '../helpers/errors/handleError';
+import { uploadFileToCloudinary } from '../helpers/fileOperations/uploadFileToCloudinary';
+import { prisma } from '../prisma';
+import { profileSchema } from '../schema/profileShema';
 
 /**
  * Update the user profile
@@ -23,8 +23,8 @@ export async function updateUserProfile(formData: FormData) {
   const imageFile = formData.get('image') as File;
 
   const validationResult = profileSchema.safeParse({
-    firstname: name,
-    email: email,
+    name,
+    email,
     image: null,
   });
 
@@ -39,6 +39,10 @@ export async function updateUserProfile(formData: FormData) {
   let publicId: string | null = null;
 
   if (imageFile && typeof imageFile === 'object') {
+    if (!imageFile.type.startsWith('image/')) {
+      throw handleError(400, 'File must be an image');
+    }
+
     const user = await prisma.user.findUnique({
       where: { id: session.user.id },
     });
@@ -60,7 +64,7 @@ export async function updateUserProfile(formData: FormData) {
     publicId = result?.public_id ?? null;
   }
 
-  await prisma.user.update({
+  const updatedUser = await prisma.user.update({
     where: { id: session.user.id },
     data: {
       name,
@@ -71,4 +75,5 @@ export async function updateUserProfile(formData: FormData) {
   });
 
   revalidatePath('/profile');
+  return updatedUser;
 }

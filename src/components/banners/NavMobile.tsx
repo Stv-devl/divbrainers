@@ -1,7 +1,7 @@
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import React from 'react';
-import { cn } from '@/helpers/cn';
+import { cn } from '../../../lib/utils/cn';
 import { navItems } from '../../constante/constante';
 import { iconsMap } from '../../constante/iconsMap';
 import NavWrapper from './wrappers/NavWrapper';

@@ -18,6 +18,8 @@ model User {
   sessions      Session[]
   credentials   Credential?
   profile       Profile?
+  data          Data?       @relation(fields: [dataId], references: [id])
+  dataId        String?     @unique
   createdAt     DateTime    @default(now())
 }
 
@@ -68,4 +70,10 @@ model Profile {
   firstname String
   lastname  String
   image     String?
+}
+
+model Data {
+  id    String   @id @default(cuid())
+  user  User?
+  stack String[]
 }

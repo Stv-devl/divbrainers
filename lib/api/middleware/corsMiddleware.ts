@@ -1,4 +1,4 @@
-import { handleError } from '../../utils/errors/handleError';
+import { handleError } from '../../helpers/errors/handleError';
 import { NextResponse } from 'next/server';
 
 const originRegex = process.env.NEXT_PUBLIC_ORIGIN_REGEX;

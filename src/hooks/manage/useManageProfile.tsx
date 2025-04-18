@@ -9,7 +9,7 @@ import { updateUserProfile } from '../../../lib/actions/updateUserProfile';
 import {
   ProfileFormData,
   profileSchema,
-} from '../../../lib/shema/profileShema';
+} from '../../../lib/schema/profileShema';
 
 /**
  * Custom hook for managing user profile updates

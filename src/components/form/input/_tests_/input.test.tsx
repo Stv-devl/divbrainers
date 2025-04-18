@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { UseFormRegister } from 'react-hook-form';
-import { ProfileFormData } from '../../../../lib/shema/profileShema';
+import { ProfileFormData } from '../../../../../lib/schema/profileShema';
 import Input from '../Input';
 
 const mockOnChange = jest.fn();

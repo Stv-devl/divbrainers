@@ -1,11 +1,11 @@
-import { postResetPassword } from '@/service/auth/postResetPassword';
-import {
-  newPasswordSchema,
-  NewPasswordSchemaType,
-} from '@/schema/newPasswordSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import {
+  newPasswordSchema,
+  NewPasswordSchemaType,
+} from '../../../lib/schema/newPasswordSchema';
+import { postResetPassword } from '@/service/auth/postResetPassword';
 
 const useResetPassword = () => {
   const router = useRouter();

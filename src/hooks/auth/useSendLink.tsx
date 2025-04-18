@@ -1,7 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import { sendLinkSchema, SendLinkSchemaType } from '@/schema/sendLinkSchema';
+import {
+  sendLinkSchema,
+  SendLinkSchemaType,
+} from '../../../lib/schema/sendLinkSchema';
 import { postSendEmail } from '@/service/auth/postSendEmail';
 
 const useSendLink = () => {

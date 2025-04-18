@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { cn } from '@/helpers/cn';
 import { ButtonComponent } from '@/types/type';
+import { cn } from '../../../lib/utils/cn';
 
 /**
  * Reusable button component with various style options

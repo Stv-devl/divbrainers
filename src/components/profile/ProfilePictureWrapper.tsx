@@ -3,9 +3,10 @@
 import Image from 'next/image';
 import React, { useRef, useCallback } from 'react';
 import { ProfilePictureWrapperProps } from '@/types/type';
-import { cn } from '../../helpers/cn';
-import IconUploadImage from '../../icons/profile/IconUploadImage';
+import { cn } from '../../../lib/utils/cn';
+import IconUploadImage from '../../icons/pages/IconUploadImage';
 
+const MAX_FILE_SIZE_MB = 5;
 const MAX_IMAGE_DIMENSION = 1024;
 const SUPPORTED_FORMATS = ['image/jpeg', 'image/png'];
 
@@ -26,10 +27,19 @@ const PictureWrapper: React.FC<ProfilePictureWrapperProps> = ({
    * Checks the file format.
    */
   const validateFile = (file: File) => {
-    if (!SUPPORTED_FORMATS.includes(file.type)) {
+    const isValidFormat = SUPPORTED_FORMATS.includes(file.type);
+    const isValidSize = file.size <= MAX_FILE_SIZE_MB * 1024 * 1024;
+
+    if (!isValidFormat) {
       alert('Please upload an image in JPG or PNG format.');
       return false;
     }
+
+    if (!isValidSize) {
+      alert(`Image must be smaller than ${MAX_FILE_SIZE_MB}MB.`);
+      return false;
+    }
+
     return true;
   };
 

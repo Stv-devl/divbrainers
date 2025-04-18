@@ -1,13 +1,13 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import {
   SignupSchemaType,
   signupValidationSchema,
-} from '../../schema/signupSchema';
+} from '../../../lib/schema/signupSchema';
 import postSignup from '../../service/auth/postSignup';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { useState } from 'react';
 
 /**
  * Custom hook for handling user sign-up functionality.

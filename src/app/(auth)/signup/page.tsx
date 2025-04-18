@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import React from 'react';
 import Button from '../../../components/buttons/Button';
-import InputWithIcon from '../../../components/form/InputWithIcon';
+import InputWithIcon from '../../../components/form/input/InputWithIcon';
 import Loading from '../../../components/loading/Loading';
 import { iconsMap } from '../../../constante/iconsMap';
 import useSignUp from '../../../hooks/auth/useSignup';

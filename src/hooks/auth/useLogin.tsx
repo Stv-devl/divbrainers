@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { LoginSchema, LoginSchemaType } from '@/schema/loginShema';
+import { LoginSchema, LoginSchemaType } from '../../../lib/schema/loginShema';
 
 const useLogin = () => {
   const [globalError, setGlobalError] = useState('');

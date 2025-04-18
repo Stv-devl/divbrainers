@@ -1,5 +1,5 @@
 import { authOptions } from '../auth/authOptions';
-import { handleError } from '../../utils/errors/handleError';
+import { handleError } from '../../helpers/errors/handleError';
 import { LRUCache } from 'lru-cache';
 import { headers } from 'next/headers';
 import { getServerSession } from 'next-auth';

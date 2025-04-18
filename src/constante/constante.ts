@@ -48,16 +48,3 @@ export const features = [
       'Track your progress over time with detailed performance stats and insightful visualizations.',
   },
 ];
-
-const stack = [];
-
-const mockuser = [
-  {
-    datas: [
-      {
-        interviews: [],
-        technicalstack: [],
-      },
-    ],
-  },
-];

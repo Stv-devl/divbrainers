@@ -1,12 +1,12 @@
-import { NextResponse } from 'next/server';
-import { prisma } from '../../prisma';
-import { sendResetEmail } from '../../utils/fileOperations/sendRestEmail';
 import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
-import { rateLimitMiddleware } from '../middleware/rateLimitMiddleware';
+import { NextResponse } from 'next/server';
+import { handleError } from '../../helpers/errors/handleError';
+import { sendResetEmail } from '../../helpers/fileOperations/sendRestEmail';
+import { prisma } from '../../prisma';
+import { sendEmailSchema } from '../../shemaServer/sendEmailShema';
 import { corsMiddleware } from '../middleware/corsMiddleware';
-import { sendEmailSchema } from '../../shema/sendEmailShema';
-import { handleError } from '../../utils/errors/handleError';
+import { rateLimitMiddleware } from '../middleware/rateLimitMiddleware';
 
 /**
  * Send email handler for user registration

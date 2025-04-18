@@ -1,7 +1,7 @@
 import React from 'react';
 import { inputFields } from '@/constante/constante';
 import { InputFieldProps, ProfileWrapperProps } from '@/types/type';
-import Input from '../form/Input';
+import Input from '../form/input/Input';
 
 /**
  * ProfileWrapper : input fields for username, email.

@@ -3,7 +3,7 @@
 import React from 'react';
 import useSendLink from '@/hooks/auth/useSendLink';
 import Button from '../../../components/buttons/Button';
-import InputWithIcon from '../../../components/form/InputWithIcon';
+import InputWithIcon from '../../../components/form/input/InputWithIcon';
 import { iconsMap } from '../../../constante/iconsMap';
 
 /**

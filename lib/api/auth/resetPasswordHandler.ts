@@ -1,10 +1,10 @@
-import { handleError } from '../../utils/errors/handleError';
-import { prisma } from '../../prisma';
-import { corsMiddleware } from '../middleware/corsMiddleware';
-import { rateLimitMiddleware } from '../middleware/rateLimitMiddleware';
 import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
-import { resetPasswordSchema } from '../../shema/resetPasswordShema';
+import { handleError } from '../../helpers/errors/handleError';
+import { prisma } from '../../prisma';
+import { resetPasswordSchema } from '../../shemaServer/resetPasswordShema';
+import { corsMiddleware } from '../middleware/corsMiddleware';
+import { rateLimitMiddleware } from '../middleware/rateLimitMiddleware';
 
 export async function resetPasswordHandler(req: Request) {
   try {
