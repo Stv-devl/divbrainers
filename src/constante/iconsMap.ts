@@ -24,6 +24,7 @@ import IconLogo from '../icons/banner/IconLogo';
 import IconVector from '../icons/banner/IconVector';
 import IconChevronDown from '../icons/pages/IconChevronDown';
 import IconClose from '../icons/pages/IconClose';
+import IconPhone from '../icons/pages/IconPhone';
 import IconStart from '../icons/pages/IconStart';
 import IconUploadImage from '../icons/pages/IconUploadImage';
 
@@ -56,4 +57,5 @@ export const iconsMap = {
   IconCalendar,
   IconBadge,
   IconStar,
+  IconPhone,
 };

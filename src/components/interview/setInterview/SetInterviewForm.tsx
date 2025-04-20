@@ -15,10 +15,6 @@ import { iconsMap } from '../../../constante/iconsMap';
 import { dropdownController } from '../../form/dropdown/DropdownController';
 import InputSelectStack from '../../form/input/InputSelectStack';
 
-type Props = {
-  updateUserStackAction: (formData: FormData) => void;
-};
-
 /**
  * Form component for setting up an interview
  * @returns {JSX.Element} A form with dropdown selections and stack choices
