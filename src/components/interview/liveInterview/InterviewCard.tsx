@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import React from 'react';
 import { useProfileImage } from '@/hooks/ui/useProfileImage';
+import { cn } from '../../../../lib/utils/cn';
 
 export interface InterviewCardProps {
   name: string;
@@ -11,12 +12,19 @@ export interface InterviewCardProps {
 }
 
 const InterviewCard = ({ name, position, image }: InterviewCardProps) => {
+  const isRecruiter = name === 'Julia Divana';
+
   const { profileImage, handleImageError } = useProfileImage(
     typeof image === 'string' ? image : null
   );
 
   return (
-    <div className="flex flex-col justify-center z-20 bg-white w-[240px] h-[300px] p-4 rounded-lg shadow-sm">
+    <div
+      className={cn(
+        'flex flex-col justify-center z-20 bg-white w-[90%] sm:w-[240px] h-full p-2 sm:p-5 rounded-lg shadow-sm',
+        !isRecruiter && 'hidden sm:block'
+      )}
+    >
       <div className="flex flex-col items-center gap-3 justify-center">
         <p className="text-lg font-bold text-blue-900">{name}</p>
         <div className="bg-blue-100 rounded-md px-2 py-1 shadow-sm">
