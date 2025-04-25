@@ -1,5 +1,5 @@
 import React from 'react';
-import FormerInterviewWrapper from '@/components/interview/formerInterview/formerInterviewWrapper';
+import PreviousInterviewWrapper from '@/components/interview/previousInterview/PreviousInterviewWrapper';
 import SetInterviewForm from '@/components/interview/setInterview/SetInterviewForm';
 import TechnicalStack from '@/components/technicalStack/TechnicalStack';
 import ImageTitleWrapper from '@/components/wrappers/ImageTitleWrapper';
@@ -21,7 +21,7 @@ const Page = () => {
       </div>
       <TechnicalStack />
       <hr className="hidden sm:block border-t border-gray-300 mt-6 w-[95%] mx-auto" />
-      <FormerInterviewWrapper />
+      <PreviousInterviewWrapper />
     </>
   );
 };

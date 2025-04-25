@@ -1,17 +1,10 @@
-'use client';
-
 import React from 'react';
-import Loading from '@/components/loading/Loading';
+import { getUser } from '../../../../lib/server/getUser';
 import { iconsMap } from '../../../constante/iconsMap';
-import { useUserStore } from '../../../store/useUserStore';
 import InterviewCard from './InterviewCard';
 
-const CallInterviewWrapper = () => {
-  const { user } = useUserStore();
-
-  if (!user) {
-    return <Loading />;
-  }
+const CallInterviewWrapper = async () => {
+  const user = await getUser();
 
   return (
     <div className=" w-[98%] sm:w-[95%] lg:w-[90%] xl:w-[60%] mx-auto">

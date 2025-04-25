@@ -1,12 +1,12 @@
 import React from 'react';
 import { jobInterviewsMock } from '@/constante/jobInterviewMock';
-import FormerInterviewCard from './formerInterviewCard';
+import FormerInterviewCard from './PreviousInterviewCard';
 
 /**
  * Component that displays a list of previous job interviews
  * @returns {JSX.Element} A component that renders a title and a list of FormerInterviewCard components
  */
-const FormerInterviewWrapper = () => {
+const PreviousInterviewWrapper = () => {
   return (
     <>
       <h1 className="text-lg sm:text-xl font-bold text-blue-800 mb-2">
@@ -24,4 +24,4 @@ const FormerInterviewWrapper = () => {
   );
 };
 
-export default FormerInterviewWrapper;
+export default PreviousInterviewWrapper;

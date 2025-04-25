@@ -14,7 +14,7 @@ import { iconsMap } from '../../../constante/iconsMap';
  * @param {JobInterviewProps} props.interview - The interview data to display
  * @returns {JSX.Element} A card component showing interview details and actions
  */
-const FormerInterviewCard = ({
+const PreviousInterviewCard = ({
   interview,
 }: {
   interview: JobInterviewProps;
@@ -81,4 +81,4 @@ const FormerInterviewCard = ({
   );
 };
 
-export default FormerInterviewCard;
+export default PreviousInterviewCard;

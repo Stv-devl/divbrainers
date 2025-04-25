@@ -11,7 +11,7 @@ const ProfileWrapper: React.FC<ProfileWrapperProps> = ({
   errors,
 }) => {
   return (
-    <div className="bg-gray-50 flex flex-col gap-6 rounded-lg p-7 lg:w-3/4">
+    <div className="bg-gray-50 flex flex-col gap-6 rounded-lg p-7 lg:w-3/4 lg:max-w-[950px]">
       {inputFields.map((field: InputFieldProps) => (
         <div
           key={field.name}

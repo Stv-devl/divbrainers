@@ -14,7 +14,7 @@ const ProfilePage = async () => {
   }
 
   return (
-    <div className="flex w-full flex-col bg-white p-0 sm:max-w-screen-xl sm:px-18 sm:py-12 sm:shadow-md">
+    <div className="flex size-full flex-col bg-white p-0 sm:max-w-[1950px] sm:px-18 sm:py-12 sm:shadow-md">
       <h1 className="font-color-theme text-2xl font-bold mb-4">
         Update your profile :
       </h1>
