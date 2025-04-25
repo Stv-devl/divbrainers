@@ -1,6 +1,6 @@
 import React from 'react';
-import PreviousInterviewWrapper from '@/components/interview/previousInterview/PreviousInterviewWrapper';
 import SetInterviewForm from '@/components/interview/setInterview/SetInterviewForm';
+import PreviousInterviewWrapper from '@/components/interview/setInterview/SetInterviewWrapper';
 import TechnicalStack from '@/components/technicalStack/TechnicalStack';
 import ImageTitleWrapper from '@/components/wrappers/ImageTitleWrapper';
 

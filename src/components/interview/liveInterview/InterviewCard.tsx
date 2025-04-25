@@ -11,6 +11,15 @@ export interface InterviewCardProps {
   image: string | File | null | undefined;
 }
 
+/**
+ * Component that displays a card with user or recruiter information during an interview
+ *
+ * @param {Object} props - Component props
+ * @param {string} props.name - The name of the person
+ * @param {string} props.position - The job position of the person
+ * @param {string|File|null|undefined} props.image - The profile image of the person
+ * @returns {JSX.Element} A card component showing person details and profile image
+ */
 const InterviewCard = ({ name, position, image }: InterviewCardProps) => {
   const isRecruiter = name === 'Julia Divana';
 

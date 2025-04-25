@@ -1,9 +1,14 @@
 import Image from 'next/image';
 import React from 'react';
 
+/**
+ * Component that displays the message from the recruiter during a live interview
+ *
+ * @returns {JSX.Element} A component showing the recruiter's question in a styled message box
+ */
 const CallInterviewMessage = () => {
   return (
-    <div className="w-[90%] sm:w-[95%] lg:w-[90%] xl:w-[60%] mx-auto">
+    <div className="w-[90%] sm:w-[95%] lg:w-[90%] xl:w-[75%] mx-auto">
       <div className="relative mt-5 sm:mt-10 w-full h-full bg-white shadow-sm border border-gray-300 rounded-lg">
         <div className="flex items-center gap-4 p-5 w-full h-[85px] bg-gray-100 rounded-t-lg">
           <Image

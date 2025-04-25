@@ -22,6 +22,7 @@ import IconLogin from '../icons/auth/IconLogin';
 import IconPassword from '../icons/auth/IconPassword';
 import IconLogo from '../icons/banner/IconLogo';
 import IconVector from '../icons/banner/IconVector';
+import IconBack from '../icons/pages/IconBack';
 import IconBreak from '../icons/pages/IconBreak';
 import IconChevronDown from '../icons/pages/IconChevronDown';
 import IconClose from '../icons/pages/IconClose';
@@ -60,4 +61,5 @@ export const iconsMap = {
   IconStar,
   IconPhone,
   IconBreak,
+  IconBack,
 };

@@ -1,8 +1,7 @@
 import { redirect } from 'next/navigation';
 import React from 'react';
-import CallInterviewMessage from '@/components/interview/liveInterview/CallInterviewMessage';
-import CallInterviewWrapper from '@/components/interview/liveInterview/CallInterviewWrapper';
-import InterviewControl from '@/components/interview/liveInterview/InterviewControl';
+import LiveInterviewUI from '@/components/interview/liveInterview/LiveInterviewUi';
+import { getUser } from '../../../../../lib/server/getUser';
 
 // create server action to check if user has started the interview
 // put the component in the server action in a layout or an other page
@@ -18,20 +17,14 @@ import InterviewControl from '@/components/interview/liveInterview/InterviewCont
       redirect('/interview'); /
     }*/
 
-const Page = () => {
-  return (
-    <div className="relative size-full">
-      <div className="flex flex-col gap-5 items-center justify-center">
-        <h1 className="mt-0 sm:mt-5 text-xl sm:text-3xl font-bold text-blue-900">
-          Interview Front-End developer
-        </h1>
-        <p>Live technical interview with recruiter</p>
-      </div>
-      <CallInterviewWrapper />
-      <CallInterviewMessage />
-      <InterviewControl />
-    </div>
-  );
+const Page = async () => {
+  const user = await getUser();
+  const hasStartedInterview = true;
+
+  if (!user) return;
+  if (!hasStartedInterview) redirect('/interview');
+
+  return <LiveInterviewUI user={user} />;
 };
 
 export default Page;

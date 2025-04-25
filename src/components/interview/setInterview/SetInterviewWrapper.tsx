@@ -1,10 +1,10 @@
 import React from 'react';
 import { jobInterviewsMock } from '@/constante/jobInterviewMock';
-import FormerInterviewCard from './PreviousInterviewCard';
+import PreviousInterviewCard from './SetInterviewCard';
 
 /**
  * Component that displays a list of previous job interviews
- * @returns {JSX.Element} A component that renders a title and a list of FormerInterviewCard components
+ * @returns {JSX.Element} A component that renders a title and a list of PreviousInterviewCard components
  */
 const PreviousInterviewWrapper = () => {
   return (
@@ -16,7 +16,7 @@ const PreviousInterviewWrapper = () => {
         {jobInterviewsMock &&
           jobInterviewsMock.map((interview) => (
             <div key={interview.id}>
-              <FormerInterviewCard interview={interview} />
+              <PreviousInterviewCard interview={interview} />
             </div>
           ))}
       </div>
