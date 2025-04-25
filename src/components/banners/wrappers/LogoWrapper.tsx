@@ -1,6 +1,10 @@
 import React from 'react';
 import { iconsMap } from '../../../constante/iconsMap';
 
+/**
+ * LogoWrapper component that displays the application logo and name
+ * @returns A component with the logo icon and application name
+ */
 const LogoWrapper = () => {
   return (
     <div className="flex items-center gap-1 sm:gap-3">

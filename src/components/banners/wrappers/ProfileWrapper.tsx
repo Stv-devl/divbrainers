@@ -5,12 +5,17 @@ import Link from 'next/link';
 import { signOut } from 'next-auth/react';
 import React from 'react';
 import ThemeSwitcher from '@/components/theme/ThemeSwitcher';
+import { UserProfile } from '@/types/type';
 import { iconsMap } from '../../../constante/iconsMap';
 import { useProfileImage } from '../../../hooks/ui/useProfileImage';
-import { useUserStore } from '../../../store/useUserStore';
 
-const ProfileWrapper = () => {
-  const { user } = useUserStore();
+/**
+ * ProfileWrapper component that displays user profile image and navigation icons
+ * @param {Object} props - Component props
+ * @param {UserProfile} props.user - The user profile data to display
+ * @returns A component with profile image and navigation icons (language, theme, logout)
+ */
+const ProfileWrapper = ({ user }: { user: UserProfile }) => {
   const { profileImage, handleImageError } = useProfileImage(
     typeof user?.image === 'string' ? user.image : null
   );

@@ -3,7 +3,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { useUserStore } from '@/store/useUserStore';
 import { UserProfile } from '@/types/type';
 import { updateUserProfile } from '../../../lib/actions/updateUserProfile';
 import {
@@ -23,9 +22,7 @@ import {
  * - handleImageChange: Function to handle profile image changes
  * - profilError: Error message string if profile update fails
  */
-const useManageProfile = () => {
-  const { user } = useUserStore();
-
+const useManageProfile = (user: UserProfile) => {
   const initialProfile = useRef<UserProfile | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(

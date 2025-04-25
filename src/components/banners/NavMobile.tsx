@@ -1,6 +1,9 @@
+'use client';
+
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import React from 'react';
+import { UserProfile } from '@/types/type';
 import { cn } from '../../../lib/utils/cn';
 import { navItems } from '../../constante/constante';
 import { iconsMap } from '../../constante/iconsMap';
@@ -11,7 +14,7 @@ import ProfileWrapper from './wrappers/ProfileWrapper';
  * NavMobile component that displays the mobile navigation bar
  * @returns The NavMobile component
  */
-const NavMobile = () => {
+const NavMobile = ({ user }: { user: UserProfile }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const toggleBurger = () => setIsOpen((prev) => !prev);
 
@@ -52,7 +55,7 @@ const NavMobile = () => {
             onClick={toggleBurger}
           />
         ))}
-        <ProfileWrapper />
+        <ProfileWrapper user={user} />
       </div>
 
       {isOpen && (

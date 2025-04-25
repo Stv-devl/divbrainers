@@ -1,22 +1,17 @@
-'use client';
+import ProfileForm from '@/components/profile/ProfileForm';
+import { getUser } from '../../../../lib/server/getUser';
 
-import React from 'react';
-import Button from '@/components/buttons/Button';
-import ProfilePictureWrapper from '@/components/profile/ProfilePictureWrapper';
-import ProfileWrapper from '@/components/profile/ProfileWrapper';
-import useManageProfile from '@/hooks/manage/useManageProfile';
+/**
+ * ProfilePage component that displays the user profile editing interface
+ * Fetches the current user data and renders the profile form
+ * @returns A page with profile editing form and instructions
+ */
+const ProfilePage = async () => {
+  const user = await getUser();
 
-const Profile = () => {
-  const {
-    register,
-    handleSubmit,
-    onSubmit,
-    errors,
-    isSubmitting,
-    imagePreview,
-    handleImageChange,
-    profilError,
-  } = useManageProfile();
+  if (!user) {
+    return;
+  }
 
   return (
     <div className="flex w-full flex-col bg-white p-0 sm:max-w-screen-xl sm:px-18 sm:py-12 sm:shadow-md">
@@ -26,40 +21,9 @@ const Profile = () => {
       <p className="mb-6">
         Add your details to create a personal touch to your profile.
       </p>
-
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        encType="multipart/form-data"
-        className="relative"
-      >
-        <div className="bg-gray-50 mb-6 rounded-lg">
-          <ProfilePictureWrapper
-            imagePreview={imagePreview}
-            handleImageChange={handleImageChange}
-          />
-        </div>
-        <div className="bg-gray-50 mb-6 rounded-lg">
-          <ProfileWrapper register={register} errors={errors} />
-        </div>
-        {profilError && (
-          <span className="flex justify-center text-red-500">
-            {profilError}
-          </span>
-        )}
-        <div className="mb-6 flex w-full justify-end border-b border-gray-200">
-          <div className="mb-6 h-[40px] w-1/2 sm:w-[100px]">
-            <Button
-              label="Edit"
-              type="submit"
-              color="filled"
-              disabled={isSubmitting}
-              isLoading={isSubmitting}
-            />
-          </div>
-        </div>
-      </form>
+      <ProfileForm user={user} />
     </div>
   );
 };
 
-export default Profile;
+export default ProfilePage;
