@@ -23,5 +23,9 @@ export default function HomePage() {
     }
   }, [status, router]);
 
-  return <Loading />;
+  if (status === 'loading') {
+    return <Loading />;
+  }
+
+  return null;
 }

@@ -1,8 +1,8 @@
-import { authOptions } from '../auth/authOptions';
-import { handleError } from '../../helpers/errors/handleError';
 import { LRUCache } from 'lru-cache';
 import { headers } from 'next/headers';
 import { getServerSession } from 'next-auth';
+import { handleError } from '../../helpers/errors/handleError';
+import { authOptions } from '../auth/authOptions';
 
 export interface RateLimitOptions {
   limit: number;

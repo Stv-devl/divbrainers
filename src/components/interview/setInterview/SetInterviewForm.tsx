@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import Button from '@/components/buttons/Button';
@@ -24,6 +25,8 @@ import InputSelectStack from '../../form/input/InputSelectStack';
 const SetInterviewForm = () => {
   const { stack, addToStack } = useInterviewStore();
   const [stackError, setStackError] = React.useState('');
+
+  const router = useRouter();
 
   const {
     control,
@@ -62,6 +65,7 @@ const SetInterviewForm = () => {
 
     try {
       await createInterview(formData);
+      router.push('/interview/live');
     } catch (error) {
       console.error('Update failed:', error);
     }
