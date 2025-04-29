@@ -1,11 +1,11 @@
 import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
-import { corsMiddleware } from '../middleware/corsMiddleware';
-import { rateLimitMiddleware } from '../middleware/rateLimitMiddleware';
-import { signupSchema } from '../../shemaServer/signupShema';
 import { handleError } from '../../helpers/errors/handleError';
 import { securityHeaders } from '../../helpers/security/securityHeaders';
 import { prisma } from '../../prisma';
+import { signupSchema } from '../../shemaServer/signupShema';
+import { corsMiddleware } from '../middleware/corsMiddleware';
+import { rateLimitMiddleware } from '../middleware/rateLimitMiddleware';
 
 const saltRounds = 10;
 
@@ -55,6 +55,9 @@ export async function signupHandler(request: Request): Promise<NextResponse> {
             image: '',
           },
         },
+        data: {
+          create: {},
+        },
       },
     });
 
@@ -65,9 +68,19 @@ export async function signupHandler(request: Request): Promise<NextResponse> {
       },
       { status: 201, headers: securityHeaders }
     );
-  } catch (error: any) {
-    if (error.code === 'P2002' && error.meta?.target?.includes('email')) {
-      return handleError(400, 'Email already in use');
+  } catch (error: unknown) {
+    if (typeof error === 'object' && error !== null && 'code' in error) {
+      const prismaError = error as {
+        code: string;
+        meta?: { target?: string[] };
+      };
+
+      if (
+        prismaError.code === 'P2002' &&
+        prismaError.meta?.target?.includes('email')
+      ) {
+        return handleError(400, 'Email already in use');
+      }
     }
 
     console.error('signupHandler Internal server error:', error);

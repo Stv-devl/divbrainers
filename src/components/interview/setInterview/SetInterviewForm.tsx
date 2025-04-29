@@ -7,10 +7,12 @@ import Button from '@/components/buttons/Button';
 import { iconStackMapping } from '@/constante/iconStackMap';
 import { dropdowns } from '@/constante/interviewFormData';
 import useInterviewStore from '@/store/useStoreInterview';
+import { createInterview } from '../../../../lib/actions/interviews/createInterview';
 import {
   interviewSchema,
   InterviewSchemaType,
 } from '../../../../lib/schema/interviewShema';
+import { stackShema } from '../../../../lib/schema/stackShema';
 import { iconsMap } from '../../../constante/iconsMap';
 import { dropdownController } from '../../form/dropdown/DropdownController';
 import InputSelectStack from '../../form/input/InputSelectStack';
@@ -26,7 +28,7 @@ const SetInterviewForm = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<InterviewSchemaType>({
     resolver: zodResolver(interviewSchema),
     defaultValues: {
@@ -41,10 +43,29 @@ const SetInterviewForm = () => {
    * Handles form submission
    * @param {InterviewSchemaType} data - Form data from react-hook-form
    */
-  const onSubmit = (data: InterviewSchemaType) => {
-    console.log('send');
-  };
+  const onSubmit = async (data: InterviewSchemaType) => {
+    const result = stackShema.safeParse({ stack });
+    if (!result.success) {
+      const errorMessage =
+        result.error.errors[0]?.message || 'Invalid stack selection.';
+      setStackError(errorMessage);
+      console.log('Stack validation failed:', errorMessage);
+      return;
+    }
 
+    const formData = new FormData();
+    formData.set('position', data.position);
+    formData.set('difficulty', data.difficulty);
+    formData.set('interviewType', data.interviewType);
+    formData.set('numberOfQuestions', data.numberOfQuestions);
+    formData.set('stack', JSON.stringify(stack));
+
+    try {
+      await createInterview(formData);
+    } catch (error) {
+      console.error('Update failed:', error);
+    }
+  };
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -69,6 +90,8 @@ const SetInterviewForm = () => {
           color="filled"
           type="submit"
           IconComponent={iconsMap.IconStart}
+          disabled={isSubmitting}
+          isLoading={isSubmitting}
         />
       </div>
     </form>

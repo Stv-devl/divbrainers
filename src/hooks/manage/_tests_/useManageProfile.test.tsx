@@ -3,7 +3,7 @@
  */
 import { renderHook, act } from '@testing-library/react';
 import { useUserStore } from '@/store/useUserStore';
-import { updateUserProfile } from '../../../../lib/actions/updateUserProfile';
+import { updateUserProfile } from '../../../../lib/actions/user/updateUserProfile';
 import useManageProfile from '../useManageProfile';
 
 jest.mock('../../../../lib/actions/updateUserProfile', () => ({

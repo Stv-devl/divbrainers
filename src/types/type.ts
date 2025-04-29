@@ -6,6 +6,7 @@ import {
   UseFormRegister,
   Control,
 } from 'react-hook-form';
+import { create } from 'zustand';
 import { InterviewSchemaType } from '../../lib/schema/interviewShema';
 import { ProfileFormData } from '../../lib/schema/profileShema';
 
@@ -184,13 +185,13 @@ export interface DropdownControllerParams {
 //--------------------------------------------//
 
 export interface JobInterviewProps {
+  createdAt: Date;
   id: string;
   position: string;
-  type: string;
-  date: string;
+  interviewType: string;
   difficulty: string;
-  score: string;
-  questionsNumber: number;
+  score?: number | null;
+  numberOfQuestions: number;
   stack: string[];
 }
 

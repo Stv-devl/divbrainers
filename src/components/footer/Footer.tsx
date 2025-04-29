@@ -21,7 +21,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="relative z-99 w-full bg-blue-100 py-5 sm:py-10 ">
+    <footer className="relative z-80 w-full bg-blue-100 py-5 sm:py-10 ">
       <div className="max-w-screen-xl w-full mx-auto px-6 flex flex-col items-center">
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 text-center">
           {footerLinks.map((section, index) => (

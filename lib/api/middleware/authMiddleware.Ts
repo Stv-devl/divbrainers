@@ -1,7 +1,7 @@
-import { authOptions } from '../auth/authOptions';
-import { handleError } from '../../utils/errors/handleError';
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
+import { handleError } from '../../../lib/helpers/errors/handleError';
+import { authOptions } from '../auth/authOptions';
 
 /**
  * Middleware to check user authentication

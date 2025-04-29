@@ -2,12 +2,12 @@
 
 import { v2 as cloudinary } from 'cloudinary';
 import { revalidatePath } from 'next/cache';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '../api/auth/authOptions';
-import { handleError } from '../helpers/errors/handleError';
-import { uploadFileToCloudinary } from '../helpers/fileOperations/uploadFileToCloudinary';
-import { prisma } from '../prisma';
-import { profileSchema } from '../schema/profileShema';
+import { redirect } from 'next/navigation';
+import { handleServerActionError } from '../../helpers/errors/handleServerActionError';
+import { uploadFileToCloudinary } from '../../helpers/fileOperations/uploadFileToCloudinary';
+import { getCurrentSession } from '../../helpers/security/getCurrentSession';
+import { prisma } from '../../prisma';
+import { profileSchema } from '../../schema/profileShema';
 
 /**
  * Update the user profile
@@ -15,8 +15,7 @@ import { profileSchema } from '../schema/profileShema';
  * @returns The updated user profile
  */
 export async function updateUserProfile(formData: FormData) {
-  const session = await getServerSession(authOptions);
-  if (!session) throw new Error('Not authenticated');
+  const session = await getCurrentSession();
 
   const name = formData.get('name') as string;
   const email = formData.get('email') as string;
@@ -29,7 +28,7 @@ export async function updateUserProfile(formData: FormData) {
   });
 
   if (!validationResult.success) {
-    handleError(
+    handleServerActionError(
       400,
       validationResult.error.issues[0]?.message || 'Invalid input data'
     );
@@ -40,12 +39,14 @@ export async function updateUserProfile(formData: FormData) {
 
   if (imageFile && typeof imageFile === 'object') {
     if (!imageFile.type.startsWith('image/')) {
-      throw handleError(400, 'File must be an image');
+      throw handleServerActionError(400, 'File must be an image');
     }
 
     const user = await prisma.user.findUnique({
       where: { id: session.user.id },
     });
+
+    if (!user) redirect('/login');
 
     if (user?.imagePublicId) {
       await cloudinary.uploader.destroy(user.imagePublicId, {

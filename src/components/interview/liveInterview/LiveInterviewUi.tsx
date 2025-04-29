@@ -1,9 +1,10 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { iconsMap } from '@/constante/iconsMap';
 import { UserProfile } from '@/types/type';
+import { useInterviewAgent } from '../../../hooks/manage/useManageAgent';
 import InterviewControl from './InterviewControl';
 import LiveInterviewCall from './LiveInterviewCall';
 import CallInterviewMessage from './LiveInterviewMessage';
@@ -17,6 +18,23 @@ import CallInterviewMessage from './LiveInterviewMessage';
 const LiveInterviewUI = ({ user }: { user: UserProfile }) => {
   const router = useRouter();
 
+  /*const { startInterview, stopInterview, lastMessage, isInterviewActive } =
+    useInterviewAgent();*/
+
+  const lastMessage = 'we test the last message';
+
+  /*
+  useEffect(() => {
+    startInterview();
+  }, [startInterview]);
+
+  /*
+  useEffect(() => {
+    if (!isInterviewActive) {
+      router.push('/interview');
+    }
+  }, [isInterviewActive, router]);*/
+
   return (
     <div className="relative size-full">
       <div className="flex flex-col gap-5 items-center justify-center">
@@ -26,11 +44,15 @@ const LiveInterviewUI = ({ user }: { user: UserProfile }) => {
         <p>Live technical interview with recruiter</p>
       </div>
       <LiveInterviewCall user={user} />
-      <CallInterviewMessage />
+      <CallInterviewMessage lastMessage={lastMessage} />
+
       <InterviewControl />
       <div
         className="absolute top-[-36px] sm:top-0 left-0 flex items-center justify-center bg-blue-100 sm:size-10 size-8 rounded-md cursor-pointer transition-all duration-300 hover:scale-105"
-        onClick={() => router.push('/interview')}
+        onClick={() => {
+          /*stopInterview();*/
+          router.push('/interview');
+        }}
       >
         <iconsMap.IconBack className="size-5 sm:size-6" />
       </div>

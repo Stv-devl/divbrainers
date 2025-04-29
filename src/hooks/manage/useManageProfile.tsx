@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { UserProfile } from '@/types/type';
-import { updateUserProfile } from '../../../lib/actions/updateUserProfile';
+import { updateUserProfile } from '../../../lib/actions/user/updateUserProfile';
 import {
   ProfileFormData,
   profileSchema,

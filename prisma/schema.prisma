@@ -18,7 +18,7 @@ model User {
   sessions      Session[]
   credentials   Credential?
   profile       Profile?
-  data          Data?       @relation(fields: [dataId], references: [id])
+  data          Data?       @relation
   dataId        String?     @unique
   createdAt     DateTime    @default(now())
 }
@@ -73,7 +73,22 @@ model Profile {
 }
 
 model Data {
-  id    String   @id @default(cuid())
-  user  User?
-  stack String[]
+  id        String      @id @default(cuid())
+  user      User?       @relation(fields: [userId], references: [id])
+  userId    String?     @unique
+  interview Interview[]
+}
+
+model Interview {
+  id                String   @id @default(cuid())
+  data              Data     @relation(fields: [dataId], references: [id], onDelete: Cascade)
+  dataId            String
+  position          String
+  difficulty        String
+  interviewType     String
+  numberOfQuestions Int
+  stack             String[]
+  score             Int?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }

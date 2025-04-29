@@ -1,7 +1,6 @@
-import { redirect } from 'next/navigation';
 import React from 'react';
 import LiveInterviewUI from '@/components/interview/liveInterview/LiveInterviewUi';
-import { getUser } from '../../../../../lib/server/getUser';
+import { getUser } from '../../../../../lib/actions/user/getUser';
 
 // create server action to check if user has started the interview
 // put the component in the server action in a layout or an other page
@@ -19,10 +18,7 @@ import { getUser } from '../../../../../lib/server/getUser';
 
 const Page = async () => {
   const user = await getUser();
-  const hasStartedInterview = true;
-
   if (!user) return;
-  if (!hasStartedInterview) redirect('/interview');
 
   return <LiveInterviewUI user={user} />;
 };

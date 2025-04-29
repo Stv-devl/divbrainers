@@ -1,5 +1,5 @@
 import ProfileForm from '@/components/profile/ProfileForm';
-import { getUser } from '../../../../lib/server/getUser';
+import { getUser } from '../../../../lib/actions/user/getUser';
 
 /**
  * ProfilePage component that displays the user profile editing interface

@@ -11,13 +11,6 @@ declare module 'next-auth' {
   interface User extends DefaultUser {
     id: string;
   }
-
-  interface ChangeUser extends User {
-    _id: string;
-    credentials: {
-      password: string;
-    };
-  }
 }
 
 declare module 'next-auth/jwt' {

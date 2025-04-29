@@ -13,7 +13,7 @@ const LateralBanner = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="hidden sm:block fixed z-10 left-0 top-18 h-screen bg-white w-[120px] pt-4 shadow-sm">
+    <nav className="hidden sm:block fixed z-10 left-0 top-18 h-full bg-white w-[120px] pt-4 shadow-sm">
       <div className="flex flex-col gap-4 w-full">
         {navItems.map((item) => (
           <NavWrapper

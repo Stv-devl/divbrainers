@@ -2,10 +2,11 @@
 
 import Image from 'next/image';
 import React from 'react';
-import Button from '@/components/buttons/Button';
 import useTechIcons from '@/hooks/ui/useTechIcon';
 import { JobInterviewProps } from '@/types/type';
+import { formatDate } from '../../../../lib/utils/formatDate';
 import { iconsMap } from '../../../constante/iconsMap';
+import SetInterviewCardControl from './SetInterviewCardControl';
 
 /**
  * Component that displays a card with information about a previous job interview
@@ -14,32 +15,33 @@ import { iconsMap } from '../../../constante/iconsMap';
  * @param {JobInterviewProps} props.interview - The interview data to display
  * @returns {JSX.Element} A card component showing interview details and actions
  */
-const PreviousInterviewCard = ({
-  interview,
-}: {
-  interview: JobInterviewProps;
-}) => {
-  const { position, type, date, difficulty, score, stack } = interview;
+const SetInterviewCard = ({ interview }: { interview: JobInterviewProps }) => {
+  const { id, position, interviewType, createdAt, difficulty, score, stack } =
+    interview;
 
   const icons = useTechIcons(stack);
 
   const details = [
-    { icon: iconsMap.IconCalendar, text: date },
+    { icon: iconsMap.IconCalendar, text: formatDate(createdAt) },
     { icon: iconsMap.IconBadge, text: difficulty },
-    { icon: iconsMap.IconStar, text: score },
+    { icon: iconsMap.IconStar, text: score ? score : 'pending' },
   ];
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-4 border border-gray-300 w-[240px] sm:w-[200px] h-[270px]">
       <div className="text-center mb-4">
         <h2 className="text-blue-800 font-bold">{position} interview</h2>
-        <p>{type}</p>
+        <p>{interviewType}</p>
       </div>
 
       <div className="flex flex-col items-start gap-3">
         {details.map(({ icon: Icon, text }, index) => (
           <div key={index} className="flex items-center gap-2">
-            <Icon className="size-6" />
+            <Icon
+              className={`${
+                Icon === iconsMap.IconBadge ? 'size-[30px] -ml-1' : 'size-6'
+              }`}
+            />
             <p>{text}</p>
           </div>
         ))}
@@ -61,24 +63,10 @@ const PreviousInterviewCard = ({
             </div>
           ))}
         </div>
-
-        <div className="flex justify-between w-full ">
-          <div className="w-20 h-6">
-            <Button
-              label="Delete"
-              color="filled"
-              bgColor="bg-red-500"
-              fontSize="text-sm"
-              hoverColor="hover:bg-red-800"
-            />
-          </div>
-          <div className="w-20 h-6">
-            <Button label="Start" color="filled" fontSize="text-sm" />
-          </div>
-        </div>
+        <SetInterviewCardControl interviewId={id} />
       </div>
     </div>
   );
 };
 
-export default PreviousInterviewCard;
+export default SetInterviewCard;
