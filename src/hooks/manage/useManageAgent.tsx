@@ -1,6 +1,9 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { Interview } from '@prisma/client';
+import { useCallback, useEffect, useState } from 'react';
+import { interviewer } from '@/constante/interviewer';
+import { UserProfile } from '@/types/type';
 import { vapi } from '../../../lib/vapi.sdk';
 
 /**
@@ -14,195 +17,118 @@ export enum CallStatus {
   ERROR = 'ERROR',
 }
 
-/**
- * Interface for VAPI messages received during the call.
- */
-interface VapiMessage {
-  type: string;
-  transcriptType?: string;
-  transcript?: string;
+interface SavedMessage {
+  role: 'user' | 'assistant';
+  content: string;
 }
 
-const CONNECTION_TIMEOUT_MS = 15000;
 /**
  * Hook to manage the live AI interview session using VAPI.
  * Handles call status, transcription, speech events, errors, and timeouts.
  * @returns An object with call state, last message, loading/error states, and controls to start/stop the interview.
  */
-export const useInterviewAgent = () => {
+export const useInterviewAgent = (user: UserProfile, interview: Interview) => {
   const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
-  const [lastMessage, setLastMessage] = useState('');
+  const [messages, setMessages] = useState<SavedMessage[]>([]);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [lastMessage, setLastMessage] = useState<string>('');
 
-  const connectionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const retryAttemptedRef = useRef(false);
+  console.log(user);
 
-  const isInterviewActive = callStatus === CallStatus.ACTIVE;
-  /**
-   * Clears the connection timeout safely.
-   */
-  const safeClearTimeout = () => {
-    if (connectionTimeoutRef.current) {
-      clearTimeout(connectionTimeoutRef.current);
-      connectionTimeoutRef.current = null;
-    }
-  };
-
-  /**
-   * Starts a connection timeout to automatically fail if connection takes too long.
-   */
-  const startConnectionTimeout = () => {
-    safeClearTimeout();
-    connectionTimeoutRef.current = setTimeout(() => {
-      setError('Connection timed out. Please try again.');
-      setCallStatus(CallStatus.ERROR);
-      setIsLoading(false);
-    }, CONNECTION_TIMEOUT_MS);
-  };
-
-  /**
-   * Resets the retry attempt flag after a successful connection.
-   */
-  const resetRetry = () => {
-    retryAttemptedRef.current = false;
-  };
-
-  /**
-   * Handler when the call successfully starts.
-   */
-  const handleCallStart = () => {
-    safeClearTimeout();
+  const { _id: userId } = user;
+  const { questions } = interview;
+  const onCallStart = useCallback(() => {
     setCallStatus(CallStatus.ACTIVE);
-    setIsLoading(false);
-    resetRetry();
-  };
-
-  /**
-   * Handler when the call ends normally.
-   */
-  const handleCallEnd = () => {
-    safeClearTimeout();
-    setCallStatus(CallStatus.FINISHED);
-  };
-
-  /**
-   * Handler for incoming VAPI messages (transcriptions).
-   * @param message The VAPI message object
-   */
-  const handleMessage = (message: VapiMessage) => {
-    if (
-      message.type === 'transcript' &&
-      message.transcriptType === 'final' &&
-      message.transcript
-    ) {
-      setLastMessage(message.transcript);
-    }
-  };
-
-  /**
-   * Handler for speech start events (when the AI starts talking).
-   */
-  const handleSpeechStart = () => setIsSpeaking(true);
-
-  /**
-   * Handler for speech end events (when the AI stops talking).
-   */
-  const handleSpeechEnd = () => setIsSpeaking(false);
-
-  /**
-   * General error handler for VAPI errors.
-   * @param err The error encountered
-   */
-  const handleError = (err: Error) => {
-    console.error('VAPI error:', err);
-    safeClearTimeout();
-    setError('An unexpected error occurred.');
-    setCallStatus(CallStatus.ERROR);
-    setIsLoading(false);
-  };
-
-  // Bind VAPI events on mount
-  useEffect(() => {
-    vapi.on('call-start', handleCallStart);
-    vapi.on('call-end', handleCallEnd);
-    vapi.on('message', handleMessage);
-    vapi.on('speech-start', handleSpeechStart);
-    vapi.on('speech-end', handleSpeechEnd);
-    vapi.on('error', handleError);
-
-    return () => {
-      vapi.off('call-start', handleCallStart);
-      vapi.off('call-end', handleCallEnd);
-      vapi.off('message', handleMessage);
-      vapi.off('speech-start', handleSpeechStart);
-      vapi.off('speech-end', handleSpeechEnd);
-      vapi.off('error', handleError);
-      safeClearTimeout();
-    };
   }, []);
 
-  /**
-   * Starts the interview session by connecting to VAPI.
-   * Includes automatic retry on failure.
-   */
-  const startInterview = useCallback(async () => {
-    if (
-      callStatus === CallStatus.CONNECTING ||
-      callStatus === CallStatus.ACTIVE
-    ) {
-      console.warn('Interview already started or connecting.');
-      return;
-    }
-
-    try {
-      setCallStatus(CallStatus.CONNECTING);
-      setIsLoading(true);
-      setError(null);
-
-      startConnectionTimeout();
-      await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!);
-    } catch (err) {
-      console.error('Failed to start interview:', err);
-
-      if (!retryAttemptedRef.current) {
-        console.log('Retrying connection...');
-        retryAttemptedRef.current = true;
-        await startInterview();
-      } else {
-        safeClearTimeout();
-        setError('Failed to start interview after retry.');
-        setCallStatus(CallStatus.ERROR);
-        setIsLoading(false);
-      }
-    }
-  }, [callStatus]);
-
-  /**
-   * Stops the interview session if active or connecting.
-   */
-  const stopInterview = useCallback(() => {
-    if (
-      callStatus !== CallStatus.ACTIVE &&
-      callStatus !== CallStatus.CONNECTING
-    )
-      return;
-
-    vapi.stop();
-    safeClearTimeout();
+  const onCallEnd = useCallback(() => {
     setCallStatus(CallStatus.FINISHED);
-    setIsLoading(false);
-  }, [callStatus]);
+  }, []);
+
+  const onMessage = useCallback((message: Message) => {
+    if (message.type === 'transcript' && message.transcriptType === 'final') {
+      const newMessage = { role: message.role, content: message.transcript };
+      setMessages((prev) => [...prev, newMessage]);
+    }
+  }, []);
+
+  const onSpeechStart = useCallback(() => {
+    setIsSpeaking(true);
+  }, []);
+
+  const onSpeechEnd = useCallback(() => {
+    setIsSpeaking(false);
+  }, []);
+
+  const onError = useCallback((error: Error) => {
+    console.error('VAPI Error:', error);
+    setCallStatus(CallStatus.ERROR);
+  }, []);
+
+  useEffect(() => {
+    vapi.on('call-start', onCallStart);
+    vapi.on('call-end', onCallEnd);
+    vapi.on('message', onMessage);
+    vapi.on('speech-start', onSpeechStart);
+    vapi.on('speech-end', onSpeechEnd);
+    vapi.on('error', onError);
+
+    return () => {
+      vapi.off('call-start', onCallStart);
+      vapi.off('call-end', onCallEnd);
+      vapi.off('message', onMessage);
+      vapi.off('speech-start', onSpeechStart);
+      vapi.off('speech-end', onSpeechEnd);
+      vapi.off('error', onError);
+    };
+  }, [onCallStart, onCallEnd, onMessage, onSpeechStart, onSpeechEnd, onError]);
+
+  useEffect(() => {
+    if (messages.length > 0) {
+      setLastMessage(messages[messages.length - 1].content);
+    }
+
+    const handleGenerateFeedback = async () => {
+      console.log('generate feedback');
+    };
+  }, [messages]);
+
+  const handleCall = async () => {
+    setCallStatus(CallStatus.CONNECTING);
+
+    //test local
+    /* const formattedQuestions =
+      questions?.map((question: string) => `- ${question}`).join('\n') ?? '';
+
+    await vapi.start(interviewer, {
+      variableValues: {
+        questions: formattedQuestions,
+      },
+    });*/
+
+    const formattedQuestions =
+      questions?.map((question: string) => `- ${question}`).join('\n') ?? '';
+
+    await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!, {
+      variableValues: {
+        userid: userId,
+        questions: formattedQuestions,
+      },
+    });
+  };
+
+  const handleDisconnect = () => {
+    setCallStatus(CallStatus.FINISHED);
+    vapi.stop();
+  };
+
+  console.log('lastMessage', lastMessage);
 
   return {
     callStatus,
     lastMessage,
     isSpeaking,
-    isLoading,
-    error,
-    startInterview,
-    stopInterview,
-    isInterviewActive,
+    handleCall,
+    handleDisconnect,
   };
 };

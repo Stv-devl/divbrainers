@@ -1,10 +1,11 @@
 'use client';
 
+import { Interview } from '@prisma/client';
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { iconsMap } from '@/constante/iconsMap';
+import { useInterviewAgent } from '@/hooks/manage/useManageAgent';
 import { UserProfile } from '@/types/type';
-import { useInterviewAgent } from '../../../hooks/manage/useManageAgent';
 import InterviewControl from './InterviewControl';
 import LiveInterviewCall from './LiveInterviewCall';
 import CallInterviewMessage from './LiveInterviewMessage';
@@ -15,25 +16,17 @@ import CallInterviewMessage from './LiveInterviewMessage';
  * @param {UserProfile} props.user - The user profile information
  * @returns {JSX.Element} The LiveInterviewUI component
  */
-const LiveInterviewUI = ({ user }: { user: UserProfile }) => {
+const LiveInterviewUI = ({
+  user,
+  interview,
+}: {
+  user: UserProfile;
+  interview: Interview;
+}) => {
   const router = useRouter();
 
-  /*const { startInterview, stopInterview, lastMessage, isInterviewActive } =
-    useInterviewAgent();*/
-
-  const lastMessage = 'we test the last message';
-
-  /*
-  useEffect(() => {
-    startInterview();
-  }, [startInterview]);
-
-  /*
-  useEffect(() => {
-    if (!isInterviewActive) {
-      router.push('/interview');
-    }
-  }, [isInterviewActive, router]);*/
+  const { callStatus, handleCall, handleDisconnect, lastMessage } =
+    useInterviewAgent(user, interview);
 
   return (
     <div className="relative size-full">
@@ -45,12 +38,15 @@ const LiveInterviewUI = ({ user }: { user: UserProfile }) => {
       </div>
       <LiveInterviewCall user={user} />
       <CallInterviewMessage lastMessage={lastMessage} />
-
-      <InterviewControl />
+      <InterviewControl
+        callStatus={callStatus}
+        handleCall={handleCall}
+        handleDisconnect={handleDisconnect}
+      />
       <div
         className="absolute top-[-36px] sm:top-0 left-0 flex items-center justify-center bg-blue-100 sm:size-10 size-8 rounded-md cursor-pointer transition-all duration-300 hover:scale-105"
         onClick={() => {
-          /*stopInterview();*/
+          handleDisconnect();
           router.push('/interview');
         }}
       >

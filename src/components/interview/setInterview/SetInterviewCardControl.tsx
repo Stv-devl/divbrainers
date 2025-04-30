@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import Button from '@/components/buttons/Button';
 import { deleteInterview } from '../../../../lib/actions/interviews/deleteInterview';
@@ -11,6 +12,7 @@ type SetInterviewCardControlProps = {
 const SetInterviewCardControl = ({
   interviewId,
 }: SetInterviewCardControlProps) => {
+  const router = useRouter();
   return (
     <form action={deleteInterview} className="flex justify-between w-full">
       <input type="hidden" name="interviewId" value={interviewId} />
@@ -26,7 +28,14 @@ const SetInterviewCardControl = ({
       </div>
 
       <div className="w-20 h-6">
-        <Button label="Start" color="filled" fontSize="text-sm" />
+        <Button
+          label="Start"
+          color="filled"
+          fontSize="text-sm"
+          onClick={() => {
+            router.push(`/interview/live/${interviewId}`);
+          }}
+        />
       </div>
     </form>
   );

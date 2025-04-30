@@ -21,7 +21,7 @@ const Banner = async () => {
       <div className="block sm:hidden">
         <NavMobile user={user} />
       </div>
-      <header className="hidden sm:flex fixed z-10 w-full h-[60px] px-4 shadow-sm bg-color-theme items-center justify-between">
+      <header className="hidden sm:flex fixed z-90 w-full h-[60px] px-4 shadow-sm bg-color-theme items-center justify-between">
         <IconWrapper />
         <ProfileWrapper user={user} />
       </header>

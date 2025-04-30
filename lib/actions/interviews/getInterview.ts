@@ -30,6 +30,7 @@ export async function getInterview() {
       difficulty: true,
       interviewType: true,
       numberOfQuestions: true,
+      questions: true,
       stack: true,
       createdAt: true,
     },

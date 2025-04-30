@@ -64,8 +64,8 @@ const SetInterviewForm = () => {
     formData.set('stack', JSON.stringify(stack));
 
     try {
-      await createInterview(formData);
-      router.push('/interview/live');
+      const newInterview = await createInterview(formData);
+      router.push(`/interview/live/${newInterview.id}`);
     } catch (error) {
       console.error('Update failed:', error);
     }
