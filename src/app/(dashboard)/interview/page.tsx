@@ -1,6 +1,6 @@
 import ClientFormWrapper from '@/components/interview/setInterview/ClientFormWrapper';
 import SetInterviewCardWrapper from '@/components/interview/setInterview/SetInterviewCardWrapper';
-import TechnicalStack from '@/components/technicalStack/TechnicalStack';
+import TechnicalStack from '@/components/wrappers/TechnicalStackWrapper';
 import ImageTitleWrapper from '@/components/wrappers/ImageTitleWrapper';
 
 const Page = () => {

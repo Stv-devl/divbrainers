@@ -10,7 +10,7 @@ import { iconsMap } from '../../constante/iconsMap';
  * Component that displays the technical stack with icons
  * @returns A component showing tech stack icons
  */
-const TechnicalStack = () => {
+const TechnicalStackWrapper = () => {
   const { stack, removeFromStack } = useInterviewStore();
 
   const icons = useTechIcons(stack);
@@ -42,4 +42,4 @@ const TechnicalStack = () => {
   );
 };
 
-export default TechnicalStack;
+export default TechnicalStackWrapper;

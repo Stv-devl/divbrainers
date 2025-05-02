@@ -19,7 +19,7 @@ const AdvertisingSection = () => {
   ];
 
   return (
-    <div className="flex flex-col gap-5 sm:gap-12 items-center justify-center">
+    <div className="flex flex-col gap-5 mb-5 sm:mb-12 sm:gap-12 items-center justify-center">
       <div className="flex flex-col gap-3 ml-10 sm:ml-20">
         {features.map((feature, index) => (
           <div
