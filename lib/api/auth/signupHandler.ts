@@ -2,10 +2,10 @@ import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
 import { handleError } from '../../helpers/errors/handleError';
 import { securityHeaders } from '../../helpers/security/securityHeaders';
+import { corsMiddleware } from '../../middleware/corsMiddleware';
+import { rateLimitMiddleware } from '../../middleware/rateLimitMiddleware';
 import { prisma } from '../../prisma';
 import { signupSchema } from '../../shemaServer/auth/signupShema';
-import { corsMiddleware } from '../middleware/corsMiddleware';
-import { rateLimitMiddleware } from '../middleware/rateLimitMiddleware';
 
 const saltRounds = 10;
 

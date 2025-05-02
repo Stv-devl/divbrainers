@@ -3,10 +3,10 @@ import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
 import { handleError } from '../../helpers/errors/handleError';
 import { sendResetEmail } from '../../helpers/fileOperations/sendRestEmail';
+import { corsMiddleware } from '../../middleware/corsMiddleware';
+import { rateLimitMiddleware } from '../../middleware/rateLimitMiddleware';
 import { prisma } from '../../prisma';
 import { sendEmailSchema } from '../../shemaServer/auth/sendEmailShema';
-import { corsMiddleware } from '../middleware/corsMiddleware';
-import { rateLimitMiddleware } from '../middleware/rateLimitMiddleware';
 
 /**
  * Send email handler for user registration

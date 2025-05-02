@@ -3,14 +3,12 @@ import { generateObject } from 'ai';
 import { NextRequest, NextResponse } from 'next/server';
 import { handleError } from '../../helpers/errors/handleError';
 import { generateFeedbackPrompt } from '../../helpers/prompt/generateFeedbacKPromps';
+import { authMiddleware } from '../../middleware/authMiddleware';
+import { corsMiddleware } from '../../middleware/corsMiddleware';
+import { rateLimitMiddleware } from '../../middleware/rateLimitMiddleware';
 import { prisma } from '../../prisma';
 import { feedbackRequestSchema } from '../../shemaServer/feedback/feebackRequestShema';
 import { feedbackSchema } from '../../shemaServer/feedback/feedbackShema';
-import { authMiddleware } from '../middleware/authMiddleware';
-import { corsMiddleware } from '../middleware/corsMiddleware';
-import { rateLimitMiddleware } from '../middleware/rateLimitMiddleware';
-
-export const runtime = 'nodejs';
 
 /**
  * Handles the feedback generation for a mock interview
