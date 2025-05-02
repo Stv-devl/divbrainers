@@ -10,6 +10,8 @@ import { authMiddleware } from '../middleware/authMiddleware';
 import { corsMiddleware } from '../middleware/corsMiddleware';
 import { rateLimitMiddleware } from '../middleware/rateLimitMiddleware';
 
+export const runtime = 'nodejs';
+
 /**
  * Handles the feedback generation for a mock interview
  * @param {NextRequest} req - The request object
