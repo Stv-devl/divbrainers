@@ -18,11 +18,15 @@ import { iconsMap } from '../../../constante/iconsMap';
 import { dropdownController } from '../../form/dropdown/DropdownController';
 import InputSelectStack from '../../form/input/InputSelectStack';
 
+interface SetInterviewFormProps {
+  setIsLoading: (value: boolean) => void;
+}
+
 /**
  * Form component for setting up an interview
  * @returns {JSX.Element} A form with dropdown selections and stack choices
  */
-const SetInterviewForm = () => {
+const SetInterviewForm = ({ setIsLoading }: SetInterviewFormProps) => {
   const { stack, addToStack } = useInterviewStore();
   const [stackError, setStackError] = React.useState('');
 
@@ -56,6 +60,8 @@ const SetInterviewForm = () => {
       return;
     }
 
+    setIsLoading(true);
+
     const formData = new FormData();
     formData.set('position', data.position);
     formData.set('difficulty', data.difficulty);
@@ -68,6 +74,8 @@ const SetInterviewForm = () => {
       router.push(`/interview/live/${newInterview.id}`);
     } catch (error) {
       console.error('Update failed:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
   return (

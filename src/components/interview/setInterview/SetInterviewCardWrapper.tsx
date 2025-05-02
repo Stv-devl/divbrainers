@@ -9,8 +9,6 @@ import SetInterviewCard from './SetInterviewCard';
 const SetInterviewCardWrapper = async () => {
   const interviews = await getInterview();
 
-  console.log(interviews);
-
   if (!interviews) {
     return null;
   }

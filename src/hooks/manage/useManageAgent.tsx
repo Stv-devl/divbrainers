@@ -17,6 +17,7 @@ export enum CallStatus {
   ACTIVE = 'ACTIVE',
   FINISHED = 'FINISHED',
   ERROR = 'ERROR',
+  GENERATING_FEEDBACK = 'GENERATING_FEEDBACK',
 }
 
 interface SavedMessage {
@@ -108,6 +109,7 @@ export const useInterviewAgent = (user: UserProfile, interview: Interview) => {
         userId
       ) {
         try {
+          setCallStatus(CallStatus.GENERATING_FEEDBACK);
           const response = await postFeedback(interview.id, messages);
 
           if (!response.success) {

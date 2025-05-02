@@ -8,13 +8,16 @@ import { interviewIdSchema } from '../../shemaServer/interview/interviewIdShema'
 
 /**
  * Deletes an interview by its ID
- * @param {FormData} formData - The form data containing the interview ID
+ * @param {Object} params - The parameters object
+ * @param {string} params.interviewId - The ID of the interview to delete
  * @returns {Promise<void>} A promise that resolves when the interview is deleted
  * @throws {Error} If the interview is not found, user is not authorized, or deletion fails
  */
-export const deleteInterview = async (formData: FormData): Promise<void> => {
-  const interviewId = formData.get('interviewId') as string;
-
+export const deleteInterview = async ({
+  interviewId,
+}: {
+  interviewId: string;
+}) => {
   const validationResult = interviewIdSchema.safeParse({ interviewId });
   if (!validationResult.success) {
     throw handleServerActionError(
