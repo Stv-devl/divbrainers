@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 import { handleError } from '../../helpers/errors/handleError';
 import { sendResetEmail } from '../../helpers/fileOperations/sendRestEmail';
 import { prisma } from '../../prisma';
-import { sendEmailSchema } from '../../shemaServer/sendEmailShema';
+import { sendEmailSchema } from '../../shemaServer/auth/sendEmailShema';
 import { corsMiddleware } from '../middleware/corsMiddleware';
 import { rateLimitMiddleware } from '../middleware/rateLimitMiddleware';
 

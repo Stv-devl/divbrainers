@@ -2,6 +2,11 @@ import { iconStackMapping } from '@/constante/iconStackMap';
 
 const techIconBaseURL = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons';
 
+/**
+ * Normalizes a technology name to match the format in the iconStackMapping
+ * @param tech - The technology name to normalize
+ * @returns The normalized technology name or null if not found in the mapping
+ */
 const normalizeTechName = (tech: string) => {
   const key = tech
     .toLowerCase()
@@ -10,6 +15,11 @@ const normalizeTechName = (tech: string) => {
   return key in iconStackMapping ? key : null;
 };
 
+/**
+ * Checks if an icon exists at the given URL
+ * @param url - The URL of the icon to check
+ * @returns A promise that resolves to true if the icon exists, false otherwise
+ */
 export const checkIconExists = (url: string): Promise<boolean> => {
   return new Promise((resolve) => {
     const img = new Image();

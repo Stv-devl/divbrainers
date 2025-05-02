@@ -11,7 +11,6 @@ const IconStart: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 30 30"
       fill="none"
-      stroke="currentColor"
       width={props.width || 30}
       height={props.height || 30}
       className={props.className}

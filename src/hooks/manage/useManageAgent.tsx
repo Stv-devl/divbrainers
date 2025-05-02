@@ -1,8 +1,10 @@
 'use client';
 
 import { Interview } from '@prisma/client';
-import { useCallback, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { interviewer } from '@/constante/interviewer';
+import postFeedback from '@/service/postFeedback';
 import { UserProfile } from '@/types/type';
 import { vapi } from '../../../lib/vapi.sdk';
 
@@ -28,15 +30,23 @@ interface SavedMessage {
  * @returns An object with call state, last message, loading/error states, and controls to start/stop the interview.
  */
 export const useInterviewAgent = (user: UserProfile, interview: Interview) => {
+  const router = useRouter();
   const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
   const [messages, setMessages] = useState<SavedMessage[]>([]);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [lastMessage, setLastMessage] = useState<string>('');
 
-  console.log(user);
+  const { _id: userId, name } = user;
+  const { questions, position } = interview;
 
-  const { _id: userId } = user;
-  const { questions } = interview;
+  const formattedQuestions = useMemo(
+    () =>
+      (questions as string[])
+        ?.map((question: string) => `- ${question}`)
+        .join('\n') ?? '',
+    [questions]
+  );
+
   const onCallStart = useCallback(() => {
     setCallStatus(CallStatus.ACTIVE);
   }, []);
@@ -45,19 +55,24 @@ export const useInterviewAgent = (user: UserProfile, interview: Interview) => {
     setCallStatus(CallStatus.FINISHED);
   }, []);
 
-  const onMessage = useCallback((message: Message) => {
-    if (message.type === 'transcript' && message.transcriptType === 'final') {
-      const newMessage = { role: message.role, content: message.transcript };
-      setMessages((prev) => [...prev, newMessage]);
-    }
-  }, []);
-
   const onSpeechStart = useCallback(() => {
     setIsSpeaking(true);
   }, []);
 
   const onSpeechEnd = useCallback(() => {
     setIsSpeaking(false);
+  }, []);
+
+  const onMessage = useCallback((message: Message) => {
+    if (
+      message.type === 'transcript' &&
+      message.transcriptType === 'final' &&
+      message.role === 'assistant'
+    ) {
+      const newMessage = { role: message.role, content: message.transcript };
+      setMessages((prev) => [...prev, newMessage]);
+      setLastMessage(message.transcript);
+    }
   }, []);
 
   const onError = useCallback((error: Error) => {
@@ -84,45 +99,63 @@ export const useInterviewAgent = (user: UserProfile, interview: Interview) => {
   }, [onCallStart, onCallEnd, onMessage, onSpeechStart, onSpeechEnd, onError]);
 
   useEffect(() => {
-    if (messages.length > 0) {
-      setLastMessage(messages[messages.length - 1].content);
-    }
+    const sendFeedbackToServer = async () => {
+      if (callStatus !== CallStatus.FINISHED) return;
+      if (
+        callStatus === CallStatus.FINISHED &&
+        messages.length > 0 &&
+        interview?.id &&
+        userId
+      ) {
+        try {
+          const response = await postFeedback(interview.id, messages);
 
-    const handleGenerateFeedback = async () => {
-      console.log('generate feedback');
+          if (!response.success) {
+            console.error('Failed to create feedback');
+          } else {
+            console.log('Feedback created:', response.feedbackId);
+            router.push(
+              `/interview/live/${interview.id}/feedback/${response.feedbackId}`
+            );
+          }
+        } catch (error) {
+          console.error('Error sending feedback:', error);
+        }
+      }
     };
-  }, [messages]);
+
+    sendFeedbackToServer();
+  }, [callStatus, messages, interview?.id, userId, router]);
 
   const handleCall = async () => {
-    setCallStatus(CallStatus.CONNECTING);
+    if (callStatus !== CallStatus.INACTIVE) return;
 
-    //test local
-    /* const formattedQuestions =
-      questions?.map((question: string) => `- ${question}`).join('\n') ?? '';
+    setCallStatus(CallStatus.CONNECTING);
 
     await vapi.start(interviewer, {
       variableValues: {
+        name: name ?? '',
+        position: position,
         questions: formattedQuestions,
       },
-    });*/
+    });
 
+    /*
+   //alternative with workflow (to fix)
     const formattedQuestions =
       questions?.map((question: string) => `- ${question}`).join('\n') ?? '';
-
     await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!, {
       variableValues: {
         userid: userId,
         questions: formattedQuestions,
       },
-    });
+    });*/
   };
 
   const handleDisconnect = () => {
     setCallStatus(CallStatus.FINISHED);
     vapi.stop();
   };
-
-  console.log('lastMessage', lastMessage);
 
   return {
     callStatus,

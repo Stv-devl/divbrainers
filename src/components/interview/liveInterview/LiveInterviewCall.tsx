@@ -1,5 +1,6 @@
 import React from 'react';
 import { UserProfile } from '@/types/type';
+import { cn } from '../../../../lib/utils/cn';
 import { iconsMap } from '../../../constante/iconsMap';
 import InterviewCard from './InterviewCard';
 
@@ -9,7 +10,13 @@ import InterviewCard from './InterviewCard';
  * @param {UserProfile} props.user - The user profile information
  * @returns {JSX.Element} The CallInterviewCall component
  */
-const LiveInterviewCall = ({ user }: { user: UserProfile }) => {
+const LiveInterviewCall = ({
+  user,
+  isSpeaking,
+}: {
+  user: UserProfile;
+  isSpeaking: boolean;
+}) => {
   return (
     <div className="w-[98%] sm:w-[95%] lg:w-[90%] xl:w-[75%] mx-auto">
       <div className="relative flex flex-col sm:flex-row gap-5 items-center justify-between mx-auto mt-5 sm:mt-10">
@@ -18,8 +25,13 @@ const LiveInterviewCall = ({ user }: { user: UserProfile }) => {
           position="Recruited Umbrea Corps "
           image="/images/recruiter.png"
         />
-        <div className="hidden sm:block z-20 bg-blue-100 border-2 border-blue-800 lg:p-3 p-2 rounded-full">
-          <iconsMap.IconPhone className="pt-1 pr-1 lg:size-12 size-10" />
+        <div className="relative hidden sm:block z-20">
+          {isSpeaking && (
+            <div className="absolute top-[10px] left-[10px] size-10 lg:top-[15px] lg:left-[14px] lg:size-12 rounded-full border-4 border-blue-800 animate-ping opacity-75" />
+          )}
+          <div className="bg-blue-100 border-2 border-blue-800 lg:p-3 p-2 rounded-full">
+            <iconsMap.IconPhone className="pt-1 pr-1 lg:size-12 size-10" />
+          </div>
         </div>
         <InterviewCard
           name={user?.name ?? 'Unknown user'}

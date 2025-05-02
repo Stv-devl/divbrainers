@@ -1,6 +1,7 @@
 'use server';
 
-import { getUserData } from '../../data/getUserData';
+import { getUserData } from '../../helpers/data/getUserData';
+import { handleServerActionError } from '../../helpers/errors/handleServerActionError';
 import { getCurrentSession } from '../../helpers/security/getCurrentSession';
 import { prisma } from '../../prisma';
 
@@ -24,17 +25,11 @@ export async function getInterview() {
     orderBy: {
       createdAt: 'desc',
     },
-    select: {
-      id: true,
-      position: true,
-      difficulty: true,
-      interviewType: true,
-      numberOfQuestions: true,
-      questions: true,
-      stack: true,
-      createdAt: true,
-    },
   });
+
+  if (!interviews) {
+    throw handleServerActionError(404, 'Interview not found');
+  }
 
   return interviews;
 }

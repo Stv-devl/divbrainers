@@ -19,9 +19,6 @@ const SetInterviewCard = ({ interview }: { interview: JobInterviewProps }) => {
   const { id, position, interviewType, createdAt, difficulty, score, stack } =
     interview;
 
-    console.log("id", id);
-    
-
   const icons = useTechIcons(stack);
 
   const details = [

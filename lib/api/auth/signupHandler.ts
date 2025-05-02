@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import { handleError } from '../../helpers/errors/handleError';
 import { securityHeaders } from '../../helpers/security/securityHeaders';
 import { prisma } from '../../prisma';
-import { signupSchema } from '../../shemaServer/signupShema';
+import { signupSchema } from '../../shemaServer/auth/signupShema';
 import { corsMiddleware } from '../middleware/corsMiddleware';
 import { rateLimitMiddleware } from '../middleware/rateLimitMiddleware';
 

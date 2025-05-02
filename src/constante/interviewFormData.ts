@@ -9,7 +9,7 @@ const optionsPosition = [
 
 const optionsDifficulty = [
   { label: 'Junior', value: 'junior' },
-  { label: 'Mid', value: 'mid' },
+  { label: 'Mid', value: 'mid-level' },
   { label: 'Senior', value: 'senior' },
 ];
 

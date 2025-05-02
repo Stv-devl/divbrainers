@@ -2,8 +2,9 @@ import { CreateAssistantDTO } from '@vapi-ai/web/dist/api';
 
 export const interviewer: CreateAssistantDTO = {
   name: 'Interviewer',
-  firstMessage:
-    "Hello! Thank you for taking the time to speak with me today. I'm excited to learn more about you and your experience.",
+  firstMessage: `Hello {{name}}! Thank you for taking the time to speak with me today. You're here to interview for the position of {{position}}. To get started, could you tell me a bit about your experience related to this role?`,
+  firstMessageInterruptionsEnabled: true,
+  firstMessageMode: 'assistant-speaks-first',
   transcriber: {
     provider: 'deepgram',
     model: 'nova-2',
@@ -14,57 +15,82 @@ export const interviewer: CreateAssistantDTO = {
     voiceId: 'sarah',
     stability: 0.4,
     similarityBoost: 0.8,
-    speed: 0.9,
+    speed: 0.85,
     style: 0.5,
     useSpeakerBoost: true,
   },
   model: {
     provider: 'openai',
     model: 'gpt-4',
+    temperature: 0.9,
+    emotionRecognitionEnabled: true,
     messages: [
       {
         role: 'system',
-        content: `You are a professional voice interviewer conducting a real-time job interview. Your job is to ask the candidate {{questions}}, listen carefully, and ask follow-ups where needed.
-
-  
-**Tone**: Friendly, professional, and conversational — like a real human interviewer.
-
-### Interview Flow
-1. **Welcome the candidate**
-   - Introduce yourself.
-   - Thank them for joining.
-
-2. **Ask the interview questions**
-   - One at a time.
-   - Use the list: {{questions}}
-   - After each response, briefly acknowledge it.
-   - If a response is too vague or unclear, ask a short follow-up.
-
-3. **Adapt based on their experience**
-   - If the candidate mentions little/no experience, keep questions relevant.
-   - Be encouraging and supportive.
-
-4. **Handle their questions**
-   - If the candidate asks about the company or position, provide basic info.
-   - Otherwise, let them know HR can give more details.
-
-5. **End the interview if needed**
-   - If the candidate becomes disrespectful, uses offensive language, or speaks completely off-topic (e.g., politics, religion, personal opinions not related to the job), you must politely end the call.
-   - Example: “This conversation is not appropriate for a professional setting. I’ll end the interview now. Thank you for your time.”
-
-5. **Wrap up**
-   - Thank the candidate for their time.
-   - Let them know you will call them soon for work position.
-   - End warmly.
-
-### Response Guidelines
-- Speak like a person, not a robot.
-- Keep answers short and clear (like in real voice chats).
-- Never use markdown or formatting.
-- Do not list all questions at once — ask them one by one.
-
-Start the conversation after your greeting by asking the first question.`,
+        content: `
+        You are a friendly and professional voice interviewer named "Interviewer". You're speaking with {{name}}, who is interviewing for the position of {{position}}.
+        
+        Your tone should be warm, respectful, and human-like, not robotic.
+        
+        Your job:
+        - Welcome the candidate and thank them.
+        - Ask the provided questions one at a time: {{questions}}.
+        - Pause after each question, and allow at least 3 to 5 seconds for the candidate to speak.
+        - If they don’t answer within 8 seconds, gently say: "Are you still with me?"
+        - If still no answer after 30 seconds, say: "I’ll go ahead and end the interview for now. Thank you for your time." Then end the call.
+        - Adapt your follow-ups based on their experience level.
+        - Don't need to repeat the answer of the candidate.
+        - If they ask about the job, respond briefly or refer them to HR.
+        - If they say something disrespectful or inappropriate, kindly end the interview immediately.
+        - Finish with a warm thank-you and goodbye.
+        `.trim(),
       },
     ],
+  },
+  stopSpeakingPlan: {
+    numWords: 0,
+    voiceSeconds: 0.3,
+    backoffSeconds: 1,
+    acknowledgementPhrases: ['got it', 'okay', 'yes', 'right', 'mhmm'],
+    interruptionPhrases: ['stop', 'wait', 'pause', 'hold on', 'no'],
+  },
+
+  silenceTimeoutSeconds: 30,
+  maxDurationSeconds: 1800,
+
+  endCallMessage:
+    'Thanks again for your time, {{name}}. I’ll be in touch soon about the job. Talk to you soon!',
+  endCallPhrases: ['goodbye', 'thank you for your time', 'end the interview'],
+
+  messagePlan: {
+    idleMessages: [
+      'Are you still with me?',
+      'Take your time. I’m here whenever you’re ready.',
+    ],
+    idleTimeoutSeconds: 8,
+    idleMessageMaxSpokenCount: 2,
+    idleMessageResetCountOnUserSpeechEnabled: true,
+    silenceTimeoutMessage:
+      "It seems you've gone quiet. I'll end the interview for now. Thank you!",
+  },
+
+  startSpeakingPlan: {
+    waitSeconds: 0.5,
+    transcriptionEndpointingPlan: {
+      onPunctuationSeconds: 0.5,
+      onNoPunctuationSeconds: 2.5,
+      onNumberSeconds: 1,
+    },
+  },
+
+  artifactPlan: {
+    recordingEnabled: true,
+    recordingFormat: 'wav;l16',
+    transcriptPlan: {
+      enabled: true,
+      assistantName: 'Interviewer',
+      userName: '{{name}}',
+    },
+    pcapEnabled: true,
   },
 };

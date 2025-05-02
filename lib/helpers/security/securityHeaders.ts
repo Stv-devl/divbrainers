@@ -6,7 +6,6 @@ const isDev = process.env.NODE_ENV !== 'production';
  */
 
 //revoir acces control origin
-
 export const securityHeaders = {
   'Access-Control-Allow-Origin': isDev
     ? '*'

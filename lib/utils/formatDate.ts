@@ -1,3 +1,8 @@
+/**
+ * Formats a date string into a human-readable format
+ * @param dateString - The date string to format
+ * @returns The formatted date string
+ */
 export const formatDate = (dateString: string | Date) => {
   const date = new Date(dateString);
 

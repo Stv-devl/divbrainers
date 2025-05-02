@@ -6,14 +6,21 @@ import { getInterviewById } from '../../../../../../lib/actions/interviews/getIn
 import { getUser } from '../../../../../../lib/actions/user/getUser';
 
 interface PageProps {
-  params: Promise<{ id: string }>;
+  params: Promise<{ interviewId: string }>;
 }
 
+/**
+ * Page component for displaying a live interview
+ * @param params - The parameters of the page
+ * @returns The page component
+ */
 export default async function Page({ params }: PageProps) {
-  const { id } = await params;
+  const { interviewId } = await params;
+
+  if (!interviewId) notFound();
 
   const user = await getUser();
-  const interview = await getInterviewById(id);
+  const interview = await getInterviewById(interviewId);
 
   if (!user || !interview) {
     notFound();

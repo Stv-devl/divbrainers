@@ -21,6 +21,7 @@ model User {
   data          Data?       @relation
   dataId        String?     @unique
   createdAt     DateTime    @default(now())
+  feedback      Feedback[]
 }
 
 model Account {
@@ -80,16 +81,30 @@ model Data {
 }
 
 model Interview {
-  id                String   @id @default(cuid())
-  data              Data     @relation(fields: [dataId], references: [id], onDelete: Cascade)
+  id                String     @id @default(cuid())
+  data              Data       @relation(fields: [dataId], references: [id], onDelete: Cascade)
   dataId            String
   position          String
   difficulty        String
   interviewType     String
   numberOfQuestions Int
   stack             String[]
-  questions         Json     @default("{}")
-  score             Int?
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  questions         Json       @default("{}")
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+  feedback          Feedback[]
+}
+
+model Feedback {
+  id                  String    @id @default(cuid())
+  interview           Interview @relation(fields: [interviewId], references: [id], onDelete: Cascade)
+  interviewId         String
+  user                User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId              String
+  totalScore          Int
+  categoryScores      Json
+  strengths           String
+  areasForImprovement String
+  finalAssessment     String
+  createdAt           DateTime  @default(now())
 }
