@@ -39,7 +39,7 @@ const SetInterviewForm = ({ setIsLoading }: SetInterviewFormProps) => {
   } = useForm<InterviewSchemaType>({
     resolver: zodResolver(interviewSchema),
     defaultValues: {
-      position: 'frontend',
+      position: 'front-end',
       difficulty: 'junior',
       interviewType: 'technical',
       numberOfQuestions: '5',

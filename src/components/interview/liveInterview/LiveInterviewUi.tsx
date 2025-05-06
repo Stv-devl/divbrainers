@@ -53,6 +53,7 @@ const LiveInterviewUI = ({
         callStatus={callStatus}
         handleCall={handleCall}
         handleDisconnect={handleDisconnect}
+        interview={interview}
       />
       <BackButton
         handleDisconnect={handleDisconnect}

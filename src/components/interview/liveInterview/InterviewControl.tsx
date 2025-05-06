@@ -1,10 +1,10 @@
+import { Interview } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import Button from '@/components/ui/buttons/Button';
-import TechnicalStack from '@/components/wrappers/TechnicalStackWrapper';
+import TechnicalStackWrapper from '@/components/wrappers/TechnicalStackWrapper';
 import { iconsMap } from '@/constante/iconsMap';
 import { CallStatus } from '@/hooks/manage/useManageAgent';
-
 /**
  * Component that displays interview control buttons and technical stack
  * @param {Object} props - Component props
@@ -18,20 +18,26 @@ interface InterviewControlProps {
   callStatus: CallStatus;
   handleCall: () => void;
   handleDisconnect: () => void;
+  interview: Interview;
 }
 
 const InterviewControl = ({
   callStatus,
   handleCall,
   handleDisconnect,
+  interview,
 }: InterviewControlProps) => {
   const router = useRouter();
   const isStartDisabled = callStatus !== CallStatus.INACTIVE;
   const isStartLoading = callStatus === CallStatus.CONNECTING;
 
+  const { stack } = interview;
+
+  console.log(stack);
+
   return (
     <div className="flex flex-col sm:flex-row justify-between items-center w-[98%] sm:w-[95%] lg:w-[90%] xl:w-[75%] mx-auto my-5 sm:my-10">
-      <TechnicalStack />
+      <TechnicalStackWrapper backendStack={stack} />
       <div className="flex justify-end sm:justify-center gap-2 mt-5 sm:mt-0">
         <div className="w-32 h-8">
           <Button

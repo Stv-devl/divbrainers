@@ -8,12 +8,19 @@ import { iconsMap } from '../../constante/iconsMap';
 
 /**
  * Component that displays the technical stack with icons
- * @returns A component showing tech stack icons
+ * @param {Array} backendStack - Optional stack data from backend
+ * @returns {JSX.Element} A component showing tech stack icons
  */
-const TechnicalStackWrapper = () => {
+const TechnicalStackWrapper = ({
+  backendStack,
+}: {
+  backendStack?: string[];
+}) => {
   const { stack, removeFromStack } = useInterviewStore();
 
-  const icons = useTechIcons(stack);
+  const stackToUse = backendStack || stack;
+  const icons = useTechIcons(stackToUse);
+
   return (
     <div className="flex flex-wrap gap-2 w-[90%] mx-auto lg:mx-0 lg:max-w-[50%]">
       {icons.map((item, index) => (
@@ -30,12 +37,14 @@ const TechnicalStackWrapper = () => {
             priority
           />
           <p>{item.tech}</p>
-          <iconsMap.IconClose
-            className="absolute size-5 right-0 top-0 cursor-pointer hover:scale-105 transition-transform duration-500"
-            onClick={() => {
-              removeFromStack(item.tech);
-            }}
-          />
+          {!backendStack && (
+            <iconsMap.IconClose
+              className="absolute size-5 right-0 top-0 cursor-pointer hover:scale-105 transition-transform duration-500"
+              onClick={() => {
+                removeFromStack(item.tech);
+              }}
+            />
+          )}
         </div>
       ))}
     </div>

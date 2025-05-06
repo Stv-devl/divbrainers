@@ -37,7 +37,7 @@ export async function feedbackHandler(req: NextRequest) {
       return handleError(400, 'Invalid request');
     }
 
-    const { interviewId, transcript, feedbackId } = parseResult.data;
+    const { interviewId, transcript } = parseResult.data;
 
     const formattedTranscript = transcript
       .map(
@@ -73,9 +73,13 @@ export async function feedbackHandler(req: NextRequest) {
       finalAssessment: object.finalAssessment,
     };
 
-    const savedFeedback = feedbackId
+    const existingFeedback = await prisma.feedback.findFirst({
+      where: { interviewId, userId },
+    });
+
+    const savedFeedback = existingFeedback
       ? await prisma.feedback.update({
-          where: { id: feedbackId },
+          where: { id: existingFeedback.id },
           data: feedbackData,
         })
       : await prisma.feedback.create({ data: feedbackData });
