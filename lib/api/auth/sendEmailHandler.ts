@@ -60,11 +60,17 @@ export async function sendEmailHandler(req: Request) {
 
     const resetLink = `${process.env.NEXT_PUBLIC_ORIGIN}/newpassword?token=${rawToken}&email=${normalizedEmail}`;
 
-    await sendResetEmail(normalizedEmail, resetLink);
-
-    return NextResponse.json({ message: 'Email sent' }, { status: 200 });
+    try {
+      await sendResetEmail(normalizedEmail, resetLink);
+    } catch (emailError) {
+      const message =
+        emailError instanceof Error ? emailError.message : 'Unknown error';
+      console.error('Failed to send reset email:', { message });
+      return handleError(500, 'Failed to send reset email.');
+    }
   } catch (err) {
-    console.error('send email', err);
+    const message = err instanceof Error ? err.message : 'Unknown error';
+    console.error('Reset email handler error:', { message });
     return handleError(500, 'Server error');
   }
 }

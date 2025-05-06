@@ -1,10 +1,9 @@
 'use client';
 
 import { Interview } from '@prisma/client';
-import { useRouter } from 'next/navigation';
 import React from 'react';
 import Loading from '@/components/loading/Loading';
-import { iconsMap } from '@/constante/iconsMap';
+import BackButton from '@/components/ui/buttons/BackButton';
 import { useInterviewAgent } from '@/hooks/manage/useManageAgent';
 import { UserProfile } from '@/types/type';
 import InterviewControl from './InterviewControl';
@@ -29,8 +28,6 @@ const LiveInterviewUI = ({
   user: UserProfile;
   interview: Interview;
 }) => {
-  const router = useRouter();
-
   const { callStatus, isSpeaking, handleCall, handleDisconnect, lastMessage } =
     useInterviewAgent(user, interview);
 
@@ -42,26 +39,26 @@ const LiveInterviewUI = ({
 
       <div className="flex flex-col gap-5 items-center justify-center">
         <h1 className="mt-0 sm:mt-5 text-xl sm:text-3xl font-bold text-blue-900">
-          Interview Front-End developer
+          Interview {interview.position}
         </h1>
         <p>Live technical interview with recruiter</p>
       </div>
-      <LiveInterviewCall user={user} isSpeaking={isSpeaking} />
+      <LiveInterviewCall
+        user={user}
+        interview={interview}
+        isSpeaking={isSpeaking}
+      />
       <CallInterviewMessage lastMessage={lastMessage} />
       <InterviewControl
         callStatus={callStatus}
         handleCall={handleCall}
         handleDisconnect={handleDisconnect}
       />
-      <div
-        className="absolute top-[-36px] sm:top-0 left-0 flex items-center justify-center bg-blue-100 sm:size-10 size-8 rounded-md cursor-pointer transition-all duration-300 hover:scale-105"
-        onClick={() => {
-          handleDisconnect();
-          router.push('/interview');
-        }}
-      >
-        <iconsMap.IconBack className="size-5 sm:size-6" />
-      </div>
+      <BackButton
+        handleDisconnect={handleDisconnect}
+        route="/interview"
+        position="-top-9 sm:top-0 left-0 "
+      />
     </div>
   );
 };

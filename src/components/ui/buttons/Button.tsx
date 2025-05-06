@@ -1,5 +1,5 @@
 import { ButtonComponent } from '@/types/type';
-import { cn } from '../../../lib/utils/cn';
+import { cn } from '../../../../lib/utils/cn';
 
 const Button: React.FC<ButtonComponent> = ({
   label,

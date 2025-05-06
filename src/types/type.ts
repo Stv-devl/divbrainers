@@ -6,7 +6,6 @@ import {
   UseFormRegister,
   Control,
 } from 'react-hook-form';
-import { create } from 'zustand';
 import { InterviewSchemaType } from '../../lib/schema/interviewShema';
 import { ProfileFormData } from '../../lib/schema/profileShema';
 
@@ -193,6 +192,13 @@ export interface JobInterviewProps {
   score?: number | null;
   numberOfQuestions: number;
   stack: string[];
+  feedback: FeedbackProps[];
+}
+
+export interface FeedbackProps {
+  id: string;
+  totalScore: number;
+  feedback: string;
 }
 
 //--------------------------------------------//

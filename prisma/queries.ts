@@ -32,7 +32,6 @@ async function main() {
         console.log(`Type: ${interview.interviewType}`);
         console.log(`Number of Questions: ${interview.numberOfQuestions}`);
         console.log(`Stack: ${interview.stack.join(', ')}`);
-        console.log(`Score: ${interview.score}`);
       });
     }
   });

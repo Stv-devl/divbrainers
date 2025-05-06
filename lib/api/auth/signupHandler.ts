@@ -9,6 +9,13 @@ import { signupSchema } from '../../shemaServer/auth/signupShema';
 
 const saltRounds = 10;
 
+interface PrismaClientKnownRequestError {
+  code: string;
+  meta?: {
+    target?: string[];
+  };
+}
+
 /**
  * Handles user signup requests
  * @param request - The HTTP request object
@@ -38,6 +45,15 @@ export async function signupHandler(request: Request): Promise<NextResponse> {
 
     const { email, password } = parsed.data;
     const normalizedEmail = email.trim().toLowerCase();
+
+    const existingUser = await prisma.user.findUnique({
+      where: { email: normalizedEmail },
+    });
+
+    if (existingUser) {
+      return handleError(400, 'Email already in use');
+    }
+
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     const newUser = await prisma.user.create({
@@ -69,11 +85,10 @@ export async function signupHandler(request: Request): Promise<NextResponse> {
       { status: 201, headers: securityHeaders }
     );
   } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+
     if (typeof error === 'object' && error !== null && 'code' in error) {
-      const prismaError = error as {
-        code: string;
-        meta?: { target?: string[] };
-      };
+      const prismaError = error as PrismaClientKnownRequestError;
 
       if (
         prismaError.code === 'P2002' &&
@@ -82,8 +97,7 @@ export async function signupHandler(request: Request): Promise<NextResponse> {
         return handleError(400, 'Email already in use');
       }
     }
-
-    console.error('signupHandler Internal server error:', error);
+    console.error('signupHandler error:', { message });
     return handleError(500, 'Server error');
   }
 }

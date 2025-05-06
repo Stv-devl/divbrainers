@@ -22,7 +22,7 @@ export async function feedbackHandler(req: NextRequest) {
     if (corsResponse) return corsResponse;
 
     const rateLimitResponse = await rateLimitMiddleware({
-      limit: 10,
+      limit: 1,
       ttl: 10000,
     });
     if (rateLimitResponse) return rateLimitResponse;
@@ -33,7 +33,6 @@ export async function feedbackHandler(req: NextRequest) {
 
     const body = await req.json();
     const parseResult = feedbackRequestSchema.safeParse(body);
-
     if (!parseResult.success) {
       return handleError(400, 'Invalid request');
     }

@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import Button from '@/components/buttons/Button';
+import Button from '@/components/ui/buttons/Button';
 import { iconStackMapping } from '@/constante/iconStackMap';
 import { dropdowns } from '@/constante/interviewFormData';
 import useInterviewStore from '@/store/useStoreInterview';
@@ -15,8 +15,8 @@ import {
 } from '../../../../lib/schema/interviewShema';
 import { stackShema } from '../../../../lib/schema/stackShema';
 import { iconsMap } from '../../../constante/iconsMap';
-import { dropdownController } from '../../form/dropdown/DropdownController';
-import InputSelectStack from '../../form/input/InputSelectStack';
+import { dropdownController } from '../../ui/form/dropdown/DropdownController';
+import InputSelectStack from '../../ui/form/input/InputSelectStack';
 
 interface SetInterviewFormProps {
   setIsLoading: (value: boolean) => void;

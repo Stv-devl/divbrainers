@@ -1,6 +1,6 @@
 import React from 'react';
 import { CustomsInputProps } from '@/types/type';
-import { cn } from '../../../../lib/utils/cn';
+import { cn } from '../../../../../lib/utils/cn';
 
 /**
  * Renders an input field with dynamic styling based on validation state.

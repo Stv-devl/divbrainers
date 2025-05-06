@@ -25,6 +25,9 @@ export async function getInterview() {
     orderBy: {
       createdAt: 'desc',
     },
+    include: {
+      feedback: true,
+    },
   });
 
   if (!interviews) {

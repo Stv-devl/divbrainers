@@ -2,8 +2,8 @@
 
 import React from 'react';
 import useResetPassword from '@/hooks/auth/useResetPassword';
-import Button from '../../../components/buttons/Button';
-import InputWithIcon from '../../../components/form/input/InputWithIcon';
+import Button from '../../../components/ui/buttons/Button';
+import InputWithIcon from '../../../components/ui/form/input/InputWithIcon';
 import { iconsMap } from '../../../constante/iconsMap';
 
 /**

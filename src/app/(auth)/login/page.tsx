@@ -2,8 +2,8 @@
 
 import Link from 'next/link';
 import React from 'react';
-import Button from '../../../components/buttons/Button';
-import InputWithIcon from '../../../components/form/input/InputWithIcon';
+import Button from '../../../components/ui/buttons/Button';
+import InputWithIcon from '../../../components/ui/form/input/InputWithIcon';
 import Loading from '../../../components/loading/Loading';
 import { iconsMap } from '../../../constante/iconsMap';
 import useLogin from '../../../hooks/auth/useLogin';

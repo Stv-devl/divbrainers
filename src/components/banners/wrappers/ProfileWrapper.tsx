@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
 import React from 'react';
-import ThemeSwitcher from '@/components/theme/ThemeSwitcher';
+import ThemeSwitcher from '@/components/ui/theme/ThemeSwitcher';
 import { UserProfile } from '@/types/type';
 import { iconsMap } from '../../../constante/iconsMap';
 import { useProfileImage } from '../../../hooks/ui/useProfileImage';

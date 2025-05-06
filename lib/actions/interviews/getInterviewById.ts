@@ -36,6 +36,9 @@ export async function getInterviewById(id: string) {
       id: validInterviewId,
       dataId: userData.id,
     },
+    include: {
+      feedback: true,
+    },
   });
 
   if (!interview) {

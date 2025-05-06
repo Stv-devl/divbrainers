@@ -1,3 +1,4 @@
+import { Interview } from '@prisma/client';
 import React from 'react';
 import { UserProfile } from '@/types/type';
 import { cn } from '../../../../lib/utils/cn';
@@ -12,9 +13,11 @@ import InterviewCard from './InterviewCard';
  */
 const LiveInterviewCall = ({
   user,
+  interview,
   isSpeaking,
 }: {
   user: UserProfile;
+  interview: Interview;
   isSpeaking: boolean;
 }) => {
   return (
@@ -35,7 +38,7 @@ const LiveInterviewCall = ({
         </div>
         <InterviewCard
           name={user?.name ?? 'Unknown user'}
-          position="Frontend developer"
+          position={interview.position ?? 'Unknown position'}
           image={user?.image}
         />
         <hr className="hidden sm:block absolute z-10 w-full border-t-2 top-[150px] left-0 border-gray-300" />

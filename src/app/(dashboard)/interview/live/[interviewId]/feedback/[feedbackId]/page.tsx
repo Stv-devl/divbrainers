@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import BackButton from '@/components/ui/buttons/BackButton';
 import { getFeedbackById } from '../../../../../../../../lib/actions/feedback/getFeedbackById';
 import { getInterviewById } from '../../../../../../../../lib/actions/interviews/getInterviewById';
 import FeedbackSection from '../../../../../../../components/interview/feedBackInterview/FeedBackSection';
@@ -27,7 +28,7 @@ export default async function Page({ params }: PageProps) {
     feedback;
 
   return (
-    <div className="flex size-full flex-col gap-2 sm:gap-6 bg-white p-0 sm:max-w-[1950px] sm:px-18 sm:py-12 sm:shadow-md">
+    <div className=" relative flex size-full flex-col gap-2 sm:gap-6 bg-white p-0 sm:max-w-[1950px] sm:px-18 sm:py-12 sm:shadow-md">
       <h1 className="text-3xl font-bold text-blue-800 mb-6 border-b border-blue-800 pb-4">
         Feedback for {position}
       </h1>
@@ -44,6 +45,10 @@ export default async function Page({ params }: PageProps) {
           {`${totalScore}/20`}
         </span>
       </div>
+      <BackButton
+        route="/interview"
+        position="-top-9 sm:top-3 sm:left-3 left-0 "
+      />
     </div>
   );
 }

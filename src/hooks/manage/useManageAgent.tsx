@@ -2,7 +2,7 @@
 
 import { Interview } from '@prisma/client';
 import { useRouter } from 'next/navigation';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { interviewer } from '@/constante/interviewer';
 import postFeedback from '@/service/postFeedback';
 import { UserProfile } from '@/types/type';
@@ -16,8 +16,9 @@ export enum CallStatus {
   CONNECTING = 'CONNECTING',
   ACTIVE = 'ACTIVE',
   FINISHED = 'FINISHED',
-  ERROR = 'ERROR',
+  STOPPED = 'STOPPED',
   GENERATING_FEEDBACK = 'GENERATING_FEEDBACK',
+  ERROR = 'ERROR',
 }
 
 interface SavedMessage {
@@ -37,6 +38,9 @@ export const useInterviewAgent = (user: UserProfile, interview: Interview) => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [lastMessage, setLastMessage] = useState<string>('');
 
+  const wasManuallyStopped = useRef(false);
+  const isMounted = useRef(true);
+
   const { _id: userId, name } = user;
   const { questions, position } = interview;
 
@@ -53,7 +57,9 @@ export const useInterviewAgent = (user: UserProfile, interview: Interview) => {
   }, []);
 
   const onCallEnd = useCallback(() => {
-    setCallStatus(CallStatus.FINISHED);
+    if (!wasManuallyStopped.current) {
+      setCallStatus(CallStatus.FINISHED);
+    }
   }, []);
 
   const onSpeechStart = useCallback(() => {
@@ -82,6 +88,8 @@ export const useInterviewAgent = (user: UserProfile, interview: Interview) => {
   }, []);
 
   useEffect(() => {
+    isMounted.current = true;
+
     vapi.on('call-start', onCallStart);
     vapi.on('call-end', onCallEnd);
     vapi.on('message', onMessage);
@@ -90,6 +98,7 @@ export const useInterviewAgent = (user: UserProfile, interview: Interview) => {
     vapi.on('error', onError);
 
     return () => {
+      isMounted.current = false;
       vapi.off('call-start', onCallStart);
       vapi.off('call-end', onCallEnd);
       vapi.off('message', onMessage);
@@ -101,7 +110,6 @@ export const useInterviewAgent = (user: UserProfile, interview: Interview) => {
 
   useEffect(() => {
     const sendFeedbackToServer = async () => {
-      if (callStatus !== CallStatus.FINISHED) return;
       if (
         callStatus === CallStatus.FINISHED &&
         messages.length > 0 &&
@@ -116,9 +124,11 @@ export const useInterviewAgent = (user: UserProfile, interview: Interview) => {
             console.error('Failed to create feedback');
           } else {
             console.log('Feedback created:', response.feedbackId);
-            router.push(
-              `/interview/live/${interview.id}/feedback/${response.feedbackId}`
-            );
+            if (isMounted.current) {
+              router.push(
+                `/interview/live/${interview.id}/feedback/${response.feedbackId}`
+              );
+            }
           }
         } catch (error) {
           console.error('Error sending feedback:', error);
@@ -131,8 +141,8 @@ export const useInterviewAgent = (user: UserProfile, interview: Interview) => {
 
   const handleCall = async () => {
     if (callStatus !== CallStatus.INACTIVE) return;
-
     setCallStatus(CallStatus.CONNECTING);
+    wasManuallyStopped.current = false;
 
     await vapi.start(interviewer, {
       variableValues: {
@@ -155,7 +165,8 @@ export const useInterviewAgent = (user: UserProfile, interview: Interview) => {
   };
 
   const handleDisconnect = () => {
-    setCallStatus(CallStatus.FINISHED);
+    wasManuallyStopped.current = true;
+    setCallStatus(CallStatus.STOPPED);
     vapi.stop();
   };
 

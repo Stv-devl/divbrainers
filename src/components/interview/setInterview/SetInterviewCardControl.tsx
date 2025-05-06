@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import React, { useTransition } from 'react';
-import Button from '@/components/buttons/Button';
+import Button from '@/components/ui/buttons/Button';
 import { deleteInterview } from '../../../../lib/actions/interviews/deleteInterview';
 
 type SetInterviewCardControlProps = {

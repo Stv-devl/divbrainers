@@ -18,7 +18,6 @@ export async function resetPasswordHandler(req: Request) {
     if (rateLimitResponse) return rateLimitResponse;
 
     const body = await req.json();
-
     const parsed = resetPasswordSchema.safeParse(body);
     if (!parsed.success) {
       return handleError(
@@ -28,42 +27,40 @@ export async function resetPasswordHandler(req: Request) {
     }
 
     const { email, token, password } = parsed.data;
-
     const normalizedEmail = email.trim().toLowerCase();
+
     const tokenRecord = await prisma.verificationToken.findFirst({
-      where: {
-        identifier: normalizedEmail,
-      },
+      where: { identifier: normalizedEmail },
+      //on peut ajouter un type pour le tokenRecord + ajouter dans prisma (pareil pour sendEmail)
     });
 
-    if (!tokenRecord) {
+    const now = new Date();
+
+    const isTokenValid =
+      tokenRecord &&
+      tokenRecord.expires > now &&
+      (await bcrypt.compare(token, tokenRecord.token));
+
+    if (!isTokenValid) {
       return handleError(400, 'Invalid or expired link.');
     }
-
-    const now = new Date();
-    if (tokenRecord.expires < now) {
-      return handleError(400, 'Link has expired.');
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await prisma.user.findUnique({
       where: { email: normalizedEmail },
     });
 
     if (!user) {
-      return handleError(404, 'Utilisateur introuvable.');
+      return handleError(400, 'Invalid or expired link.');
     }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     await prisma.credential.update({
       where: { id: user.id },
       data: { password: hashedPassword },
     });
-
-    await prisma.verificationToken.deleteMany({
-      where: {
-        identifier: normalizedEmail,
-      },
+    await prisma.verificationToken.delete({
+      where: { id: tokenRecord.id },
     });
 
     return NextResponse.json(

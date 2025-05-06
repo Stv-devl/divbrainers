@@ -1,6 +1,6 @@
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import Button from '@/components/buttons/Button';
+import Button from '@/components/ui/buttons/Button';
 import TechnicalStack from '@/components/wrappers/TechnicalStackWrapper';
 import { iconsMap } from '@/constante/iconsMap';
 import { CallStatus } from '@/hooks/manage/useManageAgent';

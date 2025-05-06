@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { iconsMap } from '../../constante/iconsMap';
+import { iconsMap } from '../../../constante/iconsMap';
 
 /**
  * ThemeSwitcher component

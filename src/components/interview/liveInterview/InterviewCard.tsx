@@ -37,7 +37,7 @@ const InterviewCard = ({ name, position, image }: InterviewCardProps) => {
       <div className="flex flex-col items-center gap-3 justify-center">
         <p className="text-lg font-bold text-blue-900">{name}</p>
         <div className="bg-blue-100 rounded-md px-2 py-1 shadow-sm">
-          <p className="text-blue-900">{position}</p>
+          <p className="text-blue-900 capitalize">{position}</p>
         </div>
         <Image
           src={profileImage}

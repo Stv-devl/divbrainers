@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import Button from '../buttons/Button';
+import Button from '../ui/buttons/Button';
 
 /**
  * HeroSection component
@@ -37,7 +37,7 @@ const HeroSection = () => {
         priority
         width={500}
         height={500}
-        className="max-w-[80%] sm:w-[350px] lg:w-[500px] sm:h-[350px] lg:h-[500px] rounded-lg"
+        className="max-w-[80%] sm:w-[350px] lg:w-[450px] sm:h-[350px] lg:h-[450px] rounded-lg"
       />
     </div>
   );

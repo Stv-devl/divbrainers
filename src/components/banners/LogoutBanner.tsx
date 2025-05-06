@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 import { iconsMap } from '../../constante/iconsMap';
-import ThemeSwitcher from '../theme/ThemeSwitcher';
+import ThemeSwitcher from '../ui/theme/ThemeSwitcher';
 import IconWrapper from './wrappers/LogoWrapper';
 
 /**

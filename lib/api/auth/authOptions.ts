@@ -4,6 +4,7 @@ import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import { config } from '../../config';
+import { rateLimitMiddleware } from '../../middleware/rateLimitMiddleware';
 import { prisma } from '../../prisma';
 
 export const authOptions: NextAuthOptions = {
@@ -14,6 +15,7 @@ export const authOptions: NextAuthOptions = {
       clientId: config.googleClientId!,
       clientSecret: config.googleClientSecret!,
     }),
+
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
@@ -21,6 +23,16 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
+        const limitResult = await rateLimitMiddleware({
+          limit: 5,
+          ttl: 10_000,
+        });
+        if (limitResult) {
+          throw new Error(
+            'Too many login attempts. Please wait and try again.'
+          );
+        }
+
         if (!credentials?.email || !credentials.password) {
           throw new Error('Email and password are required');
         }

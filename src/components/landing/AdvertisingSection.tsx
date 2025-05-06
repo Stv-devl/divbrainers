@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { iconsMap } from '../../constante/iconsMap';
-import Button from '../buttons/Button';
+import Button from '../ui/buttons/Button';
 
 /**
  * Advertising section component displaying key features and a call to action

@@ -1,8 +1,8 @@
 import { LRUCache } from 'lru-cache';
 import { headers } from 'next/headers';
 import { getServerSession } from 'next-auth';
-import { handleError } from '../helpers/errors/handleError';
 import { authOptions } from '../api/auth/authOptions';
+import { handleError } from '../helpers/errors/handleError';
 
 export interface RateLimitOptions {
   limit: number;
@@ -49,7 +49,7 @@ export async function rateLimitMiddleware(
   }
   const { limit, ttl } = options;
   const session = await getServerSession(authOptions);
-  const ip = getClientIp();
+  const ip = await getClientIp();
 
   let key: string;
   let cacheToUse: LRUCache<string, number>;
