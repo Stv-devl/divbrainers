@@ -4,12 +4,10 @@ const isDev = process.env.NODE_ENV !== 'production';
  * Sets security headers for the response
  * @returns The security headers
  */
-
-//revoir acces control origin
 export const securityHeaders = {
   'Access-Control-Allow-Origin': isDev
     ? '*'
-    : process.env.NEXT_PUBLIC_ORIGIN || '*',
+    : process.env.NEXT_PUBLIC_ORIGIN ?? 'https://divbrainers.com',
   'Access-Control-Allow-Methods': 'POST, PATCH, DELETE, GET, OPTIONS',
   'Access-Control-Allow-Headers':
     'Content-Type, Authorization, X-CSRF-Token, X-Requested-With, Accept, Origin, User-Agent, Referer',

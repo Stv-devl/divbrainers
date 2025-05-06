@@ -4,6 +4,7 @@ import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import { config } from '../../config';
+import { getClientIpFromAuth } from '../../helpers/security/getClientIp';
 import { rateLimitMiddleware } from '../../middleware/rateLimitMiddleware';
 import { prisma } from '../../prisma';
 
@@ -22,10 +23,14 @@ export const authOptions: NextAuthOptions = {
         email: { label: 'Email', type: 'text' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials) {
-        const limitResult = await rateLimitMiddleware({
-          limit: 5,
-          ttl: 10_000,
+      async authorize(credentials, req) {
+        const ip = getClientIpFromAuth(req);
+
+        const limitResult = rateLimitMiddleware({
+          key: ip,
+          limit: 30,
+          ttl: 60_000,
+          scope: 'ip',
         });
         if (limitResult) {
           throw new Error(

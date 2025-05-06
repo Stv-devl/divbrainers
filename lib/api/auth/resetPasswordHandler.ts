@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
 import { handleError } from '../../helpers/errors/handleError';
+import { getClientIp } from '../../helpers/security/getClientIp';
 import { corsMiddleware } from '../../middleware/corsMiddleware';
 import { rateLimitMiddleware } from '../../middleware/rateLimitMiddleware';
 import { prisma } from '../../prisma';
@@ -12,8 +13,10 @@ export async function resetPasswordHandler(req: Request) {
     if (corsResponse) return corsResponse;
 
     const rateLimitResponse = await rateLimitMiddleware({
+      key: getClientIp(req),
       limit: 3,
       ttl: 60000,
+      scope: 'ip',
     });
     if (rateLimitResponse) return rateLimitResponse;
 

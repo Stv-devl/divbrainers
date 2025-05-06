@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
 import { handleError } from '../../helpers/errors/handleError';
+import { getClientIp } from '../../helpers/security/getClientIp';
 import { securityHeaders } from '../../helpers/security/securityHeaders';
 import { corsMiddleware } from '../../middleware/corsMiddleware';
 import { rateLimitMiddleware } from '../../middleware/rateLimitMiddleware';
@@ -28,8 +29,10 @@ export async function signupHandler(request: Request): Promise<NextResponse> {
     if (corsResponse) return corsResponse;
 
     const rateLimitResponse = await rateLimitMiddleware({
+      key: getClientIp(request),
       limit: 3,
       ttl: 60000,
+      scope: 'ip',
     });
     if (rateLimitResponse) return rateLimitResponse;
 

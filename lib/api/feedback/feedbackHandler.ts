@@ -3,6 +3,7 @@ import { generateObject } from 'ai';
 import { NextRequest, NextResponse } from 'next/server';
 import { handleError } from '../../helpers/errors/handleError';
 import { generateFeedbackPrompt } from '../../helpers/prompt/generateFeedbacKPromps';
+import { getClientIp } from '../../helpers/security/getClientIp';
 import { authMiddleware } from '../../middleware/authMiddleware';
 import { corsMiddleware } from '../../middleware/corsMiddleware';
 import { rateLimitMiddleware } from '../../middleware/rateLimitMiddleware';
@@ -22,8 +23,10 @@ export async function feedbackHandler(req: NextRequest) {
     if (corsResponse) return corsResponse;
 
     const rateLimitResponse = await rateLimitMiddleware({
+      key: getClientIp(req),
       limit: 1,
       ttl: 10000,
+      scope: 'ip',
     });
     if (rateLimitResponse) return rateLimitResponse;
 
