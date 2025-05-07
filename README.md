@@ -32,16 +32,16 @@ DivBrainers allows users to:
 
 ### Screenshots
 
-![](./public/Screenshot_set_interview.png)
-![](./public/Screenshot_interview_live.png)
-![](./public/Screenshot_profil.png)
-![](./public/Screenshot_login.png)
-![](./public/Screenshot_register.png)
-![](./public/Screenshot_resetPassword.png)
+![](./public/screenshot/Screenshot_set_interview.png)
+![](./public/screenshot/Screenshot_interview_live.png)
+![](./public/screenshot/Screenshot_profil.png)
+![](./public/screenshot/Screenshot_login.png)
+![](./public/screenshot/Screenshot_register.png)
+![](./public/screenshot/Screenshot_resetPassword.png)
 
 ### Links
 
-- Live Site: [https:](https:divbrainers.com)
+- Live Site: [https:divbrainers.com](https:divbrainers.com)
 
 ---
 
