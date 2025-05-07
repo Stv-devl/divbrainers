@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { handleError } from '../../helpers/errors/handleError';
 import { getClientIp } from '../../helpers/security/getClientIp';
 import { corsMiddleware } from '../../middleware/corsMiddleware';
@@ -13,9 +13,9 @@ export async function resetPasswordHandler(req: Request) {
     if (corsResponse) return corsResponse;
 
     const rateLimitResponse = await rateLimitMiddleware({
-      key: getClientIp(req),
+      key: getClientIp(req as NextRequest),
       limit: 3,
-      ttl: 60000,
+      ttl: 60_000,
       scope: 'ip',
     });
     if (rateLimitResponse) return rateLimitResponse;
@@ -23,6 +23,9 @@ export async function resetPasswordHandler(req: Request) {
     const body = await req.json();
     const parsed = resetPasswordSchema.safeParse(body);
     if (!parsed.success) {
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Zod validation error:', parsed.error.format());
+      }
       return handleError(
         400,
         parsed.error.issues[0]?.message || 'Invalid input data'
@@ -34,7 +37,6 @@ export async function resetPasswordHandler(req: Request) {
 
     const tokenRecord = await prisma.verificationToken.findFirst({
       where: { identifier: normalizedEmail },
-      //on peut ajouter un type pour le tokenRecord + ajouter dans prisma (pareil pour sendEmail)
     });
 
     const now = new Date();
@@ -59,9 +61,10 @@ export async function resetPasswordHandler(req: Request) {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await prisma.credential.update({
-      where: { id: user.id },
+      where: { userId: user.id },
       data: { password: hashedPassword },
     });
+
     await prisma.verificationToken.delete({
       where: { id: tokenRecord.id },
     });
@@ -71,7 +74,7 @@ export async function resetPasswordHandler(req: Request) {
       { status: 200 }
     );
   } catch (err) {
-    console.error(err);
+    console.error('Reset password error:', err);
     return handleError(500, 'Server error.');
   }
 }

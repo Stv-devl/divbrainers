@@ -28,7 +28,7 @@ export async function updateUserProfile(formData: FormData) {
   });
 
   if (!validationResult.success) {
-    handleServerActionError(
+    throw handleServerActionError(
       400,
       validationResult.error.issues[0]?.message || 'Invalid input data'
     );
@@ -37,7 +37,7 @@ export async function updateUserProfile(formData: FormData) {
   let imageUrl: string | null = null;
   let publicId: string | null = null;
 
-  if (imageFile && typeof imageFile === 'object') {
+  if (imageFile) {
     if (!imageFile.type.startsWith('image/')) {
       throw handleServerActionError(400, 'File must be an image');
     }
@@ -48,7 +48,7 @@ export async function updateUserProfile(formData: FormData) {
 
     if (!user) redirect('/login');
 
-    if (user?.imagePublicId) {
+    if (user.imagePublicId) {
       await cloudinary.uploader.destroy(user.imagePublicId, {
         resource_type: 'image',
       });

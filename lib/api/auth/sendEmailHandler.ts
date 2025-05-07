@@ -1,5 +1,6 @@
 import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
+import { NextRequest } from 'next/server';
 import { handleError } from '../../helpers/errors/handleError';
 import { sendResetEmail } from '../../helpers/fileOperations/sendRestEmail';
 import { getClientIp } from '../../helpers/security/getClientIp';
@@ -7,7 +8,6 @@ import { corsMiddleware } from '../../middleware/corsMiddleware';
 import { rateLimitMiddleware } from '../../middleware/rateLimitMiddleware';
 import { prisma } from '../../prisma';
 import { sendEmailSchema } from '../../shemaServer/auth/sendEmailShema';
-
 /**
  * Send email handler for user registration
  * @returns The send email handler for POST requests
@@ -18,7 +18,7 @@ export async function sendEmailHandler(req: Request) {
     if (corsResponse) return corsResponse;
 
     const rateLimitResponse = rateLimitMiddleware({
-      key: getClientIp(req),
+      key: getClientIp(req as NextRequest),
       limit: 3,
       ttl: 60_000,
       scope: 'ip',

@@ -1,3 +1,4 @@
+import { JsonValue } from '@prisma/client/runtime/library';
 import { FormEvent } from 'react';
 import {
   UseFormRegisterReturn,
@@ -192,13 +193,16 @@ export interface JobInterviewProps {
   score?: number | null;
   numberOfQuestions: number;
   stack: string[];
-  feedback: FeedbackProps[];
+  feedbacks: FeedbackProps[];
 }
 
 export interface FeedbackProps {
   id: string;
   totalScore: number;
-  feedback: string;
+  strengths: string;
+  areasForImprovement: string;
+  finalAssessment: string;
+  categoryScores: JsonValue;
 }
 
 //--------------------------------------------//

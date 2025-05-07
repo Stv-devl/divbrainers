@@ -20,13 +20,13 @@ export async function getInterview() {
 
   const interviews = await prisma.interview.findMany({
     where: {
-      dataId: userData.id,
+      userId: userData.id,
     },
     orderBy: {
       createdAt: 'desc',
     },
     include: {
-      feedback: true,
+      feedbacks: true,
     },
   });
 

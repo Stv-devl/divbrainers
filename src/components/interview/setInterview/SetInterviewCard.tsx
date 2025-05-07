@@ -26,13 +26,13 @@ const SetInterviewCard = ({ interview }: { interview: JobInterviewProps }) => {
     interviewType,
     createdAt,
     difficulty,
-    feedback,
+    feedbacks,
     stack,
   } = interview;
 
   const icons = useTechIcons(stack);
-  const score = feedback[0]?.totalScore;
-  const feedbackId = feedback[0]?.id;
+  const score = feedbacks[0]?.totalScore;
+  const feedbackId = feedbacks[0]?.id;
 
   const scoreDisplay =
     score !== undefined ? (

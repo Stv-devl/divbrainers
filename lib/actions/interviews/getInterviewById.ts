@@ -26,7 +26,6 @@ export async function getInterviewById(id: string) {
   const validInterviewId = validationResult.data.interviewId;
 
   const userData = await getUserData(session.user.id);
-
   if (!userData) {
     throw handleServerActionError(404, 'User data not found');
   }
@@ -34,10 +33,10 @@ export async function getInterviewById(id: string) {
   const interview = await prisma.interview.findFirst({
     where: {
       id: validInterviewId,
-      dataId: userData.id,
+      userId: userData.id,
     },
     include: {
-      feedback: true,
+      feedbacks: true,
     },
   });
 

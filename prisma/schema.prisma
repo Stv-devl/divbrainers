@@ -18,14 +18,14 @@ model User {
   sessions      Session[]
   credentials   Credential?
   profile       Profile?
-  data          Data?       @relation
-  dataId        String?     @unique
+  feedbacks     Feedback[]
+  interviews    Interview[]
   createdAt     DateTime    @default(now())
-  feedback      Feedback[]
+  updatedAt     DateTime    @updatedAt
 }
 
 model Account {
-  id                String  @id @default(cuid())
+  id                String   @id @default(cuid())
   userId            String
   type              String
   provider          String
@@ -37,7 +37,9 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
   @@unique([provider, providerAccountId])
 }
@@ -48,6 +50,8 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model VerificationToken {
@@ -60,51 +64,51 @@ model VerificationToken {
 }
 
 model Credential {
-  id       String @id @default(cuid())
-  password String
-  user     User   @relation(fields: [id], references: [id], onDelete: Cascade)
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  password  String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Profile {
-  id        String  @id @default(cuid())
-  user      User    @relation(fields: [id], references: [id], onDelete: Cascade)
+  id        String   @id @default(cuid())
+  userId    String   @unique
   firstname String
   lastname  String
   image     String?
-}
-
-model Data {
-  id        String      @id @default(cuid())
-  user      User?       @relation(fields: [userId], references: [id])
-  userId    String?     @unique
-  interview Interview[]
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Interview {
   id                String     @id @default(cuid())
-  data              Data       @relation(fields: [dataId], references: [id], onDelete: Cascade)
-  dataId            String
+  userId            String
   position          String
   difficulty        String
   interviewType     String
   numberOfQuestions Int
   stack             String[]
   questions         Json       @default("{}")
+  user              User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  feedbacks         Feedback[]
   createdAt         DateTime   @default(now())
   updatedAt         DateTime   @updatedAt
-  feedback          Feedback[]
 }
 
 model Feedback {
   id                  String    @id @default(cuid())
-  interview           Interview @relation(fields: [interviewId], references: [id], onDelete: Cascade)
   interviewId         String
-  user                User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId              String
   totalScore          Int
   categoryScores      Json
   strengths           String
   areasForImprovement String
   finalAssessment     String
+  interview           Interview @relation(fields: [interviewId], references: [id], onDelete: Cascade)
+  user                User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
 }

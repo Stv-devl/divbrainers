@@ -31,16 +31,13 @@ export const deleteInterview = async ({
 
   const interview = await prisma.interview.findUnique({
     where: { id: validInterviewId },
-    include: {
-      data: { select: { userId: true } },
-    },
   });
 
   if (!interview) {
     throw handleServerActionError(404, 'Interview not found');
   }
 
-  if (interview.data?.userId !== session.user.id) {
+  if (interview.userId !== session.user.id) {
     throw handleServerActionError(
       403,
       'You are not authorized to delete this interview'
@@ -49,7 +46,7 @@ export const deleteInterview = async ({
 
   try {
     await prisma.interview.delete({
-      where: { id: interviewId },
+      where: { id: validInterviewId },
     });
     revalidatePath('/interview');
   } catch (error) {

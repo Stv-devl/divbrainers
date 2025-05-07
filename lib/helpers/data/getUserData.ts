@@ -6,9 +6,9 @@ import { prisma } from '../../prisma';
  * @returns The user data or null if not found
  */
 export async function getUserData(userId: string) {
-  const userData = await prisma.data.findUnique({
+  const userData = await prisma.user.findUnique({
     where: {
-      userId,
+      id: userId,
     },
     select: {
       id: true,

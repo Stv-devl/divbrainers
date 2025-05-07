@@ -42,6 +42,13 @@ export async function feedbackHandler(req: NextRequest) {
 
     const { interviewId, transcript } = parseResult.data;
 
+    const interview = await prisma.interview.findUnique({
+      where: { id: interviewId },
+    });
+    if (!interview || interview.userId !== userId) {
+      return handleError(403, 'Unauthorized access to interview');
+    }
+
     const formattedTranscript = transcript
       .map(
         ({ role, content }: { role: string; content: string }) =>
@@ -52,18 +59,16 @@ export async function feedbackHandler(req: NextRequest) {
     const prompt = generateFeedbackPrompt(formattedTranscript);
 
     const { object } = await generateObject({
-      model: google('gemini-2.0-flash-001', {
-        structuredOutputs: false,
-      }),
+      model: google('gemini-2.0-flash-001', { structuredOutputs: false }),
       schema: feedbackSchema,
       temperature: 0.8,
-      prompt: prompt,
+      prompt,
       system:
         'You are a professional interviewer analyzing a mock interview. Your task is to evaluate the candidate based on structured categories',
     });
 
-    if (!object) {
-      throw new Error('AI feedback generation failed or did not match schema');
+    if (!object || typeof object !== 'object') {
+      return handleError(500, 'AI feedback generation failed.');
     }
 
     const feedbackData = {

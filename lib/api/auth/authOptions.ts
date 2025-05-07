@@ -69,7 +69,6 @@ export const authOptions: NextAuthOptions = {
     strategy: 'jwt',
     maxAge: 60 * 60,
   },
-
   secret: config.secretKey,
 
   callbacks: {
@@ -92,18 +91,22 @@ export const authOptions: NextAuthOptions = {
       try {
         await prisma.profile.create({
           data: {
-            id: user.id,
             firstname: '',
             lastname: '',
             image: user.image ?? '',
+            user: {
+              connect: { id: user.id },
+            },
           },
         });
 
         if (!user.email?.includes('@gmail.com')) {
           await prisma.credential.create({
             data: {
-              id: user.id,
               password: '',
+              user: {
+                connect: { id: user.id },
+              },
             },
           });
         }
