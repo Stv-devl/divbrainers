@@ -1,12 +1,10 @@
 import { NextResponse } from 'next/server';
 import { handleError } from '../helpers/errors/handleError';
 
-const originRegex = process.env.NEXT_PUBLIC_ORIGIN_REGEX;
+const originRegex = process.env.ORIGIN_REGEX;
 
 if (!originRegex) {
-  throw new Error(
-    'NEXT_PUBLIC_ORIGIN_REGEX is not defined in environment variables'
-  );
+  throw new Error('ORIGIN_REGEX is not defined in environment variables');
 }
 
 const allowedOrigins = new RegExp(originRegex, 'i');
@@ -17,10 +15,14 @@ const allowedOrigins = new RegExp(originRegex, 'i');
  * @returns NextResponse | null - Blocks if the origin is not allowed, otherwise null
  */
 export function corsMiddleware(request: Request): NextResponse | null {
-  const requestOrigin = request.headers.get('origin');
+  const method = request.method.toUpperCase();
 
-  if (!requestOrigin) return null;
-  if (!allowedOrigins.test(requestOrigin)) {
+  if (method === 'OPTIONS') return null;
+
+  const origin = request.headers.get('origin');
+  if (!origin) return null;
+
+  if (!allowedOrigins.test(origin)) {
     return handleError(403, 'Forbidden: Unauthorized request origin');
   }
 

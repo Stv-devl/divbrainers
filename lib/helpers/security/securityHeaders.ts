@@ -7,7 +7,7 @@ const isDev = process.env.NODE_ENV !== 'production';
 export const securityHeaders = {
   'Access-Control-Allow-Origin': isDev
     ? '*'
-    : process.env.NEXT_PUBLIC_ORIGIN ?? 'https://divbrainers.com',
+    : process.env.API_CORS_ORIGIN ?? 'https://divbrainers.com',
   'Access-Control-Allow-Methods': 'POST, PATCH, DELETE, GET, OPTIONS',
   'Access-Control-Allow-Headers':
     'Content-Type, Authorization, X-CSRF-Token, X-Requested-With, Accept, Origin, User-Agent, Referer',

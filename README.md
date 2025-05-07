@@ -33,10 +33,15 @@ DivBrainers allows users to:
 ### Screenshots
 
 ![](./public/screenshot/Screenshot_set_interview.png)
+
 ![](./public/screenshot/Screenshot_interview_live.png)
+
 ![](./public/screenshot/Screenshot_profil.png)
+
 ![](./public/screenshot/Screenshot_login.png)
+
 ![](./public/screenshot/Screenshot_register.png)
+
 ![](./public/screenshot/Screenshot_resetPassword.png)
 
 ### Links
