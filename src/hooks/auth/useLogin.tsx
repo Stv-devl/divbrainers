@@ -32,7 +32,6 @@ const useLogin = () => {
         window.location.href = result.url ?? '/home';
       }
     } catch (err) {
-      console.log('on est la');
       console.error(err);
     }
   };

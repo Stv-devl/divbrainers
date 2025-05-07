@@ -14,7 +14,6 @@ async function main() {
   console.log(users);
 
   users.forEach((user) => {
-    console.log('---');
     console.log(`User: ${user.email || user.id}`);
 
     if (!user.interviews || user.interviews.length === 0) {

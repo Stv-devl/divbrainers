@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import React from 'react';
+import Loading from '../../../components/loading/Loading';
 import Button from '../../../components/ui/buttons/Button';
 import InputWithIcon from '../../../components/ui/form/input/InputWithIcon';
-import Loading from '../../../components/loading/Loading';
 import { iconsMap } from '../../../constante/iconsMap';
 import useSignUp from '../../../hooks/auth/useSignup';
 
@@ -23,8 +23,6 @@ const SignUp = () => {
     globalError,
     isSubmitting,
   } = useSignUp();
-
-  console.log('globalerror', globalError);
 
   return (
     <>

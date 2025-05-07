@@ -38,7 +38,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="mt-5">
-      <h1 className="text-xl sm:text-2xl font-bold text-blue-800 mb-5">
+      <h1 className="text-xl sm:text-2xl font-bold text-center text-blue-800 mb-5">
         Welcome to the V1 of DivBrainers
       </h1>
 

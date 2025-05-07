@@ -19,7 +19,6 @@ const useSignUp = () => {
 
   const [globalError, setGlobalError] = useState('');
 
-  console.log('globalerror', globalError);
   const {
     register,
     handleSubmit,
