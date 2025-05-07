@@ -100,13 +100,15 @@ export const authOptions: NextAuthOptions = {
           },
         });
 
-        if (!user.email?.includes('@gmail.com')) {
+        const account = await prisma.account.findFirst({
+          where: { userId: user.id },
+        });
+
+        if (account?.provider === 'credentials') {
           await prisma.credential.create({
             data: {
               password: '',
-              user: {
-                connect: { id: user.id },
-              },
+              user: { connect: { id: user.id } },
             },
           });
         }
