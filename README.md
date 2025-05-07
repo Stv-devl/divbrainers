@@ -32,11 +32,16 @@ DivBrainers allows users to:
 
 ### Screenshots
 
-> Screenshots will be added progressively as features are finalized.
+![](./public/Screenshot_set_interview.png)
+![](./public/Screenshot_interview_live.png)
+![](./public/Screenshot_profil.png)
+![](./public/Screenshot_login.png)
+![](./public/Screenshot_register.png)
+![](./public/Screenshot_resetPassword.png)
 
 ### Links
 
-- Live Site: [https:](https:) _(coming soon)_
+- Live Site: [https:](https:divbrainers.com)
 
 ---
 
@@ -44,22 +49,22 @@ DivBrainers allows users to:
 
 ### Try
 
-> Public access and credentials will be shared after the MVP release.
+You can create an account or register with google.
 
 ### Built with
 
-- **Next.js 15** – The latest Next.js framework, offering enhanced performance, app routing, and server-side capabilities
-- **React 19** – Latest version with concurrent rendering capabilities
-- **TypeScript** – For type-safe code and enhanced developer experience
-- **TailwindCSS v4** – Utility-first CSS framework with zero-runtime
-- **Zustand** – Lightweight, intuitive state management solution
-- **Prisma** – Type-safe ORM for efficient database interactions
-- **PostgreSQL** – Enterprise-grade relational database for data integrity
-- **Zod + React Hook Form** – Powerful combination for type-safe form validation
-- **NextAuth.js** – Comprehensive authenticatiozzzn solution with Prisma adapter
-- **Cloudinary** – Cloud-based image management for optimized storage and delivery
-- **Jest + Testing Library + jest-axe** – Comprehensive testing suite with accessibility checks
-- **Nodemailer** – Reliable email delivery service for user communications
+- **Next.js 15** – React framework for production
+- **React 19** – JavaScript library for building user interfaces
+- **TypeScript** – JavaScript with syntax for types
+- **TailwindCSS v4** – Utility-first CSS framework
+- **Zustand** – Simple state management
+- **Prisma** – Modern database toolkit
+- **PostgreSQL** – Open source relational database
+- **Zod + React Hook Form** – Form validation tools
+- **NextAuth.js** – Authentication for Next.js
+- **Cloudinary** – Cloud-based image management
+- **Jest + Testing Library + jest-axe** – Testing tools
+- **Nodemailer** – Module for email sending
 
 ### Key Features
 
@@ -75,7 +80,7 @@ DivBrainers allows users to:
   Users can update their name, email, and avatar image.
 
 - **AI Interview Assistant**  
-  Simulates real interview scenarios using OpenAI (soon to be integrated).
+  Simulates real interview scenarios using Gemini + Vapi.
 
 #### 🔜 Coming soon
 
