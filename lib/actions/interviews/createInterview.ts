@@ -45,7 +45,7 @@ export async function createInterview(formData: FormData) {
 
     const newInterview = await prisma.interview.create({
       data: {
-        userId: userData.id, 
+        userId: userData.id,
         ...input,
         questions: questions as Prisma.InputJsonValue,
       },

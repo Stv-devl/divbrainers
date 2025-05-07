@@ -1,7 +1,6 @@
 import { Interview } from '@prisma/client';
 import React from 'react';
 import { UserProfile } from '@/types/type';
-import { cn } from '../../../../lib/utils/cn';
 import { iconsMap } from '../../../constante/iconsMap';
 import InterviewCard from './InterviewCard';
 
@@ -25,7 +24,7 @@ const LiveInterviewCall = ({
       <div className="relative flex flex-col sm:flex-row gap-5 items-center justify-between mx-auto mt-5 sm:mt-10">
         <InterviewCard
           name="Julia Divana"
-          position="Recruited Umbrea Corps "
+          position="Recruiter Umbrela Corps "
           image="/images/recruiter.png"
         />
         <div className="relative hidden sm:block z-20">

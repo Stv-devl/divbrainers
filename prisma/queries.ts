@@ -1,17 +1,13 @@
 import { PrismaClient } from '@prisma/client';
 
-/*npm run queries*/
+/* npm run queries */
 
 const prisma = new PrismaClient();
 
 async function main() {
   const users = await prisma.user.findMany({
     include: {
-      data: {
-        include: {
-          interview: true,
-        },
-      },
+      interviews: true,
     },
   });
 
@@ -20,12 +16,12 @@ async function main() {
   users.forEach((user) => {
     console.log('---');
     console.log(`User: ${user.email || user.id}`);
-    if (!user.data) {
-      console.log('No Data linked');
+
+    if (!user.interviews || user.interviews.length === 0) {
+      console.log('No interviews found');
     } else {
-      console.log(`Data ID: ${user.data.id}`);
-      console.log(`Interviews number: ${user.data.interview.length}`);
-      user.data.interview.forEach((interview, index) => {
+      console.log(`Interviews number: ${user.interviews.length}`);
+      user.interviews.forEach((interview, index) => {
         console.log(`Interview ${index + 1}:`);
         console.log(`Position: ${interview.position}`);
         console.log(`Difficulty: ${interview.difficulty}`);
