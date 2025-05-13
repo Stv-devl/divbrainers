@@ -3,6 +3,8 @@ name: Deploy Production - DivBrainers
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   vercel-prod:
