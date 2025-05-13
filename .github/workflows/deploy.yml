@@ -3,6 +3,8 @@ name: Deploy Production - DivBrainers
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   vercel-prod:
@@ -24,5 +26,6 @@ jobs:
         run: npm run build
         env:
           ORIGIN_REGEX: ^https:\/\/divbrainers\.com$
+
       - name: Deploy to Vercel (Prod)
         run: npx vercel --token=${{ secrets.VERCEL_TOKEN }} --prod --confirm
