@@ -22,6 +22,8 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          ORIGIN_REGEX: ${{ secrets.ORIGIN_REGEX }}
 
       - name: Deploy to Vercel (Prod)
         run: npx vercel --token=${{ secrets.VERCEL_TOKEN }} --prod --confirm
