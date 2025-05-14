@@ -35,7 +35,7 @@ export const getTechLogos = async (techArray: string[]) => {
       const normalized = normalizeTechName(tech);
 
       if (!normalized) {
-        return { tech, url: 'images/tech.svg' };
+        return { tech, url: '/images/tech.svg' };
       }
 
       const originalUrl = `${techIconBaseURL}/${normalized}/${normalized}-original.svg`;
@@ -49,9 +49,11 @@ export const getTechLogos = async (techArray: string[]) => {
         return { tech, url: plainUrl };
       }
 
-      return { tech, url: 'images/tech.svg' };
+      return { tech, url: '/images/tech.svg' };
     })
   );
+
+  console.log('results', results);
 
   return results;
 };
