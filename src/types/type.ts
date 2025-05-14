@@ -205,6 +205,13 @@ export interface FeedbackProps {
   categoryScores: JsonValue;
 }
 
+//displayed message
+export interface DisplayedMessage {
+  role: 'user' | 'assistant';
+  content: string;
+  messageId: number;
+}
+
 //--------------------------------------------//
 //Hooks Type
 //--------------------------------------------//
