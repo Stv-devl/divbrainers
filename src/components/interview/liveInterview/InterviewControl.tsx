@@ -33,6 +33,8 @@ const InterviewControl = ({
 
   const { stack } = interview;
 
+  console.log(stack);
+
   return (
     <div className="flex flex-col sm:flex-row justify-between items-center w-[98%] sm:w-[95%] lg:w-[90%] xl:w-[75%] mx-auto my-5 sm:my-10">
       <TechnicalStackWrapper backendStack={stack} />
