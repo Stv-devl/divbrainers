@@ -5,7 +5,12 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { interviewer } from '@/constante/interviewer';
 import postFeedback from '@/service/postFeedback';
-import { UserProfile } from '@/types/type';
+import { DisplayedMessage, UserProfile } from '@/types/type';
+import {
+  TranscriptMessageTypeEnum,
+  MessageTypeEnum,
+  VapiMessage,
+} from '@/types/vapi';
 import { vapi } from '../../../lib/vapi.sdk';
 
 /**
@@ -21,11 +26,6 @@ export enum CallStatus {
   ERROR = 'ERROR',
 }
 
-interface SavedMessage {
-  role: 'user' | 'assistant';
-  content: string;
-}
-
 /**
  * Hook to manage the live AI interview session using VAPI.
  * Handles call status, transcription, speech events, errors, and timeouts.
@@ -34,9 +34,8 @@ interface SavedMessage {
 export const useInterviewAgent = (user: UserProfile, interview: Interview) => {
   const router = useRouter();
   const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
-  const [messages, setMessages] = useState<SavedMessage[]>([]);
+  const [messages, setMessages] = useState<DisplayedMessage[]>([]);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [lastMessage, setLastMessage] = useState<string>('');
 
   const wasManuallyStopped = useRef(false);
   const isMounted = useRef(true);
@@ -70,15 +69,18 @@ export const useInterviewAgent = (user: UserProfile, interview: Interview) => {
     setIsSpeaking(false);
   }, []);
 
-  const onMessage = useCallback((message: Message) => {
+  const onMessage = useCallback((message: VapiMessage) => {
     if (
-      message.type === 'transcript' &&
-      message.transcriptType === 'final' &&
+      message.type === MessageTypeEnum.TRANSCRIPT &&
+      message.transcriptType === TranscriptMessageTypeEnum.FINAL &&
       message.role === 'assistant'
     ) {
-      const newMessage = { role: message.role, content: message.transcript };
+      const newMessage: DisplayedMessage = {
+        role: message.role,
+        content: message.transcript,
+        messageId: Date.now(),
+      };
       setMessages((prev) => [...prev, newMessage]);
-      setLastMessage(message.transcript);
     }
   }, []);
 
@@ -172,7 +174,7 @@ export const useInterviewAgent = (user: UserProfile, interview: Interview) => {
 
   return {
     callStatus,
-    lastMessage,
+    messages,
     isSpeaking,
     handleCall,
     handleDisconnect,

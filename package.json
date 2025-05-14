@@ -24,6 +24,7 @@
         "cloudinary": "^2.6.0",
         "clsx": "^2.1.1",
         "eslint-plugin-import": "^2.31.0",
+        "framer-motion": "^12.11.0",
         "lru-cache": "^11.1.0",
         "next": "15.2.4",
         "next-auth": "^4.24.11",

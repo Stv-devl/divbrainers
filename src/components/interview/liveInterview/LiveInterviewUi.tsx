@@ -28,7 +28,7 @@ const LiveInterviewUI = ({
   user: UserProfile;
   interview: Interview;
 }) => {
-  const { callStatus, isSpeaking, handleCall, handleDisconnect, lastMessage } =
+  const { callStatus, isSpeaking, handleCall, handleDisconnect, messages } =
     useInterviewAgent(user, interview);
 
   const loadingText = loadingMessages[callStatus];
@@ -48,7 +48,7 @@ const LiveInterviewUI = ({
         interview={interview}
         isSpeaking={isSpeaking}
       />
-      <CallInterviewMessage lastMessage={lastMessage} />
+      <CallInterviewMessage messages={messages} />
       <InterviewControl
         callStatus={callStatus}
         handleCall={handleCall}
