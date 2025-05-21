@@ -53,5 +53,7 @@ export const getTechLogos = async (techArray: string[]) => {
     })
   );
 
+  console.log('results', results);
+
   return results;
 };
