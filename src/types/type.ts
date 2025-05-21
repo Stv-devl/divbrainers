@@ -229,7 +229,6 @@ export interface AddJobOfferProps {
   formatedJobOffer: string;
   setFormatedJobOffer: (value: string) => void;
 }
-
 //--------------------------------------------//
 //Hooks Type
 //--------------------------------------------//
