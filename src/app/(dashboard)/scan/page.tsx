@@ -3,14 +3,6 @@
 import React from 'react';
 import ScanForm from '@/components/scan/scanRequest/ScanForm';
 
-/* 
-Story : 
-- 1ère page un text area ou l'on copie l'offre d'emplois + on doit valider quand on valide pn peut supprimer les mots clefs non pertinant => serveur action
-- on a un form pout upload note cv 
-- quand text area + cv ok on peut envoyer 
-loading processing 
-- 2eme page feedback
-*/
 
 //-----page-front-end-----//
 /*
