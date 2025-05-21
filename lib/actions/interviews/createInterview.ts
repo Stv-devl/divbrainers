@@ -5,9 +5,9 @@ import { Prisma } from '@prisma/client';
 import { generateText } from 'ai';
 import { getUserData } from '../../helpers/data/getUserData';
 import { parseInterviewFormData } from '../../helpers/data/parseInterviewFormData';
-import { parseJsonSafely } from '../../helpers/data/parseJson';
+import { parseJsonSafely } from '../../helpers/data/parseJsonSafely';
 import { handleServerActionError } from '../../helpers/errors/handleServerActionError';
-import { generateQuestionsPrompt } from '../../helpers/prompt/generateQuestionsPromps';
+import { generateQuestionsPrompt } from '../../helpers/prompt/generateQuestionsPrompt';
 import { getCurrentSession } from '../../helpers/security/getCurrentSession';
 import { prisma } from '../../prisma';
 

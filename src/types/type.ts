@@ -213,6 +213,24 @@ export interface DisplayedMessage {
 }
 
 //--------------------------------------------//
+//Scan props
+//--------------------------------------------//
+export type FormError = {
+  resume?: string;
+  jobOffer?: string;
+  formatedJobOffer?: string;
+};
+
+export interface AddJobOfferProps {
+  error?: FormError;
+  setError: (error: FormError) => void;
+  keywords: string[];
+  setKeywords: React.Dispatch<React.SetStateAction<string[]>>;
+  formatedJobOffer: string;
+  setFormatedJobOffer: (value: string) => void;
+}
+
+//--------------------------------------------//
 //Hooks Type
 //--------------------------------------------//
 

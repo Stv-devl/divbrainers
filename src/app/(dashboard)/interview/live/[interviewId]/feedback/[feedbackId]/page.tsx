@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import BackButton from '@/components/ui/buttons/BackButton';
-import { getFeedbackById } from '../../../../../../../../lib/actions/feedback/getFeedbackById';
+import { getFeedbackById } from '../../../../../../../../lib/actions/interviews/getFeedbackById';
 import { getInterviewById } from '../../../../../../../../lib/actions/interviews/getInterviewById';
 import FeedbackSection from '../../../../../../../components/interview/feedBackInterview/FeedBackSection';
 
