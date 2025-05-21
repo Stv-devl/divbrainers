@@ -3,7 +3,6 @@
 import React from 'react';
 import ScanForm from '@/components/scan/scanRequest/ScanForm';
 
-
 //-----page-front-end-----//
 /*
 1ère page : 
