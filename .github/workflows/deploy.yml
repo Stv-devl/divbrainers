@@ -28,7 +28,5 @@ jobs:
           ORIGIN_REGEX: ^https:\/\/divbrainers\.com$
 
       - name: Deploy to Vercel (Prod)
-        run: npx vercel deploy \
-          --token=${{ secrets.VERCEL_TOKEN }} \
-          --target=preview \
-          --confirm
+        if: github.event_name == 'push'
+        run: npx vercel --token=${{ secrets.VERCEL_TOKEN }} --prod --confirm
