@@ -1,54 +1,46 @@
 'use client';
 
-import React, { useState } from 'react';
-import { z } from 'zod';
+import React, { useCallback, useState } from 'react';
 import Button from '@/components/ui/buttons/Button';
+import { AddJobOfferProps } from '@/types/type';
+import { findSkills } from '../../../../lib/actions/resumeScan/findSkills';
+import { jobOfferSchema } from '../../../../lib/schema/jobOfferShema';
+import { cleanText } from '../../../../lib/utils/cleanText';
 import { cn } from '../../../../lib/utils/cn';
 import { iconsMap } from '../../../constante/iconsMap';
 
-type FormError = {
-  resume?: string;
-  jobOffer?: string;
-};
-
-interface AddJobOfferProps {
-  onValidateChange: (isValid: boolean) => void;
-  error?: FormError;
-  setError: (error: FormError) => void;
-}
-
-const jobOfferSchema = z.object({
-  jobOffer: z
-    .string({
-      required_error: 'The job offer cannot be empty',
-      invalid_type_error: 'The job offer must be text',
-    })
-    .min(20, 'The job offer must contain at least 20 characters')
-    .max(2000, 'The job offer must not exceed 2000 characters'),
-});
-
 const AddJobOffer: React.FC<AddJobOfferProps> = ({
-  onValidateChange,
   error,
   setError,
+  keywords,
+  setKeywords,
+  formatedJobOffer,
+  setFormatedJobOffer,
 }) => {
   const [jobOffer, setJobOffer] = useState('');
-  const [keywordsMock, setKeywordsMock] = useState<string[]>([
-    'React',
-    'Next',
-    'Typescript',
-    'Node.js',
-    'Github',
-  ]);
-  const [isValidate, setIsValidate] = useState(false);
+  const [isValidated, setIsValidated] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleChangeTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setJobOffer(e.target.value);
-    setError({ resume: error?.resume });
-  };
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setJobOffer(e.target.value);
+      if (error?.jobOffer) {
+        setError({ resume: error.resume });
+      }
+    },
+    [error?.resume, error?.jobOffer, setError]
+  );
 
-  const handleSendOffer = async () => {
+  const removeKeyword = useCallback(
+    (value: string) => {
+      if (keywords.length > 1) {
+        setKeywords((prev) => prev.filter((item) => item !== value));
+      }
+    },
+    [keywords, setKeywords]
+  );
+
+  const handleValidate = async () => {
     const result = jobOfferSchema.safeParse({ jobOffer });
 
     if (!result.success) {
@@ -59,49 +51,54 @@ const AddJobOffer: React.FC<AddJobOfferProps> = ({
     setLoading(true);
     setError({ resume: error?.resume });
     try {
-      await new Promise((res) => setTimeout(res, 2000));
-      setIsValidate(true);
-      onValidateChange(true);
+      const cleaned = cleanText(jobOffer);
+      setFormatedJobOffer(cleaned);
+
+      const skills = await findSkills(cleaned);
+      setKeywords(skills);
+      setIsValidated(true);
     } catch (err) {
-      setError({ jobOffer: 'An error occurred', resume: error?.resume });
+      setError({
+        jobOffer: 'An error occurred',
+        resume: error?.resume,
+      });
     } finally {
       setLoading(false);
     }
   };
-
-  const removeKeyword = (value: string) => {
-    setKeywordsMock((prev) => prev.filter((item) => item !== value));
-  };
-
-  const textareaClasses = cn(
-    'input-theme w-[350px] h-[250px] rounded-lg p-2 lg:p-4 text-sm lg:text-base resize-none',
-    !!error?.jobOffer && !isValidate
-      ? 'border-red-500 text-red-500'
-      : 'text-neutral-500'
-  );
 
   return (
     <div className="flex flex-col items-center gap-4">
       <h1 className="my-2 text-center font-semibold text-blue-800">
         Copy and paste the job offer:
       </h1>
+
       <textarea
-        className={textareaClasses}
-        name="joboffer"
         id="jobOffer"
-        placeholder="Add the job offer here"
+        name="joboffer"
         value={jobOffer}
-        onChange={handleChangeTextArea}
+        placeholder="Add the job offer here"
+        className={cn(
+          'input-theme w-[350px] h-[250px] rounded-lg p-2 lg:p-4 text-sm lg:text-base resize-none',
+          !!error?.jobOffer && !isValidated
+            ? 'border-red-500 text-red-500'
+            : 'text-neutral-500'
+        )}
+        onChange={handleChange}
         disabled={loading}
       />
-      {error?.jobOffer && (
-        <span className="text-red-500">{error.jobOffer}</span>
+
+      {(error?.jobOffer || error?.formatedJobOffer) && (
+        <span className="text-red-500">
+          {error.formatedJobOffer || error.jobOffer}
+        </span>
       )}
-      {isValidate && keywordsMock.length > 0 && (
+
+      {isValidated && keywords.length > 0 && (
         <>
           <h2>Position skills :</h2>
           <div className="flex gap-2 flex-wrap">
-            {keywordsMock.map((keyword, index) => (
+            {keywords.map((keyword, index) => (
               <div
                 key={keyword + index}
                 className="relative border border-blue-200 text-sm font-semibold gap-1 pl-3 pr-5 py-2 rounded-sm shadow-sm"
@@ -119,12 +116,12 @@ const AddJobOffer: React.FC<AddJobOfferProps> = ({
 
       <div className="w-35 h-10">
         <Button
-          label={isValidate ? 'Validated' : 'Validate offer'}
+          label={isValidated ? 'Validated' : 'Validate offer'}
           type="button"
           color="filled"
-          onClick={handleSendOffer}
+          onClick={handleValidate}
           isLoading={loading}
-          disabled={loading || isValidate}
+          disabled={loading || isValidated}
         />
       </div>
     </div>
