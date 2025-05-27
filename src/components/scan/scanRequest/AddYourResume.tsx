@@ -20,15 +20,18 @@ const AddYourResume: React.FC<AddYourResumeProps> = ({
   };
 
   const browseClass =
-    'file:border-blue-700 file:text-blue-700 file:cursor-pointer hover:file:bg-blue-100 file:rounded-lg file:border file:bg-white file:font-regular file:mr-3 file:px-2 file:py-1 file:duration-500 file:ease-in-out file:sm:mr-5 file:sm:px-3 file:sm:py-1.5 file:sm:font-semibold';
+    'file:border-blue-800 file:text-blue-800 file:cursor-pointer hover:file:bg-blue-50 file:rounded-lg file:border file:bg-white file:font-regular file:mr-3 file:px-2 file:py-1 file:duration-500 file:ease-in-out file:sm:mr-8 file:sm:px-3 file:sm:py-1.5 file:sm:font-semibold';
 
   return (
-    <div>
-      <h1 className="text-blue-800 font-semibold pb-4 text-center sm:pb-7">
-        Upload a document :
-      </h1>
+    <div
+      className="w-full space-y-4
+     sm:bg-white sm:p-8 sm:rounded-lg sm:shadow-sm"
+    >
+      <h4 className="text-xl font-semibold text-blue-800">
+        Upload your resume :
+      </h4>
       <div className="w-full">
-        <div className="flex w-full flex-col gap-2 pb-4 sm:pb-6">
+        <div className="flex w-full flex-col gap-3">
           <label htmlFor="browseFile">Browse your resume :</label>
           <input
             id="browseFile"

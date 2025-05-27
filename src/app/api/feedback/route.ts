@@ -1,4 +1,4 @@
-import { feedbackHandler } from '../../../../lib/api/feedback/feedbackHandler';
+import { feedbackHandler } from '../../../../lib/api/interview/feedbackHandler';
 
 export const runtime = 'nodejs';
 

@@ -20,8 +20,13 @@ const userCache = new LRUCache<string, number>({ max: 500, ttl: 60_000 });
 export function rateLimitMiddleware(options: RateLimitOptions) {
   const { key, limit, ttl, scope = 'ip' } = options;
 
-  if (scope === 'ip' && !isValidClientIp(key)) {
-    return handleError(400, 'Invalid client IP.');
+  if (scope === 'ip') {
+    const isValid = isValidClientIp(key);
+
+    if (!isValid) {
+      console.warn('Blocked request due to invalid IP:', key);
+      return handleError(400, 'Invalid client IP.');
+    }
   }
 
   const cache = scope === 'user' ? userCache : ipCache;
