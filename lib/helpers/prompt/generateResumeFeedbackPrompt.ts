@@ -62,7 +62,7 @@ If the candidate holds a degree higher than the one required in the job offer, i
   - key: "resume_check"
   - label: "Resume assessment"
   - What to evaluate: 
-     . Review the CV based on the following and return a 10 key aspects:
+     . Carefully analyze the candidate's resume and evaluate it across the following **10 distinct key aspects**:
            - Address: Is the location clear and complete (city and country)?
            - Phone number: Is it present and preferably in international format?
            - Email : Is it present and at good format 
@@ -72,7 +72,7 @@ If the candidate holds a degree higher than the one required in the job offer, i
            - Presentation: Is there a short personal summary/introduction? If yes, provide a brief review of its quality (clarity, relevance, tone).
            - Soft skills: Are soft skills explicitly listed or easily inferred?
            - Technical skills: Are technical skills listed clearly (e.g., React, Git, etc.)?
-           - Overall Assessment : always provide a brief global assessment of the resume’s quality (1–2 sentences), along with 1 or 2 concise suggestions to make it even more effective (e.g., structure, formatting, tone).
+           - Overall Assessment: always provide a brief global assessment of the resume’s quality (1–2 sentences), along with 1 or 2 concise suggestions to make it even more effective (e.g., structure, formatting, tone).
  Instructions:
           - Do not write or repeat any user information (such as email, phone, address, etc.).
   - Output: \`score\` \`items\` (array)

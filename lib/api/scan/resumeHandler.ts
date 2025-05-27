@@ -12,6 +12,12 @@ import { authMiddleware } from '../../middleware/authMiddleware';
 import { corsMiddleware } from '../../middleware/corsMiddleware';
 import { rateLimitMiddleware } from '../../middleware/rateLimitMiddleware';
 
+/**
+ * Handles the resume analysis request
+ * @param {NextRequest} req - The incoming request object
+ * @returns {Promise<NextResponse>} The response containing the analysis results
+ * @throws {Error} If there's an error during processing
+ */
 export async function resumeHandler(req: NextRequest) {
   try {
     const corsResponse = corsMiddleware(req);

@@ -2,6 +2,12 @@ import { NextRequest } from 'next/server';
 import { scanSchema } from '../../shemaServer/scanShema';
 import { handleError } from '../errors/handleError';
 
+/**
+ * Parses and validates the form data from a scan request
+ * @param {NextRequest} req - The incoming request object containing form data
+ * @returns {Promise<{resumeFile: File, keywords: string[], formatedJobOffer: string} | NextResponse>} The parsed and validated form data or an error response
+ * @throws {Error} If the form data is invalid or missing required fields
+ */
 export async function parseScanFormData(req: NextRequest) {
   const formData = await req.formData();
 
