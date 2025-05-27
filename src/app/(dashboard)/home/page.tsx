@@ -5,27 +5,40 @@ import React from 'react';
 import { features } from '../../../constante/constante';
 import { iconsMap } from '../../../constante/iconsMap';
 
-const Home: React.FC = () => {
+const featureRoutes: Record<string, string> = {
+  'AI Interviews': '/interview',
+  'ATS Resume Scan': '/scan',
+};
+
+const Home = () => {
   const router = useRouter();
 
-  const nowFeatures = features.filter((f) => f.title === 'AI Interviews');
-  const upcomingFeatures = features.filter((f) => f.title !== 'AI Interviews');
+  const enabledTitles = Object.keys(featureRoutes);
+
+  const nowFeatures = features.filter((f) => enabledTitles.includes(f.title));
+  const upcomingFeatures = features.filter(
+    (f) => !enabledTitles.includes(f.title)
+  );
 
   const renderFeatureCard = (
     icon: string,
     title: string,
     description: string,
-    clickable: boolean
+    isEnabled: boolean
   ) => {
     const IconComponent = iconsMap[icon as keyof typeof iconsMap];
+    const handleClick = () => {
+      const path = featureRoutes[title];
+      if (path) router.push(path);
+    };
 
     return (
       <div
         key={title}
         className={`flex flex-col items-center justify-center gap-2 bg-white rounded-lg p-5 border border-gray-200 shadow-sm sm:max-w-[250px] transform transition-transform duration-300 ${
-          clickable ? 'hover:scale-105 cursor-pointer' : ''
+          isEnabled ? 'hover:scale-105 cursor-pointer' : ''
         }`}
-        onClick={clickable ? () => router.push('/interview') : undefined}
+        onClick={isEnabled ? handleClick : undefined}
       >
         <div className="w-8 h-8 sm:w-10 sm:h-10">
           <IconComponent className="w-full h-full" />

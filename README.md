@@ -24,11 +24,11 @@
 
 DivBrainers allows users to:
 
-- Access an AI-powered interview simulation
+- Experience AI-powered interview simulations
 - Use a secure, personalized dashboard
-- Edit their profile (name, avatar, email)
+- Manage their profile (name, avatar, email)
+- Run ATS scans and receive resume feedback
 - Soon: practice coding challenges and quizzes
-- Soon: scan resumes for ATS compatibility
 
 ### Screenshots
 
@@ -44,9 +44,13 @@ DivBrainers allows users to:
 
 ![](./public/screenshot/Screenshot_resetPassword.png)
 
+![](./public/screenshot/Screenshot_scan_form.png)
+
+![](./public/screenshot/Screenshot_scan_feedback.png)
+
 ### Links
 
-- Live Site: [https:divbrainers.com](https:divbrainers.com)
+- Live Site: [https://divbrainers.com](https://divbrainers.com)
 
 ---
 
@@ -87,6 +91,9 @@ You can create an account or register with google.
 - **AI Interview Assistant**  
   Simulates real interview scenarios using Gemini + Vapi.
 
+- **ATS Resume Scanner**  
+  Analyze and optimize CVs for recruiter filtering systems.
+
 #### 🔜 Coming soon
 
 - **Home Dashboard Overview**  
@@ -97,9 +104,6 @@ You can create an account or register with google.
 
 - **Coding Challenges**  
   Timed, browser-based programming exercises.
-
-- **ATS Resume Scanner**  
-  Analyze and optimize CVs for recruiter filtering systems.
 
 - **Statistics Dashboard**  
   Visualize your progress, track performance metrics, and identify improvement areas.
