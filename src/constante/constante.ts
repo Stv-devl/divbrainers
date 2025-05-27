@@ -47,4 +47,10 @@ export const features = [
     description:
       'Track your progress over time with detailed performance stats and insightful visualizations.',
   },
+  {
+    icon: 'IconScan',
+    title: 'ATS Resume Scan',
+    description:
+      'Upload your resume and get AI-powered feedback to beat the ATS.',
+  },
 ];
