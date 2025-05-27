@@ -9,18 +9,32 @@ import { cleanText } from '../../../../lib/utils/cleanText';
 import { cn } from '../../../../lib/utils/cn';
 import { iconsMap } from '../../../constante/iconsMap';
 
+/**
+ * Component that allows users to add and validate a job offer, extracting skills from the text
+ * @component
+ * @param {AddJobOfferProps} props - The component props
+ * @param {Object} props.error - Error state object
+ * @param {Function} props.setError - Function to update error state
+ * @param {string[]} props.keywords - Array of extracted skills
+ * @param {Function} props.setKeywords - Function to update keywords
+ * @param {Function} props.setFormatedJobOffer - Function to update formatted job offer
+ * @returns {JSX.Element} The rendered job offer input component
+ */
 const AddJobOffer: React.FC<AddJobOfferProps> = ({
   error,
   setError,
   keywords,
   setKeywords,
-  formatedJobOffer,
   setFormatedJobOffer,
 }) => {
   const [jobOffer, setJobOffer] = useState('');
   const [isValidated, setIsValidated] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  /**
+   * Handles changes to the job offer textarea
+   * @param {React.ChangeEvent<HTMLTextAreaElement>} e - The change event
+   */
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       setJobOffer(e.target.value);
@@ -31,6 +45,10 @@ const AddJobOffer: React.FC<AddJobOfferProps> = ({
     [error?.resume, error?.jobOffer, setError]
   );
 
+  /**
+   * Removes a keyword from the skills list
+   * @param {string} value - The keyword to remove
+   */
   const removeKeyword = useCallback(
     (value: string) => {
       if (keywords.length > 1) {
@@ -40,6 +58,9 @@ const AddJobOffer: React.FC<AddJobOfferProps> = ({
     [keywords, setKeywords]
   );
 
+  /**
+   * Validates the job offer and extracts skills
+   */
   const handleValidate = async () => {
     const result = jobOfferSchema.safeParse({ jobOffer });
 
@@ -68,53 +89,59 @@ const AddJobOffer: React.FC<AddJobOfferProps> = ({
   };
 
   return (
-    <div className="flex flex-col items-center gap-4">
-      <h1 className="my-2 text-center font-semibold text-blue-800">
+    <div className="w-full space-y-4 sm:space-y-5 sm:bg-white py-4 sm:p-8 sm:rounded-lg sm:shadow-sm">
+      <h2 className="text-lg sm:text-xl font-semibold text-blue-800">
         Copy and paste the job offer:
-      </h1>
+      </h2>
 
-      <textarea
-        id="jobOffer"
-        name="joboffer"
-        value={jobOffer}
-        placeholder="Add the job offer here"
-        className={cn(
-          'input-theme w-[350px] h-[250px] rounded-lg p-2 lg:p-4 text-sm lg:text-base resize-none',
-          !!error?.jobOffer && !isValidated
-            ? 'border-red-500 text-red-500'
-            : 'text-neutral-500'
+      <div>
+        <textarea
+          id="jobOffer"
+          name="joboffer"
+          value={jobOffer}
+          placeholder="Add the job offer here"
+          className={cn(
+            'input-theme w-full h-[200px] rounded-lg p-2 lg:p-4 text-sm lg:text-base resize-none',
+            !!error?.jobOffer && !isValidated
+              ? 'border-red-500 text-red-500'
+              : 'text-neutral-500'
+          )}
+          onChange={handleChange}
+          disabled={loading}
+        />
+
+        {(error?.jobOffer || error?.formatedJobOffer) && (
+          <span className="text-red-500">
+            {error.formatedJobOffer || error.jobOffer}
+          </span>
         )}
-        onChange={handleChange}
-        disabled={loading}
-      />
-
-      {(error?.jobOffer || error?.formatedJobOffer) && (
-        <span className="text-red-500">
-          {error.formatedJobOffer || error.jobOffer}
-        </span>
-      )}
+      </div>
 
       {isValidated && keywords.length > 0 && (
         <>
-          <h2>Position skills :</h2>
+          <h3 className="text-xl font-semibold text-blue-800">
+            Position skills :
+          </h3>
           <div className="flex gap-2 flex-wrap">
             {keywords.map((keyword, index) => (
               <div
                 key={keyword + index}
-                className="relative border border-blue-200 text-sm font-semibold gap-1 pl-3 pr-5 py-2 rounded-sm shadow-sm"
+                className="relative border border-blue-200 text-sm font-semibold gap-1 pl-3 pr-5 py-2 rounded-sm shadow-sm
+                 transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-md hover:bg-blue-50"
               >
                 <div>{keyword}</div>
-                <iconsMap.IconClose
-                  className="absolute size-5 right-0 top-0 cursor-pointer hover:scale-105 transition-transform duration-500"
-                  onClick={() => removeKeyword(keyword)}
-                />
+                <div className="absolute right-0 top-0">
+                  <iconsMap.IconClose
+                    className="size-5 cursor-pointer text-blue-800 hover:scale-110 transition-transform duration-300"
+                    onClick={() => removeKeyword(keyword)}
+                  />
+                </div>
               </div>
             ))}
           </div>
         </>
       )}
-
-      <div className="w-35 h-10">
+      <div className="w-44 h-10 mx-auto">
         <Button
           label={isValidated ? 'Validated' : 'Validate offer'}
           type="button"

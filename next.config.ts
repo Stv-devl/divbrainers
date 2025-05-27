@@ -2,6 +2,9 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   output: 'standalone',
+  reactStrictMode: true,
+  serverExternalPackages: ['pdf-parse'],
+
   images: {
     remotePatterns: [
       {
@@ -24,6 +27,13 @@ const nextConfig: NextConfig = {
   },
   typescript: {
     ignoreBuildErrors: true,
+  },
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      'qcms_bg.wasm': false,
+    };
+    return config;
   },
 };
 

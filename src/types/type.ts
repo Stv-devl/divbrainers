@@ -226,9 +226,28 @@ export interface AddJobOfferProps {
   setError: (error: FormError) => void;
   keywords: string[];
   setKeywords: React.Dispatch<React.SetStateAction<string[]>>;
-  formatedJobOffer: string;
   setFormatedJobOffer: (value: string) => void;
 }
+
+export interface FeedbackEntry {
+  key: string;
+  label: string;
+  score?: number;
+  comment?: string;
+  items?: string[];
+  text?: string;
+}
+
+export type CreateResumeResponse =
+  | {
+      success: true;
+      feedback: string;
+      offerAnalysis: string;
+    }
+  | {
+      success: false;
+      message: string;
+    };
 //--------------------------------------------//
 //Hooks Type
 //--------------------------------------------//

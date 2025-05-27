@@ -4,7 +4,7 @@ import { Interview } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { interviewer } from '@/constante/interviewer';
-import postFeedback from '@/service/postFeedback';
+import postFeedback from '@/service/interview/postFeedback';
 import { DisplayedMessage, UserProfile } from '@/types/type';
 import {
   TranscriptMessageTypeEnum,
