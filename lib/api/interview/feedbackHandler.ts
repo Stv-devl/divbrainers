@@ -2,7 +2,7 @@ import { google } from '@ai-sdk/google';
 import { generateObject } from 'ai';
 import { NextRequest, NextResponse } from 'next/server';
 import { handleError } from '../../helpers/errors/handleError';
-import { generateFeedbackPrompt } from '../../helpers/prompt/generateFeedbacKPrompt';
+import { generateFeedbackPrompt } from '../../helpers/prompt/interview/generateFeedbacKPrompt';
 import { getClientIp } from '../../helpers/security/getClientIp';
 import { authMiddleware } from '../../middleware/authMiddleware';
 import { corsMiddleware } from '../../middleware/corsMiddleware';

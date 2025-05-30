@@ -1,15 +1,15 @@
 'use server';
 
-import { google } from '@ai-sdk/google';
-import { generateText } from 'ai';
 import { getUserData } from '../../helpers/data/getUserData';
 import { parseJsonSafely } from '../../helpers/data/parseJsonSafely';
 import { handleServerActionError } from '../../helpers/errors/handleServerActionError';
-import { generateSkillsListPrompt } from '../../helpers/prompt/generateSkillsListPrompt';
+import { askAI } from '../../helpers/fileOperations/askAI';
+import { generateOfferAnalysisPrompt } from '../../helpers/prompt/scan/generateOfferAnalysisPrompt';
+import { generateSkillsListPrompt } from '../../helpers/prompt/scan/generateSkillsListPrompt';
 import { getCurrentSession } from '../../helpers/security/getCurrentSession';
 import { jobOfferSchema } from '../../schema/jobOfferShema';
 
-export async function findSkills(resumeValue: string) {
+export async function offerAnalyse(resumeValue: string) {
   try {
     const session = await getCurrentSession();
 
@@ -23,24 +23,21 @@ export async function findSkills(resumeValue: string) {
       throw handleServerActionError(404, 'User data not found');
     }
 
-    const prompt = generateSkillsListPrompt(result.data.jobOffer);
+    const [rawSkills, rawOfferAnalyse] = await Promise.all([
+      askAI(generateSkillsListPrompt(result.data.jobOffer), 0.3),
+      askAI(generateOfferAnalysisPrompt(result.data.jobOffer), 0.3),
+    ]);
 
-    const { text: rawSkills } = await generateText({
-      model: google('gemini-2.0-flash-001'),
-      prompt,
-      temperature: 0.7,
-    });
-
-    if (!rawSkills) {
-      throw handleServerActionError(400, 'AI failed to generate questions');
+    if (!rawSkills || !rawOfferAnalyse) {
+      throw new Error('AI failed to generate skills list or offer analysis');
     }
 
     const skills = parseJsonSafely(
       rawSkills,
-      'Generated questions are not in valid JSON format'
+      'Generated skills list are not in valid JSON format'
     );
 
-    return skills;
+    return { skills, rawOfferAnalyse };
   } catch (error) {
     throw handleServerActionError(500, 'An unexpected error occurred');
   }

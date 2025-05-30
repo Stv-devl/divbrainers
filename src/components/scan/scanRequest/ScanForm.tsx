@@ -7,7 +7,6 @@ import Button from '@/components/ui/buttons/Button';
 import postResume from '@/service/scan/postResume';
 import { FormError } from '@/types/type';
 import { scanSchema } from '../../../../lib/shemaServer/scanShema';
-import { cleanAndParseJSON } from '../../../../lib/utils/cleanAndParseJSON';
 import AddJobOffer from './AddJobOffer';
 import AddYourResume from './AddYourResume';
 
@@ -21,7 +20,7 @@ const ScanForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [keywords, setKeywords] = useState<string[]>([]);
-  const [formatedJobOffer, setFormatedJobOffer] = useState('');
+  const [analizeJobOffer, setAnalizeJobOffer] = useState('');
 
   const router = useRouter();
 
@@ -36,14 +35,15 @@ const ScanForm = () => {
     const result = scanSchema.safeParse({
       resumeFile,
       keywords,
-      formatedJobOffer,
+      analizeJobOffer,
     });
+
     if (!result.success) {
-      const { resumeFile, formatedJobOffer } =
+      const { resumeFile, analizeJobOffer } =
         result.error.flatten().fieldErrors;
       setError({
         resume: resumeFile?.[0],
-        formatedJobOffer: formatedJobOffer?.[0],
+        analizeJobOffer: analizeJobOffer?.[0],
       });
       return;
     }
@@ -53,15 +53,15 @@ const ScanForm = () => {
         setLoading(false);
         return;
       }
-      const response = await postResume(resumeFile, keywords, formatedJobOffer);
+
+      const response = await postResume(resumeFile, keywords, analizeJobOffer);
 
       if (!response.success) {
         setError({ resume: response.message });
         setLoading(false);
         return;
       }
-      const parsedFeedback = cleanAndParseJSON(response.feedback);
-      sessionStorage.setItem('feedback', JSON.stringify(parsedFeedback));
+      sessionStorage.setItem('feedback', JSON.stringify(response.feedback));
       router.push('scan/feedback');
     } catch (err) {
       console.error(err);
@@ -90,7 +90,7 @@ const ScanForm = () => {
             setError={setError}
             keywords={keywords}
             setKeywords={setKeywords}
-            setFormatedJobOffer={setFormatedJobOffer}
+            setAnalizeJobOffer={setAnalizeJobOffer}
           />
           <AddYourResume onFileChange={setResumeFile} error={error} />
           <div className="w-44 h-10 mb-5 sm:mb-8">
