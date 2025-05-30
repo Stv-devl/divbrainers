@@ -3,14 +3,12 @@ import { parseScanFormData } from '../../helpers/data/parseScanFormData';
 import { handleError } from '../../helpers/errors/handleError';
 import { askAI } from '../../helpers/fileOperations/askAI';
 import { extractTextFromPdfFile } from '../../helpers/fileOperations/pdfHandler';
-import { generateOfferAnalysisPrompt } from '../../helpers/prompt/generateOfferAnalysisPrompt';
-import { generateResumeAnalysisPrompt } from '../../helpers/prompt/generateResumeAnalysisPrompt';
-import { generateResumeFeedbackPrompt } from '../../helpers/prompt/generateResumeFeedbackPrompt';
+import { generateResumeFeedbackPrompt } from '../../helpers/prompt/scan/generateResumeFeedbackPrompt';
 import { getClientIp } from '../../helpers/security/getClientIp';
-import { sanitizeInput } from '../../helpers/security/sanitizeInput';
 import { authMiddleware } from '../../middleware/authMiddleware';
 import { corsMiddleware } from '../../middleware/corsMiddleware';
 import { rateLimitMiddleware } from '../../middleware/rateLimitMiddleware';
+import { sanitizeJsonString } from '../../utils/sanitizeJsonString';
 
 /**
  * Handles the resume analysis request
@@ -25,25 +23,19 @@ export async function resumeHandler(req: NextRequest) {
 
     const rateLimitResponse = await rateLimitMiddleware({
       key: getClientIp(req),
-      limit: 1,
+      limit: 10,
       ttl: 10000,
       scope: 'ip',
     });
-    if (rateLimitResponse) return rateLimitResponse;
 
+    if (rateLimitResponse) return rateLimitResponse;
     const authResponse = await authMiddleware();
     if (authResponse instanceof NextResponse) return authResponse;
 
     const parsed = await parseScanFormData(req);
     if (parsed instanceof NextResponse) return parsed;
 
-    const { resumeFile, keywords: validKeywords, formatedJobOffer } = parsed;
-    const offer = sanitizeInput(formatedJobOffer);
-
-    const offerAnalysis = await askAI(
-      generateOfferAnalysisPrompt(offer, validKeywords),
-      0.7
-    );
+    const { resumeFile, keywords: validKeywords, analizeJobOffer } = parsed;
     const pdfResult = await extractTextFromPdfFile(resumeFile);
 
     if (pdfResult.error) {
@@ -52,19 +44,12 @@ export async function resumeHandler(req: NextRequest) {
 
     const pdfData = pdfResult.text!;
 
-    const resumeAnalysis = await askAI(
-      generateResumeAnalysisPrompt(pdfData),
+    const feedbackRaw = await askAI(
+      generateResumeFeedbackPrompt(pdfData, analizeJobOffer, validKeywords),
       0.7
     );
 
-    const feedback = await askAI(
-      generateResumeFeedbackPrompt(
-        resumeAnalysis,
-        offerAnalysis,
-        validKeywords
-      ),
-      0.7
-    );
+    const feedback = JSON.parse(sanitizeJsonString(feedbackRaw));
 
     return NextResponse.json({
       success: true,
@@ -72,7 +57,7 @@ export async function resumeHandler(req: NextRequest) {
       feedback,
     });
   } catch (error) {
-    console.error('API Error in feedbackHandler:', error);
+    console.error('API Error in resumeHandler:', error);
     return handleError(500, 'Internal Server Error');
   }
 }

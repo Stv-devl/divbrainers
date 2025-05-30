@@ -3,7 +3,7 @@
 import React, { useCallback, useState } from 'react';
 import Button from '@/components/ui/buttons/Button';
 import { AddJobOfferProps } from '@/types/type';
-import { findSkills } from '../../../../lib/actions/resumeScan/findSkills';
+import { offerAnalyse } from '../../../../lib/actions/resumeScan/offerAnalyse';
 import { jobOfferSchema } from '../../../../lib/schema/jobOfferShema';
 import { cleanText } from '../../../../lib/utils/cleanText';
 import { cn } from '../../../../lib/utils/cn';
@@ -25,7 +25,7 @@ const AddJobOffer: React.FC<AddJobOfferProps> = ({
   setError,
   keywords,
   setKeywords,
-  setFormatedJobOffer,
+  setAnalizeJobOffer,
 }) => {
   const [jobOffer, setJobOffer] = useState('');
   const [isValidated, setIsValidated] = useState(false);
@@ -72,11 +72,11 @@ const AddJobOffer: React.FC<AddJobOfferProps> = ({
     setLoading(true);
     setError({ resume: error?.resume });
     try {
-      const cleaned = cleanText(jobOffer);
-      setFormatedJobOffer(cleaned);
+      const cleanedJobOffer = cleanText(jobOffer);
+      const { skills, rawOfferAnalyse } = await offerAnalyse(cleanedJobOffer);
 
-      const skills = await findSkills(cleaned);
       setKeywords(skills);
+      setAnalizeJobOffer(rawOfferAnalyse);
       setIsValidated(true);
     } catch (err) {
       setError({
@@ -110,9 +110,9 @@ const AddJobOffer: React.FC<AddJobOfferProps> = ({
           disabled={loading}
         />
 
-        {(error?.jobOffer || error?.formatedJobOffer) && (
+        {(error?.jobOffer || error?.analizeJobOffer) && (
           <span className="text-red-500">
-            {error.formatedJobOffer || error.jobOffer}
+            {error.analizeJobOffer || error.jobOffer}
           </span>
         )}
       </div>

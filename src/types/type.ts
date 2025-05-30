@@ -218,7 +218,7 @@ export interface DisplayedMessage {
 export type FormError = {
   resume?: string;
   jobOffer?: string;
-  formatedJobOffer?: string;
+  analizeJobOffer?: string;
 };
 
 export interface AddJobOfferProps {
@@ -226,7 +226,7 @@ export interface AddJobOfferProps {
   setError: (error: FormError) => void;
   keywords: string[];
   setKeywords: React.Dispatch<React.SetStateAction<string[]>>;
-  setFormatedJobOffer: (value: string) => void;
+  setAnalizeJobOffer: (value: string) => void;
 }
 
 export interface FeedbackEntry {

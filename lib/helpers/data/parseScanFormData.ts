@@ -13,7 +13,7 @@ export async function parseScanFormData(req: NextRequest) {
 
   const resumeFile = formData.get('resume');
   const rawKeywords = formData.get('keywords');
-  const rawOffer = formData.get('formatedJobOffer');
+  const rawOffer = formData.get('analizeJobOffer');
 
   if (!(resumeFile instanceof File)) {
     return handleError(400, 'Missing or invalid resume file');
@@ -40,7 +40,7 @@ export async function parseScanFormData(req: NextRequest) {
   const result = scanSchema.safeParse({
     resumeFile,
     keywords,
-    formatedJobOffer: rawOffer,
+    analizeJobOffer: rawOffer,
   });
 
   if (!result.success) {

@@ -9,10 +9,12 @@ export const scanSchema = z.object({
     .refine((file) => file.size <= 5 * 1024 * 1024, {
       message: 'The file must not exceed 5MB',
     }),
+
   keywords: z
     .array(z.string())
     .min(1, { message: 'Please validate the job offer before submitting' }),
-  formatedJobOffer: z
+
+  analizeJobOffer: z
     .string()
-    .min(20, { message: 'Please validate the job offer before submitting' }),
+    .min(1, { message: 'Please validate the job offer before submitting' }),
 });

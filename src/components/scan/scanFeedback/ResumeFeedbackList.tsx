@@ -1,3 +1,4 @@
+import { log } from 'node:console';
 import React from 'react';
 import { FeedbackEntry } from '@/types/type';
 import ResumeFeedbackItem from './ResumeFeedbackItem';
@@ -15,6 +16,8 @@ interface Props {
  */
 const ResumeFeedbackList: React.FC<Props> = ({ feedback }) => {
   const total = feedback.find((i) => i.key === 'total');
+
+  console.log(feedback);
 
   return (
     <div className="space-y-6">
