@@ -32,6 +32,8 @@ const SetInterviewForm = ({ setIsLoading }: SetInterviewFormProps) => {
 
   const router = useRouter();
 
+  //revoir le loading ici (voir scan form)
+  //normalement on a plus besoin de faire un formdata ici
   const {
     control,
     handleSubmit,

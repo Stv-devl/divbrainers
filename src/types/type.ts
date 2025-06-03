@@ -9,6 +9,7 @@ import {
 } from 'react-hook-form';
 import { InterviewSchemaType } from '../../lib/schema/interviewShema';
 import { ProfileFormData } from '../../lib/schema/profileShema';
+import { QuizFormSchemaType } from '../../lib/schema/quizFormShema';
 
 //--------------------------------------------//
 //Users type
@@ -174,10 +175,10 @@ export interface DropdownProps {
 }
 
 export interface DropdownControllerParams {
-  name: keyof InterviewSchemaType;
+  name: keyof InterviewSchemaType | keyof QuizFormSchemaType;
   label: string;
   options: DropdownOption[];
-  control: Control<InterviewSchemaType>;
+  control: Control<InterviewSchemaType | QuizFormSchemaType>;
 }
 
 //--------------------------------------------//

@@ -49,6 +49,7 @@ export async function parseScanFormData(req: NextRequest) {
       'Invalid input';
     return handleError(400, msg);
   }
+  
 
   return result.data;
 }
