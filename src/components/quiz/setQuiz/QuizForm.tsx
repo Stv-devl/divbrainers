@@ -10,8 +10,8 @@ import { dropdownController } from '@/components/ui/form/dropdown/DropdownContro
 import InputSelectStack from '@/components/ui/form/input/InputSelectStack';
 import { iconStackMapping } from '@/constante/iconStackMap';
 import { optionsDifficulty } from '@/constante/interviewFormData';
+import { startQuizSession } from '@/service/quiz/startQuizSession';
 import useInterviewStore from '@/store/useStoreInterview';
-import { createQuiz } from '../../../../lib/actions/quiz/createQuiz';
 import {
   quizFormSchema,
   QuizFormSchemaType,
@@ -61,10 +61,10 @@ const QuizForm = () => {
     try {
       setLoading(true);
 
-      const response = await createQuiz(data.difficulty, stack);
+      const result = await startQuizSession(data.difficulty, stack);
 
-      if (!response.success) {
-        setServerError(response.message || 'Server error occurred');
+      if (!result.success) {
+        setServerError(result.message || 'Server error occurred');
         setLoading(false);
         return;
       }
@@ -80,10 +80,10 @@ const QuizForm = () => {
   return (
     <>
       <form
-        className="bg-white p-7 rounded-sm shadow-sm w-full"
+        className="bg-white p-0 sm:p-7 sm:rounded-sm sm:shadow-sm w-full"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-4 sm:gap-5">
           <InputSelectStack
             label="Add your stack"
             options={iconStackMapping}
@@ -115,10 +115,9 @@ const QuizForm = () => {
           </div>
         </div>
       </form>
-
       {loading && (
-        <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/30 backdrop-blur-[1px]">
-          <Loading value="Creating quiz..." />
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/40 backdrop-blur-sm">
+          <Loading value="Generating question..." />
         </div>
       )}
     </>

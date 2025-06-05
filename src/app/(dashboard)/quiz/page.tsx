@@ -6,15 +6,15 @@ const Page = () => {
   return (
     <>
       <div className="flex items-center justify-center">
-        <div className="flex flex-col gap-5 w-[400px]">
-          <h1 className="text-xl sm:text-2xl text-left sm:text-center text-blue-800 font-bold ">
+        <div className="space-y-4 sm:space-y-7 w-full sm:w-[400px]">
+          <h1 className="sm:mt-2 text-xl sm:text-2xl text-left sm:text-center text-blue-800 font-bold ">
             Select your quiz
           </h1>
           <QuizForm />
         </div>
       </div>
-      <div className="mt-5">
-        <TechnicalStackWrapper />
+      <div className="flex lg:items-center lg:justify-center -ml-4 sm:ml-0 mt-1 sm:mt-4 w-full">
+        <TechnicalStackWrapper isCanRemove={true} />
       </div>
     </>
   );

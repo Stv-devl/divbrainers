@@ -27,6 +27,7 @@ import IconBreak from '../icons/pages/IconBreak';
 import IconChevronDown from '../icons/pages/IconChevronDown';
 import IconClose from '../icons/pages/IconClose';
 import IconPhone from '../icons/pages/IconPhone';
+import IconReload from '../icons/pages/IconReload';
 import IconStart from '../icons/pages/IconStart';
 import IconStop from '../icons/pages/IconStop';
 import IconUploadImage from '../icons/pages/IconUploadImage';
@@ -64,4 +65,5 @@ export const iconsMap = {
   IconPhone,
   IconBreak,
   IconBack,
+  IconReload,
 };

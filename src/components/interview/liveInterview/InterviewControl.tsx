@@ -33,11 +33,9 @@ const InterviewControl = ({
 
   const { stack } = interview;
 
-  console.log(stack);
-
   return (
     <div className="flex flex-col sm:flex-row justify-between items-center w-[98%] sm:w-[95%] lg:w-[90%] xl:w-[75%] mx-auto my-5 sm:my-10">
-      <TechnicalStackWrapper backendStack={stack} />
+      <TechnicalStackWrapper backendStack={stack} isCanRemove={false} />
       <div className="flex justify-end sm:justify-center gap-2 mt-5 sm:mt-0">
         <div className="w-32 h-8">
           <Button
