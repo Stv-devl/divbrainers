@@ -8,6 +8,7 @@ import { iconsMap } from '../../../constante/iconsMap';
 const featureRoutes: Record<string, string> = {
   'AI Interviews': '/interview',
   'ATS Resume Scan': '/scan',
+  Quiz: '/quiz',
 };
 
 const Home = () => {
