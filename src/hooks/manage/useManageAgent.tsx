@@ -153,17 +153,6 @@ export const useInterviewAgent = (user: UserProfile, interview: Interview) => {
         questions: formattedQuestions,
       },
     });
-
-    /*
-   //alternative with workflow (to fix)
-    const formattedQuestions =
-      questions?.map((question: string) => `- ${question}`).join('\n') ?? '';
-    await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!, {
-      variableValues: {
-        userid: userId,
-        questions: formattedQuestions,
-      },
-    });*/
   };
 
   const handleDisconnect = () => {

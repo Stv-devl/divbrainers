@@ -3,14 +3,11 @@
 /*------------------------
    Root Variables & Fonts
 -------------------------*/
-:root {
-  font-family: var(--font-instrument-sans), sans-serif;
-}
 
 body {
   font-family: var(--font-outfit), sans-serif;
   font-weight: 400;
-  font-size: 16px;
+
   font-style: normal;
   color: #404040;
   margin: 0;

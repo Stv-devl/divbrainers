@@ -18,7 +18,7 @@ const optionsPosition = [
   { label: 'Software Architect', value: 'software-architect' },
 ];
 
-const optionsDifficulty = [
+export const optionsDifficulty = [
   { label: 'Junior', value: 'junior' },
   { label: 'Mid-level', value: 'mid-level' },
   { label: 'Senior', value: 'senior' },

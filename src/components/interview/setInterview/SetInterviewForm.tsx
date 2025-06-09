@@ -74,7 +74,6 @@ const SetInterviewForm = ({ setIsLoading }: SetInterviewFormProps) => {
       router.push(`/interview/live/${newInterview.id}`);
     } catch (error) {
       console.error('Update failed:', error);
-    } finally {
       setIsLoading(false);
     }
   };

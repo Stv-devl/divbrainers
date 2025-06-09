@@ -6,11 +6,13 @@ import './globals.css';
 const outfit = Outfit({
   variable: '--font-outfit',
   subsets: ['latin'],
+  display: 'swap',
 });
 
 const instrumentSans = Instrument_Sans({
   variable: '--font-instrument-sans',
   subsets: ['latin'],
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -74,7 +76,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${outfit.variable} ${instrumentSans.variable} antialiased bg-white sm:bg-gray-100  flex h-screen w-screen flex-col p-0 sm:p-5`}
+        className={`${outfit.variable} ${instrumentSans.variable} antialiased bg-white sm:bg-gray-100 flex h-screen w-screen flex-col p-0 text-base sm:p-5`}
       >
         <SessionContext>{children}</SessionContext>
       </body>

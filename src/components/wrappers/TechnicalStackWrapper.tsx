@@ -13,8 +13,10 @@ import { iconsMap } from '../../constante/iconsMap';
  */
 const TechnicalStackWrapper = ({
   backendStack,
+  isCanRemove = true,
 }: {
   backendStack?: string[];
+  isCanRemove?: boolean;
 }) => {
   const { stack, removeFromStack } = useInterviewStore();
 
@@ -37,12 +39,10 @@ const TechnicalStackWrapper = ({
             priority
           />
           <p>{item.tech}</p>
-          {!backendStack && (
+          {isCanRemove && !backendStack && (
             <iconsMap.IconClose
               className="absolute size-5 right-0 top-0 cursor-pointer hover:scale-105 transition-transform duration-500"
-              onClick={() => {
-                removeFromStack(item.tech);
-              }}
+              onClick={() => removeFromStack(item.tech)}
             />
           )}
         </div>
