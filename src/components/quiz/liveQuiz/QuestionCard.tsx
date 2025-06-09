@@ -5,6 +5,13 @@ interface QuestionCardProps {
   currentQuestion: string;
 }
 
+/**
+ * Component that displays a question card with a recruiter avatar and question text
+ * @component
+ * @param {QuestionCardProps} props - Component props
+ * @param {string} props.currentQuestion - The question text to display
+ * @returns {JSX.Element} The rendered question card
+ */
 const QuestionCard: React.FC<QuestionCardProps> = ({ currentQuestion }) => {
   return (
     <div className="relative w-full bg-white shadow-sm border border-gray-300 rounded-lg">

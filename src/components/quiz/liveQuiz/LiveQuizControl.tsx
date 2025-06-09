@@ -8,6 +8,15 @@ interface LiveQuizControlProps {
   isCorrect: boolean;
 }
 
+/**
+ * Component that renders the control buttons for the live quiz
+ * @component
+ * @param {LiveQuizControlProps} props - Component props
+ * @param {() => void} props.handleValidate - Function to validate the current answer
+ * @param {() => void} props.handleNewQuestion - Function to load a new question
+ * @param {boolean} props.isCorrect - Flag indicating if the current answer is correct
+ * @returns {JSX.Element} The rendered control buttons
+ */
 const LiveQuizControl: React.FC<LiveQuizControlProps> = ({
   handleValidate,
   handleNewQuestion,

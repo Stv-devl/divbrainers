@@ -9,6 +9,12 @@ import { generateSkillsListPrompt } from '../../helpers/prompt/scan/generateSkil
 import { getCurrentSession } from '../../helpers/security/getCurrentSession';
 import { jobOfferSchema } from '../../schema/jobOfferShema';
 
+/**
+ * Analyzes a job offer to extract skills and provide analysis
+ * @param {string} resumeValue - The job offer text to analyze
+ * @returns {Promise<{skills: any, rawOfferAnalyse: string}>} Object containing extracted skills and offer analysis
+ * @throws {Error} If validation fails, user data is not found, or AI generation fails
+ */
 export async function offerAnalyse(resumeValue: string) {
   try {
     const session = await getCurrentSession();

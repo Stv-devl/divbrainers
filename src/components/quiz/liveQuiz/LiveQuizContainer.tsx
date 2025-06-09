@@ -5,10 +5,15 @@ import AnswerOptionList from '@/components/quiz/liveQuiz/AnswerOptionList';
 import LiveQuizControl from '@/components/quiz/liveQuiz/LiveQuizControl';
 import QuestionCard from '@/components/quiz/liveQuiz/QuestionCard';
 import TechnicalStackWrapper from '@/components/wrappers/TechnicalStackWrapper';
-import { Question } from '@/service/quiz/startQuizSession';
+
+interface questionProps {
+  question: string;
+  answers: string[];
+  correctAnswer: string;
+}
 
 interface LiveQuizContainerProps {
-  currentQuestion: Question;
+  currentQuestion: questionProps;
   handleNewQuestion: () => void;
   handleValidate: () => void;
   setSelectedAnswer: (value: string) => void;
@@ -18,7 +23,12 @@ interface LiveQuizContainerProps {
   error: string;
   setError: (value: string) => void;
 }
-
+/**
+ * Container component for the live quiz interface
+ * @component
+ * @param {LiveQuizContainerProps} props - Component props
+ * @returns {JSX.Element} The rendered live quiz container
+ */
 const LiveQuizContainer: React.FC<LiveQuizContainerProps> = ({
   currentQuestion,
   handleNewQuestion,

@@ -4,9 +4,10 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Loading from '@/components/loading/Loading';
 import LiveQuizContainer from '@/components/quiz/liveQuiz/LiveQuizContainer';
 import BackButton from '@/components/ui/buttons/BackButton';
-import { startQuizSession } from '@/service/quiz/startQuizSession';
 import useInterviewStore from '@/store/useStoreInterview';
+import { createQuiz } from '../../../../../lib/actions/quiz/createQuiz';
 import { quizCheckAnswerShema } from '../../../../../lib/schema/quizCheckAnswerShema';
+import { stackShema } from '../../../../../lib/schema/stackShema';
 import { getStoredQuestion } from '../../../../../lib/utils/getStoredQuestion';
 
 type Question = {
@@ -48,11 +49,28 @@ const Page = () => {
     setSelectedAnswer('');
 
     const difficulty = currentQuestion?.difficulty ?? 'junior';
-    const result = await startQuizSession(difficulty, stack);
+
+    const validated = stackShema.safeParse({ stack });
+    if (!validated.success) {
+      setError(validated.error.errors[0]?.message || 'Invalid stack selection');
+      setIsLoading(false);
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('difficulty', difficulty);
+    formData.append('stack', JSON.stringify(stack));
+
+    const result = await createQuiz(formData);
 
     if (result.success) {
-      const nextQuestion = getStoredQuestion();
-      if (nextQuestion) setCurrentQuestion(nextQuestion);
+      sessionStorage.setItem(
+        'currentQuestion',
+        JSON.stringify(result.question)
+      );
+      setCurrentQuestion(result.question);
+    } else {
+      setError(result.message || 'Failed to load new question');
     }
 
     setIsLoading(false);

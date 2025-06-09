@@ -6,7 +6,8 @@
 export function sanitizeJsonString(text: string): string {
   return text
     .replace(/^```json\s*/i, '')
-    .replace(/^```\s*/i, '')
-    .replace(/ \s*```$/, '')
+    .replace(/^```/, '')
+    .replace(/```$/, '')
+    .replace(/\n```$/, '')
     .trim();
 }

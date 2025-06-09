@@ -13,6 +13,12 @@ interface AnswerOptionListProps {
 
 const letters = ['A', 'B', 'C', 'D'] as const;
 
+/**
+ * Component that renders a list of answer options for a quiz question
+ * @component
+ * @param {AnswerOptionListProps} props - Component props
+ * @returns {JSX.Element} Rendered answer options list
+ */
 const AnswerOptionList: React.FC<AnswerOptionListProps> = ({
   currentQuestion,
   selectedAnswer,
@@ -22,6 +28,11 @@ const AnswerOptionList: React.FC<AnswerOptionListProps> = ({
   setSelectedAnswer,
   setError,
 }) => {
+  /**
+   * Generates CSS classes for the list item based on answer state
+   * @param {string} answer - The answer text
+   * @returns {string} Combined CSS classes
+   */
   const getLiClass = (answer: string) =>
     cn(
       'flex items-center justify-between gap-3 p-3 bg-white rounded-lg shadow-sm transition-all',
@@ -33,6 +44,12 @@ const AnswerOptionList: React.FC<AnswerOptionListProps> = ({
         ? 'border border-blue-500'
         : 'border border-gray-300'
     );
+
+  /**
+   * Generates CSS classes for the radio input based on answer state
+   * @param {string} answer - The answer text
+   * @returns {string} Combined CSS classes
+   */
   const getRadioClass = (answer: string) =>
     cn(
       'w-5 h-5 border-2 appearance-none cursor-pointer',

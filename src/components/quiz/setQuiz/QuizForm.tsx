@@ -10,8 +10,8 @@ import { dropdownController } from '@/components/ui/form/dropdown/DropdownContro
 import InputSelectStack from '@/components/ui/form/input/InputSelectStack';
 import { iconStackMapping } from '@/constante/iconStackMap';
 import { optionsDifficulty } from '@/constante/interviewFormData';
-import { startQuizSession } from '@/service/quiz/startQuizSession';
 import useInterviewStore from '@/store/useStoreInterview';
+import { createQuiz } from '../../../../lib/actions/quiz/createQuiz';
 import {
   quizFormSchema,
   QuizFormSchemaType,
@@ -50,29 +50,27 @@ const QuizForm = () => {
     setServerError('');
 
     const result = stackShema.safeParse({ stack });
-
     if (!result.success) {
-      const message =
-        result.error.errors[0]?.message || 'Please select at least one stack.';
-      setStackError(message);
+      setStackError(result.error.errors[0]?.message || 'Invalid stack');
       return;
     }
+    setLoading(true);
+
+    const formData = new FormData();
+    formData.set('difficulty', data.difficulty);
+    formData.set('stack', JSON.stringify(stack));
 
     try {
-      setLoading(true);
-
-      const result = await startQuizSession(data.difficulty, stack);
-
-      if (!result.success) {
-        setServerError(result.message || 'Server error occurred');
-        setLoading(false);
+      const res = await createQuiz(formData);
+      if (!res.success) {
+        setServerError(res.message || 'Server error occurred');
         return;
       }
-
+      sessionStorage.setItem('currentQuestion', JSON.stringify(res.question));
       router.push('/quiz/live');
     } catch (err) {
       console.error(err);
-      setServerError('Unexpected error while creating quiz');
+      setServerError('Unexpected error');
       setLoading(false);
     }
   };
