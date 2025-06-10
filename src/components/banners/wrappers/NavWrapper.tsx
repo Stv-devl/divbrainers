@@ -22,6 +22,7 @@ const NavWrapper: React.FC<NavWrapperProps> = ({
   icon,
 }: NavWrapperProps) => {
   const IconComponent = iconsMap[icon as keyof typeof iconsMap];
+
   return (
     <Link
       className={twMerge(

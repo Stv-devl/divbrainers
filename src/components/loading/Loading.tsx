@@ -22,7 +22,7 @@ const Loading = ({ value, isLoggedIn }: LoadingProps) => {
           isLoggedIn && 'translate-x-0 sm:translate-x-[65px] lg:translate-x-0'
         )}
       >
-        <span className="size-[60px] animate-spin rounded-full border-[10px] border-blue-500 border-t-gray-200"></span>
+        <span className="size-[60px] animate-[spin_2s_linear_infinite] rounded-full border-[10px] border-blue-500 border-t-gray-200"></span>
         {value && (
           <p className="mt-2 text-center text-blue-500 font-semibold">
             {value}

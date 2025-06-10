@@ -3,7 +3,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
-import React from 'react';
+import React, { useState } from 'react';
+import LanguageSwitcher from '@/components/ui/Languages/LanguageSwitcher';
 import ThemeSwitcher from '@/components/ui/theme/ThemeSwitcher';
 import { UserProfile } from '@/types/type';
 import { iconsMap } from '../../../constante/iconsMap';
@@ -19,6 +20,8 @@ const ProfileWrapper = ({ user }: { user: UserProfile }) => {
   const { profileImage, handleImageError } = useProfileImage(
     typeof user?.image === 'string' ? user.image : null
   );
+
+  const [isLangOpen, setIsLangOpen] = useState(false);
 
   const iconWrapperStyle =
     'sm:banner-link flex items-center p-0 sm:p-3 rounded-lg cursor-pointer';
@@ -39,7 +42,10 @@ const ProfileWrapper = ({ user }: { user: UserProfile }) => {
         />
       </Link>
       <div className="flex gap-4 sm:gap-0 ">
-        <div className={iconWrapperStyle}>
+        <div
+          className={iconWrapperStyle}
+          onClick={() => setIsLangOpen(!isLangOpen)}
+        >
           <iconsMap.IconLanguage className={`size-7 ${hoverScale}`} />
         </div>
         <div className={iconWrapperStyle}>
@@ -51,6 +57,10 @@ const ProfileWrapper = ({ user }: { user: UserProfile }) => {
           />
         </div>
       </div>
+      <LanguageSwitcher
+        isOpen={isLangOpen}
+        onClose={() => setIsLangOpen(false)}
+      />
     </div>
   );
 };
