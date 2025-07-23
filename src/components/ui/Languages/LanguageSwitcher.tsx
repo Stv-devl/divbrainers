@@ -1,39 +1,23 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface LanguageSwitcherProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-/**
- * LanguageSwitcher component that allows users to switch between different languages
- * @param {LanguageSwitcherProps} props - The component props
- * @returns {JSX.Element | null} A dropdown menu for language selection or null if not open
- */
 const LanguageSwitcher = ({ isOpen, onClose }: LanguageSwitcherProps) => {
-  const router = useRouter();
-  const pathname = usePathname();
+  const { i18n } = useTranslation();
   const ref = useRef<HTMLDivElement>(null);
 
-  /**
-   * Changes the current language by updating the URL path
-   * @param {string} lang - The language code to switch to
-   */
   const changeLanguage = (lang: string) => {
-    const segments = pathname.split('/');
-    segments[1] = lang;
-    router.push(segments.join('/'));
+    i18n.changeLanguage(lang);
     onClose();
   };
 
   useEffect(() => {
-    /**
-     * Handles clicks outside the language switcher to close it
-     * @param {MouseEvent} event - The mouse event
-     */
     const handleClickOutside = (event: MouseEvent) => {
       if (ref.current && !ref.current.contains(event.target as Node)) {
         onClose();

@@ -1,14 +1,16 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { postResetPassword } from '@/service/auth/postResetPassword';
 import {
-  newPasswordSchema,
+  getNewPasswordSchema,
   NewPasswordSchemaType,
 } from '../../../lib/schema/newPasswordSchema';
 
 const useResetPassword = () => {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const {
     register,
@@ -16,9 +18,8 @@ const useResetPassword = () => {
     formState: { errors, isSubmitting },
     setError,
   } = useForm<NewPasswordSchemaType>({
-    resolver: zodResolver(newPasswordSchema),
+    resolver: zodResolver(getNewPasswordSchema(t)),
   });
-
   const onSubmit = async (data: NewPasswordSchemaType) => {
     try {
       const urlParams = new URLSearchParams(window.location.search);
@@ -32,7 +33,7 @@ const useResetPassword = () => {
         return;
       }
 
-      const parsed = newPasswordSchema.safeParse(data);
+      const parsed = getNewPasswordSchema(t).safeParse(data);
 
       if (!parsed.success) {
         setError('password', {

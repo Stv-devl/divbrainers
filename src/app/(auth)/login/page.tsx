@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import React from 'react';
+import { useClientTranslation } from '@/hooks/i18n/useClientTranslation';
 import Loading from '../../../components/loading/Loading';
 import Button from '../../../components/ui/buttons/Button';
 import InputWithIcon from '../../../components/ui/form/input/InputWithIcon';
@@ -20,16 +21,21 @@ const Login = () => {
     handleSubmit,
     onSubmit,
     errors,
-    globalError,
     isSubmitting,
     handleGoogleSignIn,
   } = useLogin();
 
+  const { t, isClient } = useClientTranslation();
+
+  if (!isClient) return null;
+
   return (
     <>
       <div className="flex flex-col gap-[24px]">
-        <h1 className="font-color-theme text-2xl font-bold">Login</h1>
-        <p>Add your details below to get back into the app</p>
+        <h1 className="font-color-theme text-2xl font-bold">
+          {t('login.title')}
+        </h1>
+        <p>{t('login.subtitle')}</p>
       </div>
 
       <form
@@ -42,8 +48,8 @@ const Login = () => {
             <InputWithIcon
               registration={register('email')}
               name="email"
-              label="Email address"
-              placeholder="Write your email"
+              label={t('login.form.email.label')}
+              placeholder={t('login.form.email.placeholder')}
               type="text"
               error={errors.email?.message || ''}
               autoComplete="email"
@@ -54,8 +60,8 @@ const Login = () => {
             <InputWithIcon
               registration={register('password')}
               name="password"
-              label="Password"
-              placeholder="Enter your password"
+              label={t('login.form.password.label')}
+              placeholder={t('login.form.password.placeholder')}
               type="password"
               error={errors.password?.message || ''}
               autoComplete="current-password"
@@ -65,37 +71,38 @@ const Login = () => {
               href="/sendlink"
               className="absolute top-0.5 right-0 text-dark-blue font-semibold"
             >
-              Forget your password?
+              {t('login.form.forgot')}
             </Link>
-            {globalError && (
-              <p className="absolute top-20 right-0 text-red-500">
-                {globalError}
-              </p>
-            )}
           </div>
         </div>
+
         {isSubmitting && <Loading />}
-        <div className="mt-4 h-[46px] w-full ">
+
+        <div className="mt-4 h-[46px] w-full">
           <Button
-            label="Login"
+            label={t('login.form.submit')}
             type="submit"
             color="filled"
             disabled={isSubmitting}
           />
         </div>
-        <div className="h-[46px] w-full ">
+
+        <div className="h-[46px] w-full">
           <Button
-            label="Login with Google"
+            label={t('login.form.google')}
             onClick={handleGoogleSignIn}
             color="empty"
             IconComponent={iconsMap.IconGoogle}
             disabled={isSubmitting}
           />
         </div>
+
         <p className="px-[5%] sm:px-[10%]">
-          Don't have an account?{' '}
+          {t('login.footerLogin.noAccount')}{' '}
           <Link href="/signup">
-            <span className="text-dark-blue font-semibold">Create account</span>
+            <span className="text-dark-blue font-semibold">
+              {t('login.footerLogin.create')}
+            </span>
           </Link>
         </p>
       </form>

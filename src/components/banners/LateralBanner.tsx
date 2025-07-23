@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import React from 'react';
 import { navItems } from '@/constante/constante';
+import { useClientTranslation } from '@/hooks/i18n/useClientTranslation';
 import NavWrapper from './wrappers/NavWrapper';
 
 /**
@@ -11,6 +12,9 @@ import NavWrapper from './wrappers/NavWrapper';
  */
 const LateralBanner = () => {
   const pathname = usePathname();
+  const { t, isClient } = useClientTranslation();
+
+  if (!isClient) return null;
 
   return (
     <nav className="hidden sm:block fixed z-10 left-0 top-18 h-full bg-white w-[120px] pt-4 shadow-sm">
@@ -18,7 +22,7 @@ const LateralBanner = () => {
         {navItems.map((item) => (
           <NavWrapper
             key={item.path}
-            type={item.type}
+            type={t(item.type)}
             isSelected={pathname === item.path}
             link={item.path}
             icon={item.icon}

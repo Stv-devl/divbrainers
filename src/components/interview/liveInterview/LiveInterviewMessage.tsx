@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
+import { TFunction } from 'i18next';
 import Image from 'next/image';
 import React from 'react';
 import { DisplayedMessage } from '@/types/type';
@@ -6,6 +7,7 @@ import { cn } from '../../../../lib/utils/cn';
 
 interface Props {
   messages: DisplayedMessage[];
+  t: TFunction;
 }
 
 /**
@@ -14,9 +16,10 @@ interface Props {
  * @param {DisplayedMessage[]} props.messages - Array of messages to display
  * @returns {JSX.Element} The CallInterviewMessage component
  */
-const CallInterviewMessage = ({ messages }: Props) => {
+const CallInterviewMessage = ({ messages, t }: Props) => {
   const recruiterMessages = messages.filter((msg) => msg.role === 'assistant');
   const visibleMessages = recruiterMessages.slice(-2);
+
   return (
     <div className="w-[90%] sm:w-[95%] lg:w-[90%] xl:w-[75%] mx-auto">
       <div className="relative mt-5 sm:mt-10 w-full bg-white shadow-sm border border-gray-300 rounded-lg">
@@ -28,7 +31,9 @@ const CallInterviewMessage = ({ messages }: Props) => {
             height={60}
             className="ml-0 ssm:ml-5 w-[60px] h-[60px] object-cover rounded-full border-2 border-blue-800"
           />
-          <h3 className="text-lg font-bold">Julia Divana ask :</h3>
+          <h3 className="text-lg font-bold">
+            {t('liveInterview.recruiterName')}
+          </h3>
         </div>
         <div className="flex flex-col w-full gap-2 px-4 py-5 sm:px-6 sm:py-6">
           <AnimatePresence mode="popLayout">

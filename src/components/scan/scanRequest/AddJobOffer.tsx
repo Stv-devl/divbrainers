@@ -26,6 +26,7 @@ const AddJobOffer: React.FC<AddJobOfferProps> = ({
   keywords,
   setKeywords,
   setAnalizeJobOffer,
+  t,
 }) => {
   const [jobOffer, setJobOffer] = useState('');
   const [isValidated, setIsValidated] = useState(false);
@@ -91,7 +92,7 @@ const AddJobOffer: React.FC<AddJobOfferProps> = ({
   return (
     <div className="w-full space-y-4 sm:space-y-5 sm:bg-white py-4 sm:p-8 sm:rounded-lg sm:shadow-sm">
       <h2 className="text-lg sm:text-xl font-semibold text-blue-800">
-        Copy and paste the job offer:
+        {t('atsScan.addJobOffer.title')}
       </h2>
 
       <div>
@@ -99,7 +100,7 @@ const AddJobOffer: React.FC<AddJobOfferProps> = ({
           id="jobOffer"
           name="joboffer"
           value={jobOffer}
-          placeholder="Add the job offer here"
+          placeholder={t('atsScan.addJobOffer.placeholder')}
           className={cn(
             'input-theme w-full h-[200px] rounded-lg p-2 lg:p-4 text-sm lg:text-base resize-none',
             !!error?.jobOffer && !isValidated
@@ -120,7 +121,7 @@ const AddJobOffer: React.FC<AddJobOfferProps> = ({
       {isValidated && keywords.length > 0 && (
         <>
           <h3 className="text-xl font-semibold text-blue-800">
-            Position skills :
+            {t('atsScan.addJobOffer.skills')}
           </h3>
           <div className="flex gap-2 flex-wrap">
             {keywords.map((keyword, index) => (
@@ -143,7 +144,11 @@ const AddJobOffer: React.FC<AddJobOfferProps> = ({
       )}
       <div className="w-44 h-10 mx-auto">
         <Button
-          label={isValidated ? 'Validated' : 'Validate offer'}
+          label={
+            isValidated
+              ? t('atsScan.addJobOffer.validated')
+              : t('atsScan.addJobOffer.validate')
+          }
           type="button"
           color="filled"
           onClick={handleValidate}

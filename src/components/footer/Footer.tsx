@@ -1,22 +1,36 @@
+'use client';
+
 import { iconsMap } from '@/constante/iconsMap';
+import { useClientTranslation } from '@/hooks/i18n/useClientTranslation';
 
 /**
  * Footer component displaying legal information, support links and social media
  * @returns {JSX.Element} The footer component
  */
 const Footer = () => {
+  const { t, isClient } = useClientTranslation();
+
+  if (!isClient) return null;
+
   const footerLinks = [
     {
-      title: 'Legal',
-      links: ['Legal Notice', 'Privacy Policy', 'Cookie Management'],
+      title: t('footer.legal.title'),
+      links: [
+        t('footer.legal.links.notice'),
+        t('footer.legal.links.privacy'),
+        t('footer.legal.links.cookies'),
+      ],
     },
     {
-      title: 'Support',
-      links: ['Contact', 'FAQ'],
+      title: t('footer.support.title'),
+      links: [t('footer.support.links.contact'), t('footer.support.links.faq')],
     },
     {
-      title: 'Social Media',
-      links: ['LinkedIn', 'GitHub'],
+      title: t('footer.social.title'),
+      links: [
+        t('footer.social.links.linkedin'),
+        t('footer.social.links.github'),
+      ],
     },
   ];
 

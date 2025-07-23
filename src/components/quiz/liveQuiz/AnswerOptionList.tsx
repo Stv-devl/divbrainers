@@ -1,4 +1,5 @@
 import React from 'react';
+import { useClientTranslation } from '@/hooks/i18n/useClientTranslation';
 import { cn } from '../../../../lib/utils/cn';
 
 interface AnswerOptionListProps {
@@ -28,6 +29,8 @@ const AnswerOptionList: React.FC<AnswerOptionListProps> = ({
   setSelectedAnswer,
   setError,
 }) => {
+  const { t } = useClientTranslation();
+
   /**
    * Generates CSS classes for the list item based on answer state
    * @param {string} answer - The answer text
@@ -91,7 +94,7 @@ const AnswerOptionList: React.FC<AnswerOptionListProps> = ({
       {error && <span className="text-red-500">{error}</span>}
       {isCorrect && (
         <span className="text-green-600 font-medium">
-          Congratulations, correct answer!
+          {t('Quiz.liveQuiz.correctAnswer')}
         </span>
       )}
     </ul>

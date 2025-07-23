@@ -17,7 +17,6 @@ describe('useLogin hook', () => {
     expect(result.current).toHaveProperty('handleSubmit');
     expect(result.current).toHaveProperty('onSubmit');
     expect(result.current).toHaveProperty('errors');
-    expect(result.current).toHaveProperty('globalError');
     expect(result.current).toHaveProperty('isSubmitting');
     expect(result.current).toHaveProperty('handleGoogleSignIn');
   });
@@ -81,8 +80,6 @@ describe('useLogin hook', () => {
     });
 
     expect(mockSignIn).toHaveBeenCalled();
-
-    expect(result.current.globalError).toBe('Email or password incorrect');
   });
 
   it('should call signIn with google provider', async () => {

@@ -28,7 +28,6 @@ const getMockedUseLoginProps = (overrides = {}) => ({
   handleSubmit: jest.fn(),
   onSubmit: jest.fn(),
   errors: {},
-  globalError: '',
   isSubmitting: false,
   handleGoogleSignIn: jest.fn(),
   ...overrides,
@@ -50,7 +49,9 @@ describe('Login Page', () => {
   it('renders all login elements correctly', async () => {
     await renderLogin();
     expect(screen.getByLabelText('Email address')).toBeInTheDocument();
-    expect(screen.getByLabelText('Password')).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText('Enter your password')
+    ).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Login' })).toBeInTheDocument();
     expect(
       screen.getByRole('button', { name: 'Login with Google' })
@@ -101,10 +102,15 @@ describe('Login Page', () => {
     mockedUseLogin.mockReturnValue(
       getMockedUseLoginProps({
         errors: {
-          email: { message: 'Invalid email address', type: 'required' },
-          password: { message: 'At least 8 characters', type: 'required' },
+          email: {
+            message: 'Invalid email address',
+            type: 'required',
+          },
+          password: {
+            message: 'At least 8 characters',
+            type: 'required',
+          },
         },
-        globalError: 'Email or password incorrect',
       })
     );
 
@@ -112,7 +118,6 @@ describe('Login Page', () => {
 
     expect(screen.getByText('Invalid email address')).toBeInTheDocument();
     expect(screen.getByText('At least 8 characters')).toBeInTheDocument();
-    expect(screen.getByText('Email or password incorrect')).toBeInTheDocument();
   });
 
   it('has no accessibility violations', async () => {

@@ -1,0 +1,352 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "quiz": "Quiz",
+    "coding": "Code",
+    "interview": "Entretien",
+    "ats": "Scan CV"
+  },
+  "logoutNavBar": {
+    "login": "Connexion",
+    "register": "S'inscrire"
+  },
+  "homepage": {
+    "welcome": "Bienvenue sur la V1 de DivBrainers",
+    "now": "Ce que vous pouvez déjà faire :",
+    "soon": "Ce qui arrive bientôt :"
+  },    
+  "features": {
+    "quiz": {
+      "title": "Quiz",
+      "description": "Testez-vous avec des quiz adaptés à votre stack technique et votre niveau."
+    },
+    "coding": {
+      "title": "Coding Live",
+      "description": "Codez en direct via notre console avec des questions techniques en conditions réelles."
+    },
+    "ai": {
+      "title": "Entretiens IA",
+      "description": "Préparez vos entretiens avec des simulations d’entretien animées par une IA."
+    },
+    "stats": {
+      "title": "Statistiques",
+      "description": "Suivez vos progrès avec des stats de performance détaillées et des visualisations claires."
+    },
+    "ats": {
+      "title": "Scan de CV ATS",
+      "description": "Uploadez votre CV et recevez des retours IA pour passer les filtres ATS."
+    }
+  },
+"hero": {
+  "title": "Améliorez vos compétences en programmation gratuitement et préparez-vous aux entretiens",
+  "description": "Entraînez-vous avec des quiz, des exercices de code en direct et des simulations d'entretien alimentées par l'IA.",
+  "cta": "Commencer !"
+},
+"advertising": {
+  "free": "100% gratuit et sans publicité",
+  "suitable": "Adapté aux débutants et aux utilisateurs expérimentés",
+  "responsive": "Fonctionne sur tous les écrans",
+  "ctaTitle": "Prêt à améliorer vos compétences ?",
+  "ctaButton": "Inscrivez-vous !"
+},
+  "profile": {
+    "titleWrapper": {
+      "title" :"Mettre à jour votre profil :",
+      "description": "Ajoutez vos informations pour personnaliser votre profil"
+    },
+    "fields": {
+      "name": {
+        "label": "Identifiant",
+        "placeholder": "Entrez votre identifiant"
+      },
+      "email": {
+        "label": "E-mail",
+        "placeholder": "Entrez votre adresse e-mail"
+      }
+    },
+    "edit": "Modifier",
+    "pictureLabel": "Photo de profil",
+    "changeImage": "Changer l’image",
+    "uploadPicture": "Télécharger une image",
+    "imageHint": "L’image doit faire moins de 1024x1024px. Formats acceptés : PNG ou JPG.",
+    "invalidFormat": "Veuillez importer une image au format JPG ou PNG.",
+    "invalidSize": "L’image doit faire moins de {{size}} Mo.",
+    "invalidDimension": "Les dimensions doivent être inférieures à {{size}}x{{size}} px.",
+    "noChanges": "Vous devez modifier au moins un champ pour mettre à jour votre profil.",
+    "updateFailed": "La mise à jour du profil a échoué. Veuillez réessayer."
+  }, 
+  "Quiz": {
+    "titleWrapper": {
+      "titleSet": "Sélectionnez votre quiz",
+      "titleLive": "Répondez aux questions"
+    },
+    "form": {
+      "fields": {
+          "stack": {
+            "label": "Ajouter votre stack",
+            "placeholder": "Sélectionnez votre stack"
+          },
+          "difficulty": {
+            "label": "Difficulté",
+            "junior": "Débutant",
+            "mid": "Intermédiaire",
+            "senior": "Expert"
+          }
+        },  
+          "errors": {
+            "min": "Veuillez sélectionner au moins un stack",
+            "max": "Vous ne pouvez sélectionner que 6 stacks",
+            "default": "Stack invalide"
+          },
+        "button": "Démarrer le quiz",
+        "loading": "Génération de la question..."
+      },
+      "liveQuiz": {
+        "interviewer": "Julia Divana demande : ",
+        "buttonReload": "Recharger",
+        "buttonNext": "Suivant",
+        "buttonValidate": "Valider",
+        "loading": "Génération de la question...",
+        "correctAnswer": "Félicitations, bonne réponse !",
+        "errors": {
+          "required": "Vous devez choisir une réponse.",
+          "invalidType": "La réponse doit être une chaîne de caractères.",
+          "incorrect": "Réponse incorrecte, veuillez réessayer."
+      }
+      }
+    },
+    "interview": {
+      "titleWrapper": {
+        "titleSet": "Bienvenue ! Installez-vous",
+        "titleLive": "Répondez aux questions",
+        "titlePreviousInterviews": "Vos entretiens précédents :"
+      },
+      "form": {
+        "fields": {
+          "stack": {
+            "label": "Ajouter votre stack",
+            "placeholder": "Sélectionnez votre stack"
+          },
+          "difficulty": {
+            "label": "Difficulté",
+            "junior": "Débutant",
+            "mid": "Intermédiaire",
+            "senior": "Expert"
+          },
+          "position": {
+            "label": "Position",
+            "placeholder": "Choisissez votre rôle",
+            "options": {
+              "front-end": "Développeur Front-End",
+              "back-end": "Développeur Back-End",
+              "full-stack": "Développeur Full-Stack",
+              "mobile": "Développeur Mobile",
+              "devops": "Ingénieur DevOps",
+              "cloud-engineer": "Ingénieur Cloud",
+              "qa": "Ingénieur QA",
+              "data-engineer": "Ingénieur Data",
+              "ai-ml": "Ingénieur AI/ML",
+              "cyber-security": "Ingénieur Cybersecurity",
+              "ux-ui-designer": "Designer UX/UI",
+              "product-manager": "Product Manager",
+              "tech-lead": "Tech Lead",
+              "software-architect": "Architecte Logiciel"
+            }
+          },
+          "interviewType": {
+            "label": "Type d'entretien",
+            "placeholder": "Choisissez le type",
+            "options": {
+              "technical": "Technique",
+              "behavioral": "Comportemental",
+              "mixed": "Mixte"
+            }
+          },
+          "numberOfQuestions": {
+            "label": "Nombre de questions",
+            "placeholder": "Sélectionnez un nombre"
+          }
+        },
+        "errors": {
+          "position": "La position est requise",
+          "difficulty": "La difficulté est requise",
+          "interviewType": "Le type d'entretien est requis",
+          "numberOfQuestions": "Le nombre de questions est requis",
+          "min": "Veuillez sélectionner au moins un stack",
+          "max": "Vous ne pouvez sélectionner que 6 stacks",
+          "default": "Stack invalide"
+        },
+        "button": "Démarrer",
+        "loading": "Génération de l'entretien..."
+      },
+      "interviewCard": {
+        "title": "Entretien",
+        "start": "Démarrer",
+        "delete": "Supprimer"
+      }
+    },
+"liveInterview": {
+  "title": "Interview {{position}}",
+  "recruiterName": "Julia Divana demande :",
+  "subtitle": "Entretien technique avec le recruteur",
+  "loadingMessages": {
+    "CONNECTING": "Connexion à l'entretien.",
+    "GENERATING_FEEDBACK": "Génération de l'avis..."
+  },
+  "controls": {
+    "start": "Démarrer",
+    "end": "Terminer",
+    "call": "Appeler",
+    "disconnect": "Déconnecter"
+  }
+},
+"atsScan": {
+  "title": "Scan de CV ATS",
+  "sendButton": "Envoyer votre CV",
+  "loading": "Génération de l'avis...",
+  "addResume": {
+    "title": "Téléchargez votre CV :",
+    "label": "Parcourez votre CV :"
+  },
+  "addJobOffer": {
+    "title": "Copiez et collez l'offre d'emploi :",
+    "placeholder": "Ajoutez l'offre d'emploi ici",
+    "skills": "Compétences de la position :",
+    "validate": "Valider l'offre",
+    "validated": "Validé",
+    "error": {
+      "generic": "Une erreur est survenue"
+    }
+  }
+},
+"login": {
+  "title": "Connexion",
+  "subtitle": "Ajoutez vos informations ci-dessous pour vous connecter",
+  "form": {
+    "email": {
+      "label": "Adresse email",
+      "placeholder": "Écrivez votre email"
+    },
+    "password": {
+      "label": "Mot de passe",
+      "placeholder": "Entrez votre mot de passe"
+    },
+    "forgot": "Mot de passe oublié?",
+    "submit": "Se connecter",
+    "google": "Se connecter avec Google",
+    "errors": {
+      "email": {
+        "invalid": "Adresse email invalide"
+      },
+      "password": {
+        "min": "Au moins 8 caractères"
+      }
+    }
+  },
+  "footerLogin": {
+    "noAccount": "Vous n'avez pas de compte?",
+    "create": "Inscription"
+  }
+},  
+"signup": {
+  "title": "Créer un compte",
+  "subtitle": "Commencez à partager vos liens!",
+  "form": {
+    "email": {
+      "label": "Adresse email",
+      "placeholder": "Écrivez votre email"
+    },
+    "password": {
+      "label": "Mot de passe",
+      "placeholder": "Au moins 8 caractères"
+    },
+    "repeat": {
+      "label": "Confirmer",
+      "placeholder": "Au moins 8 caractères"
+    },
+    "submit": "Créer un compte",
+    "google": "Créer un compte avec Google",
+    "errors": {
+      "email": {
+        "required": "L'Email est requis",
+        "invalid": "Email invalide"
+      },
+      "password": {
+        "required": "Mot de passe requis",
+        "min": "Au moins 8 caractères"
+      },
+      "repeat": {
+        "required": "Confirmez le mot de passe",
+        "mismatch": "Mots de passe différents"
+      }
+    }
+  },
+  "footerSignup": {
+    "already": "Vous avez déjà un compte ?",
+    "login": "Connexion"
+  }
+},
+"resetPassword": {
+  "title": "Nouveau mot de passe",
+  "subtitle": "Écrivez votre nouveau mot de passe",
+  "form": {
+    "password": {
+      "label": "Mot de passe",
+      "placeholder": "Entrez votre mot de passe"
+    },
+    "repeat": {
+      "label": "Répéter le mot de passe",
+      "placeholder": "Répétez votre mot de passe"
+    },
+    "submit": "Changer le mot de passe"
+  }
+},
+"sendLink": {
+  "title": "Récupérer votre mot de passe",
+  "subtitle": "Entrez votre email pour récupérer votre mot de passe",
+  "form": {
+    "email": {
+      "label": "Adresse email",
+      "placeholder": "Écrivez votre email"
+    },
+    "submit": "Récupérer un lien de réinitialisation",
+    "errors": {
+      "email": {
+        "required": "L'Email est requis",
+        "invalid": "Email invalide",
+        "sendError": "Échec de l'envoi de l'email"
+      }
+    }
+  }
+},
+  "underConstruction": {
+    "title": "Cette page est en construction",
+    "message": "Veuillez revenir plus tard !"
+  },
+  "footer": {
+    "legal": {
+      "title": "Mentions légales",
+      "links": {
+        "notice": "Mentions légales",
+        "privacy": "Politique de confidentialité",
+        "cookies": "Gestion des cookies"
+      }
+    },
+    "support": {
+      "title": "Support",
+      "links": {
+        "contact": "Contact",
+        "faq": "FAQ"
+      }
+    },
+    "social": {
+      "title": "Réseaux sociaux",
+      "links": {
+        "linkedin": "LinkedIn",
+        "github": "GitHub"
+
+      }
+    }
+  }
+}
+

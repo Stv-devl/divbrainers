@@ -1,11 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import {
+  getSignupSchema,
   SignupSchemaType,
-  signupValidationSchema,
 } from '../../../lib/schema/signupSchema';
 import postSignup from '../../service/auth/postSignup';
 
@@ -17,15 +17,14 @@ import postSignup from '../../service/auth/postSignup';
 const useSignUp = () => {
   const router = useRouter();
 
-  const [globalError, setGlobalError] = useState('');
+  const { t } = useTranslation();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    setError,
   } = useForm<SignupSchemaType>({
-    resolver: zodResolver(signupValidationSchema),
+    resolver: zodResolver(getSignupSchema(t)),
   });
 
   const onSubmit = async (data: SignupSchemaType) => {
@@ -40,16 +39,12 @@ const useSignUp = () => {
 
       if (result?.ok) {
         router.push('/home');
-      } else {
-        setGlobalError('Signup process encountered an error');
       }
     } catch (error) {
       if (error instanceof Error) {
         console.error('Signup error', error.message);
-        setGlobalError('Something went wrong. Please try again.');
       } else {
         console.error('Signup unknown error:', error);
-        setGlobalError('Something went wrong. Please try again.');
       }
     }
   };
@@ -64,7 +59,6 @@ const useSignUp = () => {
     onSubmit,
     handleGoogleSignIn,
     errors,
-    globalError,
     isSubmitting,
   };
 };

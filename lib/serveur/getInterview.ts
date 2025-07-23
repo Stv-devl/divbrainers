@@ -1,9 +1,7 @@
-'use server';
-
-import { getUserData } from '../../helpers/data/getUserData';
-import { handleServerActionError } from '../../helpers/errors/handleServerActionError';
-import { getCurrentSession } from '../../helpers/security/getCurrentSession';
-import { prisma } from '../../prisma';
+import { getUserData } from '../helpers/data/getUserData';
+import { handleServerActionError } from '../helpers/errors/handleServerActionError';
+import { getCurrentSession } from '../helpers/security/getCurrentSession';
+import { prisma } from '../prisma';
 
 /**
  * Retrieves all interviews for the authenticated user

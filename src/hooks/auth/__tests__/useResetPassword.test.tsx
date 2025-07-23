@@ -27,7 +27,10 @@ describe('useResetPassword hook', () => {
   });
 
   afterAll(() => {
-    window.location = originalLocation;
+    Object.defineProperty(window, 'location', {
+      value: originalLocation,
+      writable: true,
+    });
   });
 
   it('should initialize with correct values', () => {

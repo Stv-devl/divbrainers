@@ -1,12 +1,25 @@
+import { TFunction } from 'i18next';
 import { z } from 'zod';
 
-/**
- * Login validation schema
- * @constant
- * @type {z.ZodObject}
- */
-export const LoginSchema = z.object({
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(8, 'At least 8 characters'),
-});
-export type LoginSchemaType = z.infer<typeof LoginSchema>;
+export const LoginSchemaShape = {
+  email: z.string(),
+  password: z.string(),
+};
+
+export type LoginSchemaType = z.infer<z.ZodObject<typeof LoginSchemaShape>>;
+
+export const getLoginSchema = (t: TFunction) =>
+  z.object({
+    email: z
+      .string({
+        required_error: t('login.form.errors.email.required'),
+        invalid_type_error: t('login.form.errors.email.invalid'),
+      })
+      .email(t('login.form.errors.email.invalid')),
+    password: z
+      .string({
+        required_error: t('login.form.errors.password.required'),
+        invalid_type_error: t('login.form.errors.password.invalid'),
+      })
+      .min(8, t('login.form.errors.password.min')),
+  });

@@ -1,0 +1,375 @@
+{
+  "nav": {
+    "home": "Home",
+    "quiz": "Quiz",
+    "coding": "Coding",
+    "interview": "Interview",
+    "ats": "ATS Scan"
+  },
+  "logoutNavBar": {
+    "login": "Login",
+    "register": "Register"
+  },
+  "homepage": {
+    "welcome": "Welcome to the V1 of DivBrainers",
+    "now": "What you can do now:",
+    "soon": "What will come next:"
+  },
+  "features": {
+    "quiz": {
+      "title": "Quiz",
+      "description": "Challenge yourself with quizzes built to match your technical stack and experience level."
+    },
+    "coding": {
+      "title": "Coding Live",
+      "description": "Live coding through our console, with technical questions to train in real conditions."
+    },
+    "ai": {
+      "title": "AI Interviews",
+      "description": "Be ready for job interviews with AI-simulated interviews to get you in the right mindset."
+    },
+    "stats": {
+      "title": "Statistics",
+      "description": "Track your progress over time with detailed performance stats and insightful visualizations."
+    },
+    "ats": {
+      "title": "ATS Resume Scan",
+      "description": "Upload your resume and get AI-powered feedback to beat the ATS."
+    }
+  },
+"hero": {
+  "title": "Improve your coding skills for free and prepare for interviews",
+  "description": "Train with quizzes, live coding exercises and AI-powered mock interviews.",
+  "cta": "Get started!"
+},
+"advertising": {
+  "free": "100% free and ad-free",
+  "suitable": "Suitable for beginners and experienced users",
+  "responsive": "Works on all screen sizes",
+  "ctaTitle": "Ready to boost your skills?",
+  "ctaButton": "Sign up now!"
+},
+  "profile": {
+    "titleWrapper": {
+      "title" :" Update your profile :",
+      "description":  "Add your details to create a personal touch to your profile"
+    },
+    "fields": {
+      "name": {
+        "label": "Username",
+        "placeholder": "Enter your username"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter your email address"
+      }
+    },
+    "edit": "Edit",
+    "pictureLabel": "Profile picture",
+    "changeImage": "Change image",
+    "uploadPicture": "Upload a picture",
+    "imageHint": "Image must be below 1024x1024px. Use PNG or JPG format.",
+    "invalidFormat": "Please upload an image in JPG or PNG format.",
+    "invalidSize": "Image must be smaller than {{size}}MB.",
+    "invalidDimension": "Image dimensions should be less than {{size}}x{{size}}px.",
+    "noChanges": "You must make some changes to update your profile.",
+    "updateFailed": "Profile update failed. Please try again."
+  }, 
+"Quiz": {
+  "titleWrapper": {
+    "titleSet": "Select your quiz",
+    "titleLive": "Let's train with quiz game"
+  },
+"form": {
+  "fields": {
+      "stack": {
+        "label": "Add your stack",
+        "placeholder": "Select your stack"
+      },
+      "difficulty": {
+        "label": "Difficulty",
+        "junior": "Junior",
+        "mid": "Mid-level",
+        "senior": "Senior"
+      }
+    },  
+      "errors": {
+        "position": "Position is required",
+        "difficulty": "Difficulty is required",
+        "interviewType": "Interview type is required",
+        "numberOfQuestions": "Number of questions is required",
+        "min": "Please select at least one stack",
+        "max": "You can select up to 6 stacks only",
+        "default": "Invalid stack"
+      },
+    "button": "Start Quiz",
+    "loading": "Generating question..."
+  },
+  "liveQuiz": {
+    "interviewer": "Julia Divana ask : ",
+    "buttonReload": "Reload",
+    "buttonNext": "Next",
+    "buttonValidate": "Validate",
+    "loading": "Generating question...",
+    "correctAnswer": "Congratulations, correct answer!",
+    "errors": {
+      "required": "You must choose an answer.",
+      "invalidType": "The answer must be a string.",
+      "incorrect": "Incorrect answer, please try again."
+  }
+  }
+},
+"interview": {
+  "titleWrapper": {
+    "titleSet": "Welcome! Take a seat and get ready.",
+    "titleLive": "Answer the questions",
+    "titlePreviousInterviews": "Your previous job interviews :"
+  },
+  "form": {
+    "fields": {
+      "stack": {
+        "label": "Add your stack",
+        "placeholder": "Select your stack"
+      },
+      "difficulty": {
+        "label": "Difficulty",
+        "junior": "Junior",
+        "mid": "Mid-level",
+        "senior": "Senior"
+      },
+      "position": {
+        "label": "Position",
+        "placeholder": "Choose your role",
+        "options": {
+          "front-end": "Front-End Developer",
+          "back-end": "Back-End Developer",
+          "full-stack": "Full-Stack Developer",
+          "mobile": "Mobile Developer",
+          "devops": "DevOps Engineer",
+          "cloud-engineer": "Cloud Engineer",
+          "qa": "QA Engineer",
+          "data-engineer": "Data Engineer",
+          "ai-ml": "AI/ML Engineer",
+          "cyber-security": "Cybersecurity Engineer",
+          "ux-ui-designer": "UX/UI Designer",
+          "product-manager": "Product Manager",
+          "tech-lead": "Tech Lead",
+          "software-architect": "Software Architect"
+        }
+      },
+      "interviewType": {
+        "label": "Interview type",
+        "placeholder": "Choose type",
+        "options": {
+          "technical": "Technical",
+          "behavioral": "Behavioral",
+          "mixed": "Mixed"
+        }
+      },
+      "numberOfQuestions": {
+        "label": "Number of questions",
+        "placeholder": "Select a number"
+      }
+    },
+    "errors": {
+      "min": "Please select at least one stack",
+      "max": "You can select up to 6 stacks only",
+      "default": "Invalid stack"
+    },
+    "button": "Start Interview",
+    "loading": "Creating interview..."
+  },
+  "interviewCard": {
+    "title": "Interview",
+    "start": "Start",
+    "delete": "Delete"
+  }
+},
+"liveInterview": {
+  "title": "Interview {{position}}",
+  "recruiterName": "Julia Divana ask :",
+  "subtitle": "Live technical interview with recruiter",
+  "loadingMessages": {
+    "CONNECTING": "Connecting to the interviewer...",
+    "GENERATING_FEEDBACK": "Generating feedback..."
+  },
+  "controls": {
+    "start": "Start",
+    "end": "End",
+    "call": "Call",
+    "disconnect": "Disconnect"
+  }
+},
+"interviewFeedback": {
+  "title": "Feedback for {{position}}",
+  "sections": {
+    "strengths": "Strengths:",
+    "improvements": "Areas for Improvement:",
+    "assessment": "Final Assessment:"
+  },
+  "score": "Score: {{score}}/20",
+  "back": "Back to interviews"
+},
+"atsScan": {
+  "title": "ATS scan your resume",
+  "sendButton": "Send your resume",
+  "loading": "Generating feedback...",
+  "addResume": {
+    "title": "Upload your resume :",
+    "label": "Browse your resume :"
+  },
+  "addJobOffer": {
+    "title": "Copy and paste the job offer:",
+    "placeholder": "Add the job offer here",
+    "skills": "Position skills :",
+    "validate": "Validate offer",
+    "validated": "Validated",
+    "error": {
+      "generic": "An error occurred"
+    }
+  }
+}, 
+"login": {
+  "title": "Login",
+  "subtitle": "Add your details below to get back into the app",
+  "form": {
+    "email": {
+      "label": "Email address",
+      "placeholder": "Write your email"
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "Enter your password"
+    },
+    "forgot": "Forget your password?",
+    "submit": "Login",
+    "google": "Login with Google",
+    "errors": {
+      "email": {
+        "invalid": "Invalid email address"
+      },
+      "password": {
+        "min": "At least 8 characters"
+      }
+    }
+  },
+  "footerLogin": {
+    "noAccount": "Don't have an account?",
+    "create": "Create account"
+  }
+},  
+"signup": {
+  "title": "Create account",
+  "subtitle": "Let's get you started sharing your links!",
+  "form": {
+    "email": {
+      "label": "Email address",
+      "placeholder": "Write your email"
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "At least 8 characters"
+    },
+    "repeat": {
+      "label": "Confirm password",
+      "placeholder": "At least 8 characters"
+    },
+    "submit": "Create a new account",
+    "google": "Signup with Google",
+    "errors": {
+      "email": {
+        "required": "Email is required",
+        "invalid": "Invalid email address"
+      },
+      "password": {
+        "required": "Password is required",
+        "min": "At least 8 characters"
+      },
+      "repeat": {
+        "required": "Please confirm your password",
+        "mismatch": "Passwords do not match"
+      }
+    }
+    },
+  "footerSignup": {
+    "already": "Already have an account?",
+    "login": "Login"
+  }
+},
+"resetPassword": {
+  "title": "New password",
+  "subtitle": "Write your new password",
+  "form": {
+    "password": {
+      "label": "Password",
+      "placeholder": "Enter your password"
+    },
+    "repeat": {
+      "label": "Repeat password",
+      "placeholder": "Repeat your password"
+    },
+    "submit": "Change password",
+    "errors": {
+      "password": {
+        "required": "Password is required",
+        "min": "At least 4 characters"
+      },
+      "repeat": {
+        "required": "Please confirm your password",
+        "mismatch": "Passwords must match"
+      },
+      "token": "Invalid or missing token/email in URL",
+      "failed": "Failed to reset password",
+      "invalid": "Invalid data",
+      "generic": "An error occurred"
+    }
+  }
+},
+"sendLink": {
+  "title": "Recover password",
+  "subtitle": "Enter your email to recover your password",
+  "form": {
+    "email": {
+      "label": "Email address",
+      "placeholder": "Write your email"
+    },
+    "submit": "Get a link to reset password",
+    "errors": {
+      "email": {
+        "required": "Email is required",
+        "invalid": "Invalid email address",
+        "sendError": "Failed to send email"
+      }
+    }
+  }
+},
+  "underConstruction": {
+    "title": "This page is under construction",
+    "message": "Please check back later!"
+  },
+  "footer": {
+    "legal": {
+      "title": "Legal",
+      "links": {
+        "notice": "Legal Notice",
+        "privacy": "Privacy Policy",
+        "cookies": "Cookie Management"
+      }
+    },
+    "support": {
+      "title": "Support",
+      "links": {
+        "contact": "Contact",
+        "faq": "FAQ"
+      }
+    },
+    "social": {
+      "title": "Social Media",
+      "links": {
+        "linkedin": "LinkedIn",
+        "github": "GitHub"
+      }
+    }
+  }
+}
+

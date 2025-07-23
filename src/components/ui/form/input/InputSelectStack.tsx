@@ -10,6 +10,7 @@ const InputSelectStack: React.FC<InputSelectStackProps> = ({
   onChange,
   stackError,
   setStackError,
+  t,
 }) => {
   const [inputValue, setInputValue] = useState('');
   const [isOpen, setIsOpen] = useState(false);
@@ -39,7 +40,7 @@ const InputSelectStack: React.FC<InputSelectStackProps> = ({
       <input
         type="text"
         value={inputValue}
-        placeholder="Add a stack"
+        placeholder={t('Quiz.form.fields.stack.placeholder')}
         onChange={(e) => {
           setInputValue(e.target.value);
           setIsOpen(true);

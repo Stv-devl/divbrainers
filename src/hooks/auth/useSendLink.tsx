@@ -1,14 +1,17 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { postSendEmail } from '@/service/auth/postSendEmail';
 import {
-  sendLinkSchema,
+  getSendLinkSchema,
   SendLinkSchemaType,
 } from '../../../lib/schema/sendLinkSchema';
 
 const useSendLink = () => {
   const router = useRouter();
+
+  const { t } = useTranslation();
 
   const {
     register,
@@ -16,7 +19,7 @@ const useSendLink = () => {
     formState: { errors, isSubmitting },
     setError,
   } = useForm<SendLinkSchemaType>({
-    resolver: zodResolver(sendLinkSchema),
+    resolver: zodResolver(getSendLinkSchema(t)),
   });
 
   const onSubmit = async (data: SendLinkSchemaType) => {

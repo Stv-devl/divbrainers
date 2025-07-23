@@ -1,6 +1,7 @@
 import React from 'react';
-import { getInterview } from '../../../../lib/actions/interviews/getInterview';
+import { getInterview } from '../../../../lib/serveur/getInterview';
 import SetInterviewCard from './SetInterviewCard';
+import SetInterviewCardTitle from './SetInterviewCardTitle';
 
 /**
  * Component that displays a list of previous job interviews
@@ -17,9 +18,7 @@ const SetInterviewCardWrapper = async () => {
     <>
       {interviews.length > 0 && (
         <>
-          <h1 className="text-lg sm:text-xl font-bold text-blue-800 mb-2">
-            Your previous job interviews :
-          </h1>
+          <SetInterviewCardTitle />
           <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-5 sm:mb-10 w-full">
             {interviews.map((interview) => (
               <div key={interview.id}>

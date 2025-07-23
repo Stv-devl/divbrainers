@@ -1,10 +1,12 @@
 'use client';
 
+import { TFunction } from 'i18next';
 import React from 'react';
 import AnswerOptionList from '@/components/quiz/liveQuiz/AnswerOptionList';
 import LiveQuizControl from '@/components/quiz/liveQuiz/LiveQuizControl';
 import QuestionCard from '@/components/quiz/liveQuiz/QuestionCard';
 import TechnicalStackWrapper from '@/components/wrappers/TechnicalStackWrapper';
+import { useClientTranslation } from '@/hooks/i18n/useClientTranslation';
 
 interface questionProps {
   question: string;
@@ -40,12 +42,19 @@ const LiveQuizContainer: React.FC<LiveQuizContainerProps> = ({
   error,
   setError,
 }) => {
+  const { t, isClient } = useClientTranslation();
+
+  if (!isClient) return null;
+
   return (
     <div className="space-y-5 sm:space-y-7 w-full lg:w-[90%] mx-auto">
       <h1 className="text-xl sm:text-2xl text-left sm:text-center text-blue-800 font-bold">
-        Let's training with quiz game
+        {t('Quiz.titleWrapper.titleLive')}
       </h1>
-      <QuestionCard currentQuestion={currentQuestion.question} />
+      <QuestionCard
+        currentQuestion={currentQuestion.question}
+        t={t as TFunction}
+      />
       <AnswerOptionList
         currentQuestion={currentQuestion.answers}
         selectedAnswer={selectedAnswer}
@@ -60,6 +69,7 @@ const LiveQuizContainer: React.FC<LiveQuizContainerProps> = ({
           handleValidate={handleValidate}
           handleNewQuestion={handleNewQuestion}
           isCorrect={isCorrect}
+          t={t as TFunction}
         />
         <div className="-ml-4 sm:ml-0">
           <TechnicalStackWrapper isCanRemove={false} />

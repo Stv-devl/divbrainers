@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import React from 'react';
+import { useClientTranslation } from '@/hooks/i18n/useClientTranslation';
 import { UserProfile } from '@/types/type';
 import { cn } from '../../../lib/utils/cn';
 import { navItems } from '../../constante/constante';
@@ -19,6 +20,9 @@ const NavMobile = ({ user }: { user: UserProfile }) => {
   const toggleBurger = () => setIsOpen((prev) => !prev);
 
   const pathname = usePathname();
+
+  const { t, isClient } = useClientTranslation();
+  if (!isClient) return null;
 
   return (
     <>
@@ -49,7 +53,7 @@ const NavMobile = ({ user }: { user: UserProfile }) => {
         {navItems.map((item) => (
           <NavWrapper
             key={item.path}
-            type={item.type}
+            type={t(item.type)}
             isSelected={pathname === item.path}
             link={item.path}
             onClick={toggleBurger}

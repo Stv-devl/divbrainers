@@ -1,8 +1,10 @@
+import { TFunction } from 'i18next';
 import Image from 'next/image';
 import React from 'react';
 
 interface QuestionCardProps {
   currentQuestion: string;
+  t: TFunction;
 }
 
 /**
@@ -12,7 +14,7 @@ interface QuestionCardProps {
  * @param {string} props.currentQuestion - The question text to display
  * @returns {JSX.Element} The rendered question card
  */
-const QuestionCard: React.FC<QuestionCardProps> = ({ currentQuestion }) => {
+const QuestionCard: React.FC<QuestionCardProps> = ({ currentQuestion, t }) => {
   return (
     <div className="relative w-full bg-white shadow-sm border border-gray-300 rounded-lg">
       <div className="flex items-center gap-4 p-5 h-[85px] bg-gray-100 rounded-t-lg">
@@ -24,7 +26,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ currentQuestion }) => {
           className="ml-0 sm:ml-5 w-[60px] h-[60px] object-cover rounded-full border-2 border-blue-800"
           priority
         />
-        <h3 className="text-lg font-bold">Julia Divana asks :</h3>
+        <h3 className="text-lg font-bold">{t('Quiz.liveQuiz.interviewer')}</h3>
       </div>
       <div className="px-5 py-6 sm:px-6 sm:py-6">
         <p>{currentQuestion}</p>

@@ -1,33 +1,84 @@
+import { TFunction } from 'i18next';
 import { DropdownOption } from '@/types/type';
-import { InterviewSchemaType } from '../../lib/schema/interviewShema';
 
-const optionsPosition = [
-  { label: 'Front-End Developer', value: 'front-end' },
-  { label: 'Back-End Developer', value: 'back-end' },
-  { label: 'Full-Stack Developer', value: 'full-stack' },
-  { label: 'Mobile Developer', value: 'mobile' },
-  { label: 'DevOps Engineer', value: 'devops' },
-  { label: 'Cloud Engineer', value: 'cloud-engineer' },
-  { label: 'QA Engineer', value: 'qa' },
-  { label: 'Data Engineer', value: 'data-engineer' },
-  { label: 'AI/ML Engineer', value: 'ai-ml' },
-  { label: 'Cybersecurity Engineer', value: 'cyber-security' },
-  { label: 'UX/UI Designer', value: 'ux-ui-designer' },
-  { label: 'Product Manager', value: 'product-manager' },
-  { label: 'Tech Lead', value: 'tech-lead' },
-  { label: 'Software Architect', value: 'software-architect' },
+export const getTranslatedOptionsPosition = (
+  t: TFunction
+): DropdownOption[] => [
+  {
+    label: t('interview.form.fields.position.options.front-end'),
+    value: 'front-end',
+  },
+  {
+    label: t('interview.form.fields.position.options.back-end'),
+    value: 'back-end',
+  },
+  {
+    label: t('interview.form.fields.position.options.full-stack'),
+    value: 'full-stack',
+  },
+  {
+    label: t('interview.form.fields.position.options.mobile'),
+    value: 'mobile',
+  },
+  {
+    label: t('interview.form.fields.position.options.devops'),
+    value: 'devops',
+  },
+  {
+    label: t('interview.form.fields.position.options.cloud-engineer'),
+    value: 'cloud-engineer',
+  },
+  { label: t('interview.form.fields.position.options.qa'), value: 'qa' },
+  {
+    label: t('interview.form.fields.position.options.data-engineer'),
+    value: 'data-engineer',
+  },
+  { label: t('interview.form.fields.position.options.ai-ml'), value: 'ai-ml' },
+  {
+    label: t('interview.form.fields.position.options.cyber-security'),
+    value: 'cyber-security',
+  },
+  {
+    label: t('interview.form.fields.position.options.ux-ui-designer'),
+    value: 'ux-ui-designer',
+  },
+  {
+    label: t('interview.form.fields.position.options.product-manager'),
+    value: 'product-manager',
+  },
+  {
+    label: t('interview.form.fields.position.options.tech-lead'),
+    value: 'tech-lead',
+  },
+  {
+    label: t('interview.form.fields.position.options.software-architect'),
+    value: 'software-architect',
+  },
 ];
 
-export const optionsDifficulty = [
-  { label: 'Junior', value: 'junior' },
-  { label: 'Mid-level', value: 'mid-level' },
-  { label: 'Senior', value: 'senior' },
+export const getTranslatedOptionsDifficulty = (
+  t: TFunction
+): DropdownOption[] => [
+  { label: t('Quiz.form.fields.difficulty.junior'), value: 'junior' },
+  { label: t('Quiz.form.fields.difficulty.mid'), value: 'mid-level' },
+  { label: t('Quiz.form.fields.difficulty.senior'), value: 'senior' },
 ];
 
-const optionsInterviewType = [
-  { label: 'Technical', value: 'technical' },
-  { label: 'Behavioral', value: 'behavioral' },
-  { label: 'Mixed', value: 'mixed' },
+export const getTranslatedOptionsInterviewType = (
+  t: TFunction
+): DropdownOption[] => [
+  {
+    label: t('interview.form.fields.interviewType.options.technical'),
+    value: 'technical',
+  },
+  {
+    label: t('interview.form.fields.interviewType.options.behavioral'),
+    value: 'behavioral',
+  },
+  {
+    label: t('interview.form.fields.interviewType.options.mixed'),
+    value: 'mixed',
+  },
 ];
 
 const optionsNumberOfQuestions = [
@@ -36,21 +87,29 @@ const optionsNumberOfQuestions = [
   { label: '10', value: '10' },
 ];
 
-export const dropdowns: {
-  name: keyof InterviewSchemaType;
-  label: string;
-  options: DropdownOption[];
-}[] = [
-  { name: 'position', label: 'Position', options: optionsPosition },
-  { name: 'difficulty', label: 'Difficulty', options: optionsDifficulty },
+export const getDropdowns = (t: TFunction) => [
+  {
+    name: 'position',
+    label: t('interview.form.fields.position.label'),
+    options: getTranslatedOptionsPosition(t),
+    placeholder: t('interview.form.fields.position.placeholder'),
+  },
+  {
+    name: 'difficulty',
+    label: t('interview.form.fields.difficulty.label'),
+    options: getTranslatedOptionsDifficulty(t),
+    placeholder: t('interview.form.fields.difficulty.placeholder'),
+  },
   {
     name: 'interviewType',
-    label: 'Interview type',
-    options: optionsInterviewType,
+    label: t('interview.form.fields.interviewType.label'),
+    options: getTranslatedOptionsInterviewType(t),
+    placeholder: t('interview.form.fields.interviewType.placeholder'),
   },
   {
     name: 'numberOfQuestions',
-    label: 'Number of questions',
+    label: t('interview.form.fields.numberOfQuestions.label'),
     options: optionsNumberOfQuestions,
+    placeholder: t('interview.form.fields.numberOfQuestions.placeholder'),
   },
 ];

@@ -1,11 +1,11 @@
 import { InputFieldProps } from '@/types/type';
 
 export const navItems = [
-  { path: '/home', type: 'Home', icon: 'IconHome' },
-  { path: '/quiz', type: 'Quiz', icon: 'IconQuiz' },
-  { path: '/coding', type: 'Coding', icon: 'IconCode' },
-  { path: '/interview', type: 'Interview', icon: 'IconInterview' },
-  { path: '/scan', type: 'ATS scan', icon: 'IconScan' },
+  { path: '/home', type: 'nav.home', icon: 'IconHome' },
+  { path: '/quiz', type: 'nav.quiz', icon: 'IconQuiz' },
+  { path: '/coding', type: 'nav.coding', icon: 'IconCode' },
+  { path: '/interview', type: 'nav.interview', icon: 'IconInterview' },
+  { path: '/scan', type: 'nav.ats', icon: 'IconScan' },
 ];
 
 export const inputFields: InputFieldProps[] = [
@@ -25,32 +25,27 @@ export const inputFields: InputFieldProps[] = [
 export const features = [
   {
     icon: 'IconBrain',
-    title: 'Quiz',
-    description:
-      'Challenge yourself with quizzes built to match your technical stack and experience level.',
+    title: 'features.quiz.title',
+    description: 'features.quiz.description',
   },
   {
     icon: 'IconCode',
-    title: 'Coding live',
-    description:
-      'Live coding through our console, with technical questions to train in real conditions.',
+    title: 'features.coding.title',
+    description: 'features.coding.description',
   },
   {
     icon: 'IconIa',
-    title: 'AI Interviews',
-    description:
-      'Be ready for job interviews with AI-simulated interviews to get you in the right mindset.',
+    title: 'features.ai.title',
+    description: 'features.ai.description',
   },
   {
     icon: 'IconSats',
-    title: 'Statistics',
-    description:
-      'Track your progress over time with detailed performance stats and insightful visualizations.',
+    title: 'features.stats.title',
+    description: 'features.stats.description',
   },
   {
     icon: 'IconScan',
-    title: 'ATS Resume Scan',
-    description:
-      'Upload your resume and get AI-powered feedback to beat the ATS.',
+    title: 'features.ats.title',
+    description: 'features.ats.description',
   },
 ];

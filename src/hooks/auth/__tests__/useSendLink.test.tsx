@@ -3,9 +3,9 @@
  */
 
 import { renderHook, act } from '@testing-library/react';
-import useSendLink from '../useSendLink';
-import { postSendEmail } from '@/service/auth/postSendEmail';
 import { useRouter } from 'next/navigation';
+import { postSendEmail } from '@/service/auth/postSendEmail';
+import useSendLink from '../useSendLink';
 
 jest.mock('@/service/auth/postSendEmail');
 jest.mock('next/navigation', () => ({

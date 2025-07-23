@@ -4,16 +4,12 @@ import { Interview } from '@prisma/client';
 import React from 'react';
 import Loading from '@/components/loading/Loading';
 import BackButton from '@/components/ui/buttons/BackButton';
+import { useClientTranslation } from '@/hooks/i18n/useClientTranslation';
 import { useInterviewAgent } from '@/hooks/manage/useManageAgent';
 import { UserProfile } from '@/types/type';
 import InterviewControl from './InterviewControl';
 import LiveInterviewCall from './LiveInterviewCall';
 import CallInterviewMessage from './LiveInterviewMessage';
-
-const loadingMessages: Record<string, string | null> = {
-  CONNECTING: 'Connecting to the interviewer...',
-  GENERATING_FEEDBACK: 'Generating feedback...',
-};
 
 /**
  * Component that displays the live interview user interface
@@ -28,10 +24,18 @@ const LiveInterviewUI = ({
   user: UserProfile;
   interview: Interview;
 }) => {
+  const { t, isClient } = useClientTranslation();
   const { callStatus, isSpeaking, handleCall, handleDisconnect, messages } =
     useInterviewAgent(user, interview);
 
+  const loadingMessages: Record<string, string | null> = {
+    CONNECTING: t('liveInterview.loadingMessages.CONNECTING'),
+    GENERATING_FEEDBACK: t('liveInterview.loadingMessages.GENERATING_FEEDBACK'),
+  };
+
   const loadingText = loadingMessages[callStatus];
+
+  if (!isClient) return null;
 
   return (
     <div className="relative size-full">
@@ -39,21 +43,22 @@ const LiveInterviewUI = ({
 
       <div className="flex flex-col gap-5 items-center justify-center">
         <h1 className="mt-0 sm:mt-5 text-xl sm:text-3xl font-bold text-blue-900">
-          Interview {interview.position}
+          {t('liveInterview.title', { position: interview.position })}
         </h1>
-        <p>Live technical interview with recruiter</p>
+        <p>{t('liveInterview.subtitle')}</p>
       </div>
       <LiveInterviewCall
         user={user}
         interview={interview}
         isSpeaking={isSpeaking}
       />
-      <CallInterviewMessage messages={messages} />
+      <CallInterviewMessage messages={messages} t={t} />
       <InterviewControl
         callStatus={callStatus}
         handleCall={handleCall}
         handleDisconnect={handleDisconnect}
         interview={interview}
+        t={t}
       />
       <BackButton
         handleDisconnect={handleDisconnect}

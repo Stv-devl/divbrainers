@@ -1,8 +1,10 @@
+import { TFunction } from 'i18next';
 import React from 'react';
 
 interface AddYourResumeProps {
   onFileChange: (file: File | null) => void;
   error?: { resume?: string };
+  t: TFunction;
 }
 
 /**
@@ -13,6 +15,7 @@ interface AddYourResumeProps {
 const AddYourResume: React.FC<AddYourResumeProps> = ({
   onFileChange,
   error,
+  t,
 }) => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] ?? null;
@@ -28,11 +31,11 @@ const AddYourResume: React.FC<AddYourResumeProps> = ({
      sm:bg-white sm:p-8 sm:rounded-lg sm:shadow-sm"
     >
       <h4 className="text-xl font-semibold text-blue-800">
-        Upload your resume :
+        {t('atsScan.addResume.title')}
       </h4>
       <div className="w-full">
         <div className="flex w-full flex-col gap-3">
-          <label htmlFor="browseFile">Browse your resume :</label>
+          <label htmlFor="browseFile">{t('atsScan.addResume.label')}</label>
           <input
             id="browseFile"
             type="file"

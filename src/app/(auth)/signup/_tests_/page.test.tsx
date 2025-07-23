@@ -10,8 +10,8 @@ import {
   act,
 } from '@testing-library/react';
 import { axe, toHaveNoViolations } from 'jest-axe';
-import SignUp from '../page';
 import useSignUp from '../../../../hooks/auth/useSignup';
+import SignUp from '../page';
 
 expect.extend(toHaveNoViolations);
 
@@ -34,7 +34,6 @@ const getMockedUseSignUpProps = (overrides = {}): UseSignUpReturn => ({
   onSubmit: jest.fn(),
   handleGoogleSignIn: jest.fn(),
   errors: {},
-  globalError: '',
   isSubmitting: false,
   ...overrides,
 });
@@ -117,20 +116,6 @@ describe('SignUp Page', () => {
     expect(screen.getByText('Email is required')).toBeInTheDocument();
     expect(screen.getByText('At least 8 characters')).toBeInTheDocument();
     expect(screen.getByText('Passwords do not match')).toBeInTheDocument();
-  });
-
-  it('displays global error message if signup fails', async () => {
-    mockedUseSignUp.mockReturnValue(
-      getMockedUseSignUpProps({
-        globalError: 'Signup failed',
-      })
-    );
-
-    await renderSignUp();
-
-    const error = screen.getByText('Signup failed');
-    expect(error).toBeInTheDocument();
-    expect(error).toHaveClass('text-red-500');
   });
 
   it('has no accessibility violations', async () => {
