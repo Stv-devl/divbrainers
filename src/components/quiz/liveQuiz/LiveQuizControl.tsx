@@ -1,3 +1,4 @@
+import { TFunction } from 'i18next';
 import React from 'react';
 import Button from '@/components/ui/buttons/Button';
 import { iconsMap } from '@/constante/iconsMap';
@@ -6,6 +7,7 @@ interface LiveQuizControlProps {
   handleValidate: () => void;
   handleNewQuestion: () => void;
   isCorrect: boolean;
+  t: TFunction;
 }
 
 /**
@@ -21,12 +23,13 @@ const LiveQuizControl: React.FC<LiveQuizControlProps> = ({
   handleValidate,
   handleNewQuestion,
   isCorrect,
+  t,
 }) => {
   return (
     <div className="flex gap-4 justify-end">
       <div className="w-44 h-10 mb-5 sm:mb-8 text-sm">
         <Button
-          label="Reload"
+          label={t('Quiz.liveQuiz.buttonReload')}
           type="button"
           color="empty"
           onClick={handleNewQuestion}
@@ -35,7 +38,11 @@ const LiveQuizControl: React.FC<LiveQuizControlProps> = ({
       </div>
       <div className="w-44 h-10 mb-5 sm:mb-8">
         <Button
-          label={isCorrect ? 'Next' : 'Validate'}
+          label={
+            isCorrect
+              ? t('Quiz.liveQuiz.buttonNext')
+              : t('Quiz.liveQuiz.buttonValidate')
+          }
           type="button"
           color="filled"
           onClick={isCorrect ? handleNewQuestion : handleValidate}

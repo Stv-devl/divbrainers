@@ -1,9 +1,7 @@
-'use server';
-
-import { handleServerActionError } from '../../helpers/errors/handleServerActionError';
-import { getCurrentSession } from '../../helpers/security/getCurrentSession';
-import { prisma } from '../../prisma';
-import { getFeedBackSchema } from '../../shemaServer/feedback/getFeedBackShema';
+import { handleServerActionError } from '../helpers/errors/handleServerActionError';
+import { getCurrentSession } from '../helpers/security/getCurrentSession';
+import { prisma } from '../prisma';
+import { getFeedBackSchema } from '../shemaServer/feedback/getFeedBackShema';
 
 /**
  * Retrieves a feedback by its ID for the current user

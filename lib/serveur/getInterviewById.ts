@@ -1,10 +1,8 @@
-'use server';
-
-import { getUserData } from '../../helpers/data/getUserData';
-import { handleServerActionError } from '../../helpers/errors/handleServerActionError';
-import { getCurrentSession } from '../../helpers/security/getCurrentSession';
-import { prisma } from '../../prisma';
-import { interviewIdSchema } from '../../shemaServer/interview/interviewIdShema';
+import { getUserData } from '../helpers/data/getUserData';
+import { handleServerActionError } from '../helpers/errors/handleServerActionError';
+import { getCurrentSession } from '../helpers/security/getCurrentSession';
+import { prisma } from '../prisma';
+import { interviewIdSchema } from '../shemaServer/interview/interviewIdShema';
 
 /**
  * Retrieves an interview by its ID for the current user

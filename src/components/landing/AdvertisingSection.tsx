@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { iconsMap } from '../../constante/iconsMap';
 import Button from '../ui/buttons/Button';
 
@@ -12,10 +13,12 @@ import Button from '../ui/buttons/Button';
 const AdvertisingSection = () => {
   const router = useRouter();
 
+  const { t } = useTranslation();
+
   const features = [
-    '100% free and ad-free',
-    'Suitable for beginners and experienced users',
-    'Works on all screen sizes',
+    t('advertising.free'),
+    t('advertising.suitable'),
+    t('advertising.responsive'),
   ];
 
   return (
@@ -33,12 +36,12 @@ const AdvertisingSection = () => {
       </div>
       <div className="flex flex-col gap-4 items-center justify-center">
         <h3 className="text-lg sm:text-2xl font-bold">
-          Ready to boost your skills?
+          {t('advertising.ctaTitle')}
         </h3>
         <div className="w-[150px] h-[46px] text-sm sm:text-base">
           <Button
             onClick={() => router.push('/signup')}
-            label="Sign up now!"
+            label={t('advertising.ctaButton')}
             color="filled"
           />
         </div>

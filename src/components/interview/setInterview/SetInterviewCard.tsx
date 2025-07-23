@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import { useClientTranslation } from '@/hooks/i18n/useClientTranslation';
 import useTechIcons from '@/hooks/ui/useTechIcon';
 import { JobInterviewProps } from '@/types/type';
 import { cn } from '../../../../lib/utils/cn';
@@ -19,6 +20,7 @@ import SetInterviewCardControl from './SetInterviewCardControl';
  */
 const SetInterviewCard = ({ interview }: { interview: JobInterviewProps }) => {
   const router = useRouter();
+  const { t, isClient } = useClientTranslation();
 
   const {
     id,
@@ -66,11 +68,13 @@ const SetInterviewCard = ({ interview }: { interview: JobInterviewProps }) => {
     if (route) router.push(route);
   };
 
+  if (!isClient) return null;
+
   return (
     <div className="bg-white rounded-lg shadow-sm p-4 border border-gray-300 w-[240px] sm:w-[220px] h-[280px]">
       <div className="text-center mb-4">
         <h2 className="text-blue-800 font-bold capitalize">
-          Interview {position}
+          {t('interview.interviewCard.title')} {position}
         </h2>
         <p className="capitalize">{interviewType}</p>
       </div>

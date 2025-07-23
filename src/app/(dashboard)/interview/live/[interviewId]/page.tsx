@@ -2,8 +2,8 @@
 
 import { notFound } from 'next/navigation';
 import LiveInterviewUI from '@/components/interview/liveInterview/LiveInterviewUi';
-import { getInterviewById } from '../../../../../../lib/actions/interviews/getInterviewById';
-import { getUser } from '../../../../../../lib/actions/user/getUser';
+import { getInterviewById } from '../../../../../../lib/serveur/getInterviewById';
+import { getUser } from '../../../../../../lib/serveur/getUser';
 
 interface PageProps {
   params: Promise<{ interviewId: string }>;

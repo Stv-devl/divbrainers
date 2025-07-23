@@ -2,6 +2,7 @@
 
 import React from 'react';
 import useSendLink from '@/hooks/auth/useSendLink';
+import { useClientTranslation } from '@/hooks/i18n/useClientTranslation';
 import Button from '../../../components/ui/buttons/Button';
 import InputWithIcon from '../../../components/ui/form/input/InputWithIcon';
 import { iconsMap } from '../../../constante/iconsMap';
@@ -15,15 +16,19 @@ import { iconsMap } from '../../../constante/iconsMap';
 const SendLink = () => {
   const { register, handleSubmit, onSubmit, errors, isSubmitting } =
     useSendLink();
+  const { t, isClient } = useClientTranslation();
+
+  if (!isClient) return null;
 
   return (
     <>
       <div className="flex flex-col gap-[20px]">
         <h1 className="font-color-theme text-2xl font-bold">
-          Recover password
+          {t('sendLink.title')}
         </h1>
-        <p>Enter your email to recover your password</p>
+        <p>{t('sendLink.subtitle')}</p>
       </div>
+
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex w-full flex-col gap-[20px]"
@@ -32,8 +37,8 @@ const SendLink = () => {
           <div className="flex flex-col gap-1">
             <InputWithIcon
               name="email"
-              label="Email address"
-              placeholder="Write your email"
+              label={t('sendLink.form.email.label')}
+              placeholder={t('sendLink.form.email.placeholder')}
               type="text"
               autoComplete="email"
               IconComponent={iconsMap.IconEmail}
@@ -44,8 +49,8 @@ const SendLink = () => {
 
           <div className="mt-4 h-[46px] w-full">
             <Button
-              label={'Get a link to reset password'}
-              color={'filled'}
+              label={t('sendLink.form.submit')}
+              color="filled"
               type="submit"
               disabled={isSubmitting}
               isLoading={isSubmitting}

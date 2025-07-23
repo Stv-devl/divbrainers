@@ -1,4 +1,5 @@
 import { Interview } from '@prisma/client';
+import { TFunction } from 'i18next';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import Button from '@/components/ui/buttons/Button';
@@ -19,6 +20,7 @@ interface InterviewControlProps {
   handleCall: () => void;
   handleDisconnect: () => void;
   interview: Interview;
+  t: TFunction;
 }
 
 const InterviewControl = ({
@@ -26,6 +28,7 @@ const InterviewControl = ({
   handleCall,
   handleDisconnect,
   interview,
+  t,
 }: InterviewControlProps) => {
   const router = useRouter();
   const isStartDisabled = callStatus !== CallStatus.INACTIVE;
@@ -39,7 +42,7 @@ const InterviewControl = ({
       <div className="flex justify-end sm:justify-center gap-2 mt-5 sm:mt-0">
         <div className="w-32 h-8">
           <Button
-            label="Start"
+            label={t('liveInterview.controls.start')}
             color="filled"
             IconComponent={iconsMap.IconStart}
             onClick={handleCall}
@@ -47,18 +50,9 @@ const InterviewControl = ({
             isLoading={isStartLoading}
           />
         </div>
-        {/*
         <div className="w-32 h-8">
           <Button
-            label="Break"
-            color="filled"
-            IconComponent={iconsMap.IconBreak}
-            disabled={callStatus !== 'ACTIVE'}
-          />
-        </div>*/}
-        <div className="w-32 h-8">
-          <Button
-            label="End"
+            label={t('liveInterview.controls.end')}
             color="filled"
             bgColor="bg-red-500"
             hoverColor="hover:bg-red-800"

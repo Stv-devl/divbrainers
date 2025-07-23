@@ -2,17 +2,21 @@
 
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import { useClientTranslation } from '@/hooks/i18n/useClientTranslation';
 import { features } from '../../../constante/constante';
 import { iconsMap } from '../../../constante/iconsMap';
 
 const featureRoutes: Record<string, string> = {
-  'AI Interviews': '/interview',
-  'ATS Resume Scan': '/scan',
-  Quiz: '/quiz',
+  'features.ai.title': '/interview',
+  'features.ats.title': '/scan',
+  'features.quiz.title': '/quiz',
 };
 
 const Home = () => {
   const router = useRouter();
+  const { t, isClient } = useClientTranslation();
+
+  if (!isClient) return null;
 
   const enabledTitles = Object.keys(featureRoutes);
 
@@ -44,8 +48,10 @@ const Home = () => {
         <div className="w-8 h-8 sm:w-10 sm:h-10">
           <IconComponent className="w-full h-full" />
         </div>
-        <h3 className="text-xl sm:text-2xl font-bold text-blue-800">{title}</h3>
-        <p className="text-sm text-center">{description}</p>
+        <h3 className="text-xl sm:text-2xl font-bold text-blue-800">
+          {t(title)}
+        </h3>
+        <p className="text-sm text-center">{t(description)}</p>
       </div>
     );
   };
@@ -53,12 +59,12 @@ const Home = () => {
   return (
     <div className="mt-5">
       <h1 className="text-xl sm:text-2xl font-bold text-center text-blue-800 mb-5">
-        Welcome to the V1 of DivBrainers
+        {t('homepage.welcome')}
       </h1>
 
       <div className="flex flex-col gap-5">
         <h2 className="text-lg sm:text-xl font-bold text-blue-800">
-          What you can do now:
+          {t('homepage.now')}
         </h2>
         <div className="flex flex-wrap gap-4">
           {nowFeatures.map(({ icon, title, description }) =>
@@ -67,7 +73,7 @@ const Home = () => {
         </div>
 
         <h3 className="text-lg sm:text-xl font-bold text-blue-800">
-          What will come next:
+          {t('homepage.soon')}
         </h3>
         <div className="flex flex-wrap gap-4">
           {upcomingFeatures.map(({ icon, title, description }) =>

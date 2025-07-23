@@ -1,13 +1,15 @@
 'use client';
 
+import { TFunction } from 'i18next';
 import React, { useCallback, useEffect, useState } from 'react';
 import Loading from '@/components/loading/Loading';
 import LiveQuizContainer from '@/components/quiz/liveQuiz/LiveQuizContainer';
 import BackButton from '@/components/ui/buttons/BackButton';
+import { useClientTranslation } from '@/hooks/i18n/useClientTranslation';
 import useInterviewStore from '@/store/useStoreInterview';
 import { createQuiz } from '../../../../../lib/actions/quiz/createQuiz';
 import { quizCheckAnswerShema } from '../../../../../lib/schema/quizCheckAnswerShema';
-import { stackShema } from '../../../../../lib/schema/stackShema';
+import { getStackShema } from '../../../../../lib/schema/stackShema';
 import { getStoredQuestion } from '../../../../../lib/utils/getStoredQuestion';
 
 type Question = {
@@ -26,21 +28,26 @@ const Page = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const { t, isClient } = useClientTranslation();
+
   const handleValidate = useCallback(() => {
     if (!currentQuestion) return;
 
     const result = quizCheckAnswerShema(
-      currentQuestion.correctAnswer
+      currentQuestion.correctAnswer,
+      t as TFunction
     ).safeParse(selectedAnswer);
 
     if (!result.success) {
-      setError(result.error.errors[0].message);
+      setError(
+        result.error.errors[0]?.message || t('Quiz.liveQuiz.errors.required')
+      );
       setIsCorrect(false);
     } else {
       setIsCorrect(true);
       setError('');
     }
-  }, [currentQuestion, selectedAnswer]);
+  }, [currentQuestion, selectedAnswer, t]);
 
   const handleNewQuestion = useCallback(async () => {
     setIsLoading(true);
@@ -50,9 +57,11 @@ const Page = () => {
 
     const difficulty = currentQuestion?.difficulty ?? 'junior';
 
-    const validated = stackShema.safeParse({ stack });
+    const validated = getStackShema(t as TFunction).safeParse({ stack });
     if (!validated.success) {
-      setError(validated.error.errors[0]?.message || 'Invalid stack selection');
+      setError(
+        validated.error.errors[0]?.message || t('Quiz.form.errors.default')
+      );
       setIsLoading(false);
       return;
     }
@@ -74,7 +83,7 @@ const Page = () => {
     }
 
     setIsLoading(false);
-  }, [currentQuestion?.difficulty, stack]);
+  }, [currentQuestion?.difficulty, stack, t]);
 
   useEffect(() => {
     const initialQuestion = getStoredQuestion();
@@ -82,6 +91,8 @@ const Page = () => {
   }, []);
 
   if (!currentQuestion) return null;
+
+  if (!isClient) return null;
 
   return (
     <div className="relative">

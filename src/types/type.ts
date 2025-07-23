@@ -1,4 +1,5 @@
 import { JsonValue } from '@prisma/client/runtime/library';
+import { TFunction } from 'i18next';
 import { FormEvent } from 'react';
 import {
   UseFormRegisterReturn,
@@ -156,6 +157,7 @@ export interface InputSelectStackProps {
   onChange: (value: string) => void;
   stackError: string;
   setStackError: (value: string) => void;
+  t: TFunction;
 }
 
 //--------------------------------------------//
@@ -228,6 +230,7 @@ export interface AddJobOfferProps {
   keywords: string[];
   setKeywords: React.Dispatch<React.SetStateAction<string[]>>;
   setAnalizeJobOffer: (value: string) => void;
+  t: TFunction;
 }
 
 export interface FeedbackEntry {

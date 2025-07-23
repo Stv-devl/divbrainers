@@ -1,5 +1,5 @@
 import React from 'react';
-import { getUser } from '../../../lib/actions/user/getUser';
+import { getUser } from '../../../lib/serveur/getUser';
 import NavMobile from './NavMobile';
 import IconWrapper from './wrappers/LogoWrapper';
 import ProfileWrapper from './wrappers/ProfileWrapper';

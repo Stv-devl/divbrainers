@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import React, { useTransition } from 'react';
 import Button from '@/components/ui/buttons/Button';
+import { useClientTranslation } from '@/hooks/i18n/useClientTranslation';
 import { deleteInterview } from '../../../../lib/actions/interviews/deleteInterview';
 
 type SetInterviewCardControlProps = {
@@ -12,6 +13,7 @@ type SetInterviewCardControlProps = {
 const SetInterviewCardControl = ({
   interviewId,
 }: SetInterviewCardControlProps) => {
+  const { t, isClient } = useClientTranslation();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [isDeletePending, startDeleteTransition] = useTransition();
@@ -28,13 +30,15 @@ const SetInterviewCardControl = ({
       router.refresh();
     });
   };
+
+  if (!isClient) return null;
   return (
     <form className="flex justify-between w-full">
       <input type="hidden" name="interviewId" value={interviewId} />
       <div className="w-20 h-6">
         <Button
           type="submit"
-          label="Delete"
+          label={t('interview.interviewCard.delete')}
           color="filled"
           bgColor="bg-red-500"
           fontSize="text-sm"
@@ -47,7 +51,7 @@ const SetInterviewCardControl = ({
 
       <div className="w-20 h-6">
         <Button
-          label="Start"
+          label={t('interview.interviewCard.start')}
           color="filled"
           fontSize="text-sm"
           onClick={handleStart}

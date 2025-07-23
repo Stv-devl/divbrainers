@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Outfit, Instrument_Sans } from 'next/font/google';
 import SessionContext from '@/context/sessionsContext';
 import './globals.css';
+import I18nProvider from '../components/providers/I18nProvider';
 
 const outfit = Outfit({
   variable: '--font-outfit',
@@ -78,7 +79,9 @@ export default function RootLayout({
       <body
         className={`${outfit.variable} ${instrumentSans.variable} antialiased bg-white sm:bg-gray-100 flex h-screen w-screen flex-col p-0 text-base sm:p-5`}
       >
-        <SessionContext>{children}</SessionContext>
+        <I18nProvider>
+          <SessionContext>{children}</SessionContext>
+        </I18nProvider>
       </body>
     </html>
   );

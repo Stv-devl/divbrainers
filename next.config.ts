@@ -5,6 +5,13 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   serverExternalPackages: ['pdf-parse'],
 
+  /*
+  i18n: {
+    localeDetection: false,
+    locales: ['en', 'fr'],
+    defaultLocale: 'fr',
+  },*/
+
   images: {
     remotePatterns: [
       {

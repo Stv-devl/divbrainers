@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import Loading from '@/components/loading/Loading';
 import Button from '@/components/ui/buttons/Button';
+import { useClientTranslation } from '@/hooks/i18n/useClientTranslation';
 import postResume from '@/service/scan/postResume';
 import { FormError } from '@/types/type';
 import { scanSchema } from '../../../../lib/shemaServer/scanShema';
@@ -23,7 +24,7 @@ const ScanForm = () => {
   const [analizeJobOffer, setAnalizeJobOffer] = useState('');
 
   const router = useRouter();
-
+  const { t, isClient } = useClientTranslation();
   /**
    * Handles form submission, validates input, and processes the resume
    * @param {React.FormEvent<HTMLFormElement>} e - The form submission event
@@ -70,6 +71,8 @@ const ScanForm = () => {
     }
   };
 
+  if (!isClient) return null;
+
   return (
     <div className="relative w-full flex flex-col items-center">
       <div
@@ -78,7 +81,7 @@ const ScanForm = () => {
         }`}
       >
         <h1 className="text-xl sm:text-2xl text-left sm:text-center text-blue-800 font-bold my-0 sm:mt-2 sm:mb-5">
-          ATS scan your resume
+          {t('atsScan.title')}
         </h1>
 
         <form
@@ -91,11 +94,12 @@ const ScanForm = () => {
             keywords={keywords}
             setKeywords={setKeywords}
             setAnalizeJobOffer={setAnalizeJobOffer}
+            t={t}
           />
-          <AddYourResume onFileChange={setResumeFile} error={error} />
+          <AddYourResume onFileChange={setResumeFile} error={error} t={t} />
           <div className="w-44 h-10 mb-5 sm:mb-8">
             <Button
-              label="Send your resume"
+              label={t('atsScan.sendButton')}
               type="submit"
               color="filled"
               isLoading={loading}
@@ -106,7 +110,7 @@ const ScanForm = () => {
       </div>
       {loading && (
         <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/30 backdrop-blur-[1px]">
-          <Loading value="Generating feedback..." />
+          <Loading value={t('atsScan.loading')} />
         </div>
       )}
     </div>

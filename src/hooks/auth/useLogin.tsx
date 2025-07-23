@@ -1,18 +1,21 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signIn } from 'next-auth/react';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { LoginSchema, LoginSchemaType } from '../../../lib/schema/loginShema';
+import { useTranslation } from 'react-i18next';
+import {
+  getLoginSchema,
+  LoginSchemaType,
+} from '../../../lib/schema/loginShema';
 
 const useLogin = () => {
-  const [globalError, setGlobalError] = useState('');
+  const { t } = useTranslation();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<LoginSchemaType>({
-    resolver: zodResolver(LoginSchema),
+    resolver: zodResolver(getLoginSchema(t)),
   });
 
   const onSubmit = async (data: LoginSchemaType) => {
@@ -23,10 +26,6 @@ const useLogin = () => {
         password: data.password,
         callbackUrl: '/home',
       });
-
-      if (result?.error) {
-        setGlobalError('Email or password incorrect');
-      }
 
       if (result?.ok) {
         window.location.href = result.url ?? '/home';
@@ -48,7 +47,6 @@ const useLogin = () => {
     handleSubmit,
     onSubmit,
     errors,
-    globalError,
     isSubmitting,
     handleGoogleSignIn,
   };

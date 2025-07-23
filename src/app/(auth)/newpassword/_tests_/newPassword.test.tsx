@@ -10,8 +10,8 @@ import {
   act,
 } from '@testing-library/react';
 import { axe, toHaveNoViolations } from 'jest-axe';
-import NewPassword from '../page';
 import useResetPassword from '@/hooks/auth/useResetPassword';
+import NewPassword from '../page';
 
 expect.extend(toHaveNoViolations);
 
@@ -52,18 +52,26 @@ describe('NewPassword Page', () => {
     mockedUseResetPassword.mockReturnValue(mockedProps);
   });
 
-  it('renders all password fields and button', async () => {
+  it('renders password and repeat fields and submit button', async () => {
     await renderNewPassword();
-    expect(screen.getByLabelText('Password')).toBeInTheDocument();
-    expect(screen.getByLabelText('Repeat password')).toBeInTheDocument();
+
     expect(
-      screen.getByRole('button', { name: /Change password/i })
+      screen.getByPlaceholderText('Enter your password')
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByPlaceholderText('Repeat your password')
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByRole('button', { name: 'Change password' })
     ).toBeInTheDocument();
   });
 
   it('submits the form correctly', async () => {
     await renderNewPassword();
-    fireEvent.submit(screen.getByRole('button', { name: /Change password/i }));
+
+    fireEvent.submit(screen.getByRole('form'));
 
     await waitFor(() => {
       expect(mockedProps.onSubmit).toHaveBeenCalled();
@@ -77,16 +85,16 @@ describe('NewPassword Page', () => {
 
     await renderNewPassword();
 
-    const button = screen.getByRole('button');
+    const button = screen.getByRole('button', { name: '' });
     expect(button).toBeDisabled();
   });
 
-  it('displays field errors correctly', async () => {
+  it('displays field error messages', async () => {
     mockedUseResetPassword.mockReturnValue(
       getMockedHookProps({
         errors: {
-          password: { message: 'Password is required' },
-          repeat: { message: 'Passwords must match' },
+          password: { message: 'Password is required', type: 'required' },
+          repeat: { message: 'Passwords must match', type: 'validate' },
         },
       })
     );

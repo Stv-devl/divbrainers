@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { TFunction } from 'i18next';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -9,21 +10,25 @@ import Button from '@/components/ui/buttons/Button';
 import { dropdownController } from '@/components/ui/form/dropdown/DropdownController';
 import InputSelectStack from '@/components/ui/form/input/InputSelectStack';
 import { iconStackMapping } from '@/constante/iconStackMap';
-import { optionsDifficulty } from '@/constante/interviewFormData';
+import { getTranslatedOptionsDifficulty } from '@/constante/interviewFormData';
 import useInterviewStore from '@/store/useStoreInterview';
 import { createQuiz } from '../../../../lib/actions/quiz/createQuiz';
 import {
   quizFormSchema,
   QuizFormSchemaType,
 } from '../../../../lib/schema/quizFormShema';
-import { stackShema } from '../../../../lib/schema/stackShema';
+import { getStackShema } from '../../../../lib/schema/stackShema';
+
+interface QuizFormProps {
+  t: TFunction;
+}
 
 /**
  * Form component for creating and starting a quiz
  * @component
- * @returns {JSX.Element} The rendered quiz form
+ * @returns {JSX.Elemen} The rendered quiz form
  */
-const QuizForm = () => {
+const QuizForm: React.FC<QuizFormProps> = ({ t }) => {
   const { stack, addToStack } = useInterviewStore();
   const [stackError, setStackError] = useState('');
   const [serverError, setServerError] = useState('');
@@ -49,9 +54,11 @@ const QuizForm = () => {
     setStackError('');
     setServerError('');
 
-    const result = stackShema.safeParse({ stack });
+    const result = getStackShema(t).safeParse({ stack });
     if (!result.success) {
-      setStackError(result.error.errors[0]?.message || 'Invalid stack');
+      setStackError(
+        result.error.errors[0]?.message || t('Quiz.form.filedserrors.default')
+      );
       return;
     }
     setLoading(true);
@@ -83,18 +90,19 @@ const QuizForm = () => {
       >
         <div className="flex flex-col gap-4 sm:gap-5">
           <InputSelectStack
-            label="Add your stack"
+            label={t('Quiz.form.fields.stack.label')}
             options={iconStackMapping}
             value={stack}
             onChange={addToStack}
             stackError={stackError}
             setStackError={setStackError}
+            t={t}
           />
 
           {dropdownController({
             name: 'difficulty',
-            label: 'Select Difficulty',
-            options: optionsDifficulty,
+            label: t('Quiz.form.fields.difficulty.label'),
+            options: getTranslatedOptionsDifficulty(t),
             control,
           })}
 
@@ -104,7 +112,7 @@ const QuizForm = () => {
 
           <div className="w-44 h-10 mx-auto">
             <Button
-              label="Start Interview"
+              label={t('Quiz.form.button')}
               color="filled"
               type="submit"
               disabled={isSubmitting}
@@ -115,7 +123,7 @@ const QuizForm = () => {
       </form>
       {loading && (
         <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/40 backdrop-blur-sm">
-          <Loading value="Generating question..." />
+          <Loading value={t('Quiz.form.loading')} />
         </div>
       )}
     </>

@@ -1,8 +1,9 @@
 'use client';
 
-import Button from '@/components/ui/buttons/Button';
 import ProfilePictureWrapper from '@/components/profile/ProfilePictureWrapper';
 import ProfileWrapper from '@/components/profile/ProfileWrapper';
+import Button from '@/components/ui/buttons/Button';
+import { useClientTranslation } from '@/hooks/i18n/useClientTranslation';
 import useManageProfile from '@/hooks/manage/useManageProfile';
 import { UserProfile } from '@/types/type';
 
@@ -23,6 +24,10 @@ const ProfileForm = ({ user }: { user: UserProfile }) => {
     handleImageChange,
     profilError,
   } = useManageProfile(user);
+
+  const { t, isClient } = useClientTranslation();
+
+  if (!isClient) return null;
 
   return (
     <form
@@ -45,7 +50,7 @@ const ProfileForm = ({ user }: { user: UserProfile }) => {
       <div className="mb-6 flex w-full justify-end border-b border-gray-200">
         <div className="mb-6 h-[40px] w-1/2 sm:w-[100px]">
           <Button
-            label="Edit"
+            label={t('profile.edit')}
             type="submit"
             color="filled"
             disabled={isSubmitting}

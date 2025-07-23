@@ -1,8 +1,6 @@
-'use server';
-
-import { UserProfile } from '../../../src/types/type';
-import { getCurrentSession } from '../../helpers/security/getCurrentSession';
-import { prisma } from '../../prisma';
+import { UserProfile } from '../../src/types/type';
+import { getCurrentSession } from '../helpers/security/getCurrentSession';
+import { prisma } from '../prisma';
 
 /**
  * Retrieves user profile information

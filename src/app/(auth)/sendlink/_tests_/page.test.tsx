@@ -10,13 +10,13 @@ import {
   act,
 } from '@testing-library/react';
 import { axe, toHaveNoViolations } from 'jest-axe';
-import SendLink from '../page';
-import useSendLink from '@/hooks/auth/useSendLink';
 import {
   FieldErrors,
   SubmitHandler,
   UseFormHandleSubmit,
 } from 'react-hook-form';
+import useSendLink from '@/hooks/auth/useSendLink';
+import SendLink from '../page';
 
 expect.extend(toHaveNoViolations);
 
