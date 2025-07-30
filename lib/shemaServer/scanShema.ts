@@ -17,4 +17,9 @@ export const scanSchema = z.object({
   analizeJobOffer: z
     .string()
     .min(1, { message: 'Please validate the job offer before submitting' }),
+
+  lang: z.enum(['fr', 'en'], {
+    required_error: 'Language is required',
+    invalid_type_error: 'Invalid language selected',
+  }),
 });

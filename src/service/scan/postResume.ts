@@ -4,7 +4,8 @@ import { CreateResumeResponse } from '@/types/type';
 const postResume = async (
   resumeFile: File,
   keywords: string[],
-  analizeJobOffer: string
+  analizeJobOffer: string,
+  lang: string = 'en'
 ): Promise<CreateResumeResponse> => {
   const url = `${process.env.NEXT_PUBLIC_API_URL}/resume-processing`;
 
@@ -20,6 +21,7 @@ const postResume = async (
   formData.append('resume', resumeFile);
   formData.append('keywords', JSON.stringify(keywords));
   formData.append('analizeJobOffer', analizeJobOffer);
+  formData.append('lang', lang);
 
   try {
     const response = await fetch(url, {

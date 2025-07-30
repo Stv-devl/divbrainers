@@ -51,6 +51,6 @@ export const generateQuizQuestionPrompt = (
   - The answers must be unique and plausible.
   - The correct answer must match exactly one of the provided answers.
   - Do not include any explanations or code blocks.
-  - Output **only** the JSON object. No markdown, no text before or after.
+  - Output **only** the JSON object. No markdown, no text before or after, no **.
     `;
 };

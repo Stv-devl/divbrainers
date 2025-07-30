@@ -35,20 +35,31 @@ export async function resumeHandler(req: NextRequest) {
     const parsed = await parseScanFormData(req);
     if (parsed instanceof NextResponse) return parsed;
 
-    const { resumeFile, keywords: validKeywords, analizeJobOffer } = parsed;
-    const pdfResult = await extractTextFromPdfFile(resumeFile);
+    const {
+      resumeFile,
+      keywords: validKeywords,
+      analizeJobOffer,
+      lang,
+    } = parsed;
 
+    const pdfResult = await extractTextFromPdfFile(resumeFile);
     if (pdfResult.error) {
       return handleError(pdfResult.status || 422, pdfResult.error);
     }
 
     const pdfData = pdfResult.text!;
 
+    console.log('Langue sélectionnée pour l’analyse IA :', lang);
+
     const feedbackRaw = await askAI(
-      generateResumeFeedbackPrompt(pdfData, analizeJobOffer, validKeywords),
+      generateResumeFeedbackPrompt(
+        pdfData,
+        analizeJobOffer,
+        validKeywords,
+        lang as 'fr' | 'en'
+      ),
       0.7
     );
-
     const feedback = JSON.parse(sanitizeJsonString(feedbackRaw));
 
     return NextResponse.json({

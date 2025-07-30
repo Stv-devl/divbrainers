@@ -1,17 +1,38 @@
 export const generateResumeFeedbackPrompt = (
   resume: string,
   offer: string,
-  validKeywords: string[]
+  validKeywords: string[],
+  lang: 'fr' | 'en' = 'en'
 ) => {
+  const isFr = lang === 'fr';
+
+  const languageInstruction = isFr
+    ? 'IMPORTANT : La réponse doit être entièrement rédigée en français.'
+    : 'IMPORTANT: The response must be fully written in English.';
+
+  const labels = {
+    relevance: isFr ? "Pertinence de l'expérience" : 'Relevance of experience',
+    technical: isFr
+      ? 'Correspondance des compétences techniques'
+      : 'Technical skills match',
+    soft: isFr
+      ? 'Compétences relationnelles et adéquation de personnalité'
+      : 'Soft skills and personality fit',
+    education: isFr ? 'Éducation' : 'Education',
+    total: isFr ? 'Score total' : 'Total score',
+    resume: isFr ? 'Évaluation du CV' : 'Resume assessment',
+    summary: isFr
+      ? 'Évaluation finale et score total'
+      : 'Final assessment and total score',
+  };
+
   return `
       You are an expert assistant specialized in CV evaluation.
        TASK: Return a **valid JSON array with 7 objects** based on the analysis below.  
     
-    IMPORTANT – Language Rule:
-    - You must **always write your response in the same language** as the candidate's resume.
-    - If the resume is in **French**, answer fully in **French**.
-    - If the resume is in **English**, answer fully in **English**.
-    - Do **NOT** translate or switch languages under any circumstance.
+    IMPORTANT 
+    – Language Rule:${languageInstruction}
+
       
       Each object must have:
       - "key" (e.g., "relevance")
@@ -26,7 +47,7 @@ export const generateResumeFeedbackPrompt = (
       
       1. Relevance of experience ("relevance")
         - key: "relevance"
-        - label: "Relevance of experience"
+        - label: "${labels.relevance}"
         - What to evaluate: 
           - Evaluate how well the candidate’s previous roles match the type of job (e.g., frontend, backend).
           - Compare the required years of experience from the job offer with the **relevant** experience from the resume.
@@ -36,7 +57,7 @@ export const generateResumeFeedbackPrompt = (
       
        02. **Technical skills match**
         - key: "technical_skills"
-        - label: "Technical skills match"
+        - label: "${labels.technical}"
         - What to evaluate:
              - Compare the candidate’s technical stack with the required tools, frameworks, and languages in the job offer.
              - Do **NOT penalize the absence of JavaScript, HTML, CSS, or W3C, etc** if the candidate already lists frontend frameworks like React, Next.js, or Vue — these skills are **implicit and expected**.
@@ -46,20 +67,20 @@ export const generateResumeFeedbackPrompt = (
       
         03. **Soft skills and personality fit**
         - key: "soft_skills"
-        - label: "Soft skills and personality fit"
+        - label: "${labels.soft}"
         - What to evaluate: Soft skills alignment (e.g., communication, adaptability).
         - Output: \`score\` + \`comment\`
       
         04. **Education**
         - key: "education"
-        - label: "Education"
+        - label: "${labels.education}"
         - What to evaluate: Assess the relevance of the candidate’s degrees, certifications, or training to the role.
           If the candidate holds a degree higher than the one required in the job offer, it should be considered a positive factor, as long as it remains relevant to the field.
         - Output: \`score\` + \`comment\`
     
         05. **Total score**
          - key: "total"
-         - label: "Total score"
+         - label: "${labels.total}"
          - What to evaluate: Calculate the weighted average of the five criteria above (each scored from 0 to 20). The weights for each field are as follows:
                - Relevance of experience: 3
                - Technical skills match: 3
@@ -72,7 +93,7 @@ export const generateResumeFeedbackPrompt = (
 
         06. **Resume Assessment**
         - key: "resume_check"
-        - label: "Resume assessment"
+        - label: "${labels.resume}"
         - What to evaluate: 
           Carefully analyze the candidate's resume and evaluate it across the following **10 distinct key aspects**:
                  - Address: Is the location clear, at least the city?
@@ -91,7 +112,7 @@ export const generateResumeFeedbackPrompt = (
     
         7. **Final assessment**
          - key: "summary"
-         - label: "Final assessment and total score"
+         -  label: "${labels.summary}"
          - What to evaluate: A short paragraph (4-6 ligne) summarizing how well the candidate fits the job offer overall.
          - Penalize clearly if:
          - Mismatch between job type (e.g., frontend CV vs backend job)

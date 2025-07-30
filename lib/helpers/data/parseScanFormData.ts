@@ -5,8 +5,7 @@ import { handleError } from '../errors/handleError';
 /**
  * Parses and validates the form data from a scan request
  * @param {NextRequest} req - The incoming request object containing form data
- * @returns {Promise<{resumeFile: File, keywords: string[], formatedJobOffer: string} | NextResponse>} The parsed and validated form data or an error response
- * @throws {Error} If the form data is invalid or missing required fields
+ * @returns {Promise<{resumeFile: File, keywords: string[], analizeJobOffer: string, lang: 'fr' | 'en'} | NextResponse>} The parsed and validated form data or an error response
  */
 export async function parseScanFormData(req: NextRequest) {
   const formData = await req.formData();
@@ -14,6 +13,7 @@ export async function parseScanFormData(req: NextRequest) {
   const resumeFile = formData.get('resume');
   const rawKeywords = formData.get('keywords');
   const rawOffer = formData.get('analizeJobOffer');
+  const rawLang = formData.get('lang');
 
   if (!(resumeFile instanceof File)) {
     return handleError(400, 'Missing or invalid resume file');
@@ -30,7 +30,7 @@ export async function parseScanFormData(req: NextRequest) {
     return handleError(400, 'Invalid file type: only PDF files are allowed');
   }
 
-  let keywords;
+  let keywords: string[];
   try {
     keywords = JSON.parse(rawKeywords as string);
   } catch {
@@ -41,6 +41,7 @@ export async function parseScanFormData(req: NextRequest) {
     resumeFile,
     keywords,
     analizeJobOffer: rawOffer,
+    lang: rawLang,
   });
 
   if (!result.success) {
@@ -49,7 +50,6 @@ export async function parseScanFormData(req: NextRequest) {
       'Invalid input';
     return handleError(400, msg);
   }
-  
 
   return result.data;
 }

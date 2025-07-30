@@ -20,8 +20,6 @@ const ResumeFeedbackItem: React.FC<ResumeFeedbackItemProps> = ({
   item,
   totalScore,
 }) => {
-  console.log(item);
-
   const score = typeof totalScore === 'number' ? totalScore : item.score;
 
   return (

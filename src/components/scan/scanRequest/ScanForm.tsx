@@ -7,10 +7,10 @@ import Button from '@/components/ui/buttons/Button';
 import { useClientTranslation } from '@/hooks/i18n/useClientTranslation';
 import postResume from '@/service/scan/postResume';
 import { FormError } from '@/types/type';
+import i18n from '../../../../lib/i18n';
 import { scanSchema } from '../../../../lib/shemaServer/scanShema';
 import AddJobOffer from './AddJobOffer';
 import AddYourResume from './AddYourResume';
-
 /**
  * Form component for submitting a resume for ATS scanning
  * @component
@@ -37,14 +37,15 @@ const ScanForm = () => {
       resumeFile,
       keywords,
       analizeJobOffer,
+      lang: i18n.language,
     });
 
     if (!result.success) {
-      const { resumeFile, analizeJobOffer } =
+      const { resumeFile, analizeJobOffer, keywords, lang } =
         result.error.flatten().fieldErrors;
       setError({
         resume: resumeFile?.[0],
-        analizeJobOffer: analizeJobOffer?.[0],
+        analizeJobOffer: analizeJobOffer?.[0] || keywords?.[0] || lang?.[0],
       });
       return;
     }
@@ -55,7 +56,12 @@ const ScanForm = () => {
         return;
       }
 
-      const response = await postResume(resumeFile, keywords, analizeJobOffer);
+      const response = await postResume(
+        resumeFile,
+        keywords,
+        analizeJobOffer,
+        i18n.language
+      );
 
       if (!response.success) {
         setError({ resume: response.message });

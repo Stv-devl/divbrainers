@@ -215,6 +215,9 @@
   "title": "ATS scan your resume",
   "sendButton": "Send your resume",
   "loading": "Generating feedback...",
+  "feedback": {
+    "title": "Resume Feedback"
+  },
   "addResume": {
     "title": "Upload your resume :",
     "label": "Browse your resume :"

@@ -205,6 +205,9 @@
   "title": "Scan de CV ATS",
   "sendButton": "Envoyer votre CV",
   "loading": "Génération de l'avis...",
+  "feedback": {
+    "title": "Avis sur le CV"
+  },
   "addResume": {
     "title": "Téléchargez votre CV :",
     "label": "Parcourez votre CV :"
