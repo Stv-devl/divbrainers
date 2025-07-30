@@ -6,9 +6,15 @@
  */
 export const generateQuizQuestionPrompt = (
   difficulty: string,
-  stack: string[]
+  stack: string[],
+  lang: 'fr' | 'en' = 'en'
 ) => {
   const randomNote = Math.random().toString(36).slice(2, 7);
+
+  const languageInstruction =
+    lang === 'fr'
+      ? 'The question and answers must be written in French.'
+      : 'The question and answers must be written in English.';
 
   return `
   You are a senior software engineer and recruiter.
@@ -18,7 +24,8 @@ export const generateQuizQuestionPrompt = (
   - Tech Stack: ${stack}
   - Random ID: ${randomNote}
   - Vary the topic across generations to avoid repeating the same concepts
-  - Language: English
+  - Language: ${languageInstruction}
+
 
   Avoid:
   - Repeating common beginner questions (like useEffect, useState, "what is React?")

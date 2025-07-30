@@ -1,5 +1,4 @@
 'use client';
-
 import { TFunction } from 'i18next';
 import React, { useCallback, useEffect, useState } from 'react';
 import Loading from '@/components/loading/Loading';
@@ -8,6 +7,7 @@ import BackButton from '@/components/ui/buttons/BackButton';
 import { useClientTranslation } from '@/hooks/i18n/useClientTranslation';
 import useInterviewStore from '@/store/useStoreInterview';
 import { createQuiz } from '../../../../../lib/actions/quiz/createQuiz';
+import i18n from '../../../../../lib/i18n';
 import { quizCheckAnswerShema } from '../../../../../lib/schema/quizCheckAnswerShema';
 import { getStackShema } from '../../../../../lib/schema/stackShema';
 import { getStoredQuestion } from '../../../../../lib/utils/getStoredQuestion';
@@ -69,6 +69,7 @@ const Page = () => {
     const formData = new FormData();
     formData.append('difficulty', difficulty);
     formData.append('stack', JSON.stringify(stack));
+    formData.append('lang', i18n.language);
 
     const result = await createQuiz(formData);
 
@@ -79,7 +80,7 @@ const Page = () => {
       );
       setCurrentQuestion(result.question);
     } else {
-      setError(result.message || 'Failed to load new question');
+      setError(result.message || t('Quiz.liveQuiz.errors.failedToLoad'));
     }
 
     setIsLoading(false);
@@ -109,7 +110,7 @@ const Page = () => {
       />
       {isLoading && (
         <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/40 backdrop-blur-sm">
-          <Loading value="Generating question..." />
+          <Loading value={t('Quiz.form.loading')} />
         </div>
       )}
       <BackButton route="/quiz" position="-top-10 sm:top-1 left-0 sm:left-1" />
