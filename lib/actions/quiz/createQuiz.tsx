@@ -20,6 +20,8 @@ export async function createQuiz(formData: FormData) {
 
     const difficulty = formData.get('difficulty') as string;
     const rawStack = formData.get('stack');
+    const lang = (formData.get('lang') as string) === 'fr' ? 'fr' : 'en';
+
     const stack = typeof rawStack === 'string' ? JSON.parse(rawStack) : [];
 
     const result = CreateQuizSchema.safeParse({ difficulty, stack });
@@ -34,7 +36,7 @@ export async function createQuiz(formData: FormData) {
     const randomStack = stack[Math.floor(Math.random() * stack.length)];
 
     const quizQuestionRaw = await askAI(
-      generateQuizQuestionPrompt(difficulty, [randomStack]),
+      generateQuizQuestionPrompt(difficulty, [randomStack], lang),
       1
     );
 

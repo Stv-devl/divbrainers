@@ -13,6 +13,7 @@ import { iconStackMapping } from '@/constante/iconStackMap';
 import { getTranslatedOptionsDifficulty } from '@/constante/interviewFormData';
 import useInterviewStore from '@/store/useStoreInterview';
 import { createQuiz } from '../../../../lib/actions/quiz/createQuiz';
+import i18n from '../../../../lib/i18n';
 import {
   quizFormSchema,
   QuizFormSchemaType,
@@ -66,6 +67,7 @@ const QuizForm: React.FC<QuizFormProps> = ({ t }) => {
     const formData = new FormData();
     formData.set('difficulty', data.difficulty);
     formData.set('stack', JSON.stringify(stack));
+    formData.append('lang', i18n.language);
 
     try {
       const res = await createQuiz(formData);

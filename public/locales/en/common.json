@@ -115,7 +115,8 @@
     "errors": {
       "required": "You must choose an answer.",
       "invalidType": "The answer must be a string.",
-      "incorrect": "Incorrect answer, please try again."
+      "incorrect": "Incorrect answer, please try again.",
+      "failedToLoad": "Failed to load new question"
   }
   }
 },

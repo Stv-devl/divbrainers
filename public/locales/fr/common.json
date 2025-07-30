@@ -111,7 +111,8 @@
         "errors": {
           "required": "Vous devez choisir une réponse.",
           "invalidType": "La réponse doit être une chaîne de caractères.",
-          "incorrect": "Réponse incorrecte, veuillez réessayer."
+          "incorrect": "Réponse incorrecte, veuillez réessayer.",
+          "failedToLoad": "Échec du chargement de la nouvelle question"
       }
       }
     },
