@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import ResumeFeedbackList from '@/components/scan/scanFeedback/ResumeFeedbackList';
 import BackButton from '@/components/ui/buttons/BackButton';
+import { useClientTranslation } from '@/hooks/i18n/useClientTranslation';
 import { FeedbackEntry } from '@/types/type';
 
 /**
@@ -12,6 +13,9 @@ import { FeedbackEntry } from '@/types/type';
  */
 const Page = () => {
   const [feedback, setFeedback] = useState<FeedbackEntry[] | null>(null);
+  const { t, isClient } = useClientTranslation();
+
+  console.log(feedback);
 
   useEffect(() => {
     const feedbackStored = sessionStorage.getItem('feedback');
@@ -24,13 +28,13 @@ const Page = () => {
     }
   }, []);
 
-  if (!feedback) return null;
+  if (!feedback || !isClient) return null;
 
   return (
     <div className="relative p-4 sm:p-0 space-y-8 min-h-screen sm:max-w-[1950px] mx-auto">
       <section className="bg-white p-6 rounded-sm shadow-lg">
         <h2 className="text-2xl text-center font-bold text-blue-800 mb-6">
-          Resume Feedback
+          {t('atsScan.feedback.title')}
         </h2>
         <ResumeFeedbackList feedback={feedback} />
       </section>
