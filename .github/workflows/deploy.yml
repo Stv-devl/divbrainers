@@ -1,8 +1,6 @@
 name: Deploy Production - DivBrainers
 
 on:
-  pull_request:
-    branches: [main]
   push:
     branches: [main]
 
@@ -11,18 +9,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v5
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 22.14.0
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
+      - name: Build project
         run: npm run build
         env:
           ORIGIN_REGEX: ^https:\/\/divbrainers\.com$
