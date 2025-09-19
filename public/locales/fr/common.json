@@ -327,6 +327,55 @@
     "title": "Cette page est en construction",
     "message": "Veuillez revenir plus tard !"
   },
+  "overview": {
+    "title": "Vue d'ensemble",
+    "subtitle": "Suivez vos progrès et votre performance",
+    "loading": "Chargement de vos données...",
+    "stats": {
+      "interviews": "Entretiens",
+      "quizzes": "Quiz",
+      "scans": "Analyses CV",
+      "averageScore": "Score moyen",
+      "totalInterviews": "Total des entretiens",
+      "completedQuizzes": "Quiz complétés",
+      "scannedCvs": "CVs analysés",
+      "globalPerformance": "Performance globale",
+      "vsLastMonth": "vs mois dernier"
+    },
+    "quickActions": {
+      "title": "Actions rapides",
+      "newInterview": "Nouvel entretien",
+      "createQuiz": "Créer un quiz",
+      "analyzeCv": "Analyser un CV"
+    },
+    "recentActivities": {
+      "title": "Activités récentes",
+      "description": "Vos dernières activités",
+      "viewAll": "Voir tout",
+      "noActivities": "Aucune activité récente",
+      "status": {
+        "completed": "Terminé",
+        "inProgress": "En cours",
+        "pending": "En attente",
+        "unknown": "Inconnu"
+      }
+    },
+    "skillProgress": {
+      "title": "Progression des compétences",
+      "description": "Votre niveau dans chaque technologie"
+    },
+    "weeklyActivity": {
+      "title": "Activité de la semaine",
+      "description": "Votre activité des 7 derniers jours",
+      "interviews": "entretiens"
+    },
+    "errors": {
+      "loadingError": "Erreur de chargement",
+      "noData": "Aucune donnée disponible",
+      "noDataDescription": "Commencez par créer votre premier entretien ou quiz",
+      "retry": "Réessayer"
+    }
+  },
   "footer": {
     "legal": {
       "title": "Mentions légales",
@@ -348,8 +397,74 @@
       "links": {
         "linkedin": "LinkedIn",
         "github": "GitHub"
-
       }
+    }
+  },
+  "landing": {
+    "hero": {
+      "badge": "Plateforme d'apprentissage du code #1",
+      "title": "Améliorez vos compétences en",
+      "titleHighlight": "programmation",
+      "description": "DivBrainers vous aide à maîtriser la programmation avec des exercices pratiques, des défis et des simulations d'entretiens techniques.",
+      "cta": "Commencer"
+    },
+    "features": {
+      "title": "Améliorez vos compétences :",
+      "subtitle": "Découvrez tous les outils dont vous avez besoin pour exceller en programmation"
+    },
+    "howItWorks": {
+      "title": "Comment ça marche ?",
+      "subtitle": "Trois étapes simples pour maîtriser la programmation",
+      "step1": {
+        "title": "Choisissez votre niveau",
+        "description": "Définissez votre niveau de compétence actuel pour recevoir des exercices adaptés à vos besoins."
+      },
+      "step2": {
+        "title": "Pratiquez régulièrement",
+        "description": "Résolvez des exercices quotidiens, participez aux défis et simulez des entretiens techniques."
+      },
+      "step3": {
+        "title": "Suivez vos progrès",
+        "description": "Visualisez vos améliorations, débloquez des badges et devenez un développeur plus confiant."
+      }
+    },
+    "stats": {
+      "title": "Ils nous font confiance",
+      "exercisesSolved": "Exercices résolus",
+      "successRate": "Taux de réussite",
+      "activeUsers": "Utilisateurs actifs",
+      "continuousAccess": "Accès continu"
+    },
+    "testimonials": {
+      "title": "Ce que disent nos utilisateurs",
+      "subtitle": "Découvrez les témoignages de développeurs qui ont transformé leurs compétences",
+      "testimonial1": {
+        "name": "Marie Dubois",
+        "role": "Développeuse React",
+        "text": "DivBrainers m'a permis de décrocher mon premier job de développeuse ! Les exercices pratiques et les simulations d'entretiens sont parfaits."
+      },
+      "testimonial2": {
+        "name": "Thomas Martin",
+        "role": "Lead Developer",
+        "text": "En tant que lead dev, je recommande DivBrainers à toute mon équipe. La progression est visible et les défis maintiennent la motivation."
+      },
+      "testimonial3": {
+        "name": "Alexandre Moreau",
+        "role": "Étudiant en Informatique",
+        "text": "Étudiant en informatique, DivBrainers m'aide énormément dans mes études. Les explications sont claires et les exercices progressifs."
+      }
+    },
+    "advertising": {
+      "features": [
+        "100% gratuit et sans publicité",
+        "Adapté aux débutants et aux utilisateurs expérimentés",
+        "Fonctionne sur tous les écrans"
+      ],
+      "ctaTitle": "Prêt à améliorer vos compétences ?",
+      "ctaButton": "Inscrivez-vous !"
+    },
+    "footer": {
+      "copyright": "© 2025 DivBrainers. Tous droits réservés."
     }
   }
 }
