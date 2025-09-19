@@ -351,6 +351,55 @@
     "title": "This page is under construction",
     "message": "Please check back later!"
   },
+  "overview": {
+    "title": "Overview",
+    "subtitle": "Track your progress and performance",
+    "loading": "Loading your data...",
+    "stats": {
+      "interviews": "Interviews",
+      "quizzes": "Quizzes",
+      "scans": "Resume Scans",
+      "averageScore": "Average Score",
+      "totalInterviews": "Total interviews",
+      "completedQuizzes": "Completed quizzes",
+      "scannedCvs": "Scanned Resumes",
+      "globalPerformance": "Global performance",
+      "vsLastMonth": "vs last month"
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "newInterview": "New Interview",
+      "createQuiz": "Create Quiz",
+      "analyzeCv": "Analyze Resume"
+    },
+    "recentActivities": {
+      "title": "Recent Activities",
+      "description": "Your latest activities",
+      "viewAll": "View all",
+      "noActivities": "No recent activities",
+      "status": {
+        "completed": "Completed",
+        "inProgress": "In Progress",
+        "pending": "Pending",
+        "unknown": "Unknown"
+      }
+    },
+    "skillProgress": {
+      "title": "Skill Progress",
+      "description": "Your level in each technology"
+    },
+    "weeklyActivity": {
+      "title": "Weekly Activity",
+      "description": "Your activity for the last 7 days",
+      "interviews": "interviews"
+    },
+    "errors": {
+      "loadingError": "Loading error",
+      "noData": "No data available",
+      "noDataDescription": "Start by creating your first interview or quiz",
+      "retry": "Retry"
+    }
+  },
   "footer": {
     "legal": {
       "title": "Legal",
@@ -373,6 +422,73 @@
         "linkedin": "LinkedIn",
         "github": "GitHub"
       }
+    }
+  },
+  "landing": {
+    "hero": {
+      "badge": "#1 Code Learning Platform",
+      "title": "Improve your",
+      "titleHighlight": "programming skills",
+      "description": "DivBrainers helps you master programming with practical exercises, challenges and technical interview simulations.",
+      "cta": "Get Started"
+    },
+    "features": {
+      "title": "Improve your skills:",
+      "subtitle": "Discover all the tools you need to excel in programming"
+    },
+    "howItWorks": {
+      "title": "How it works?",
+      "subtitle": "Three simple steps to master programming",
+      "step1": {
+        "title": "Choose your level",
+        "description": "Define your current skill level to receive exercises tailored to your needs."
+      },
+      "step2": {
+        "title": "Practice regularly",
+        "description": "Solve daily exercises, participate in challenges and simulate technical interviews."
+      },
+      "step3": {
+        "title": "Track your progress",
+        "description": "Visualize your improvements, unlock badges and become a more confident developer."
+      }
+    },
+    "stats": {
+      "title": "They trust us",
+      "exercisesSolved": "Exercises solved",
+      "successRate": "Success rate",
+      "activeUsers": "Active users",
+      "continuousAccess": "Continuous access"
+    },
+    "testimonials": {
+      "title": "What our users say",
+      "subtitle": "Discover testimonials from developers who have transformed their skills",
+      "testimonial1": {
+        "name": "Marie Dubois",
+        "role": "React Developer",
+        "text": "DivBrainers helped me land my first developer job! The practical exercises and interview simulations are perfect."
+      },
+      "testimonial2": {
+        "name": "Thomas Martin",
+        "role": "Lead Developer",
+        "text": "As a lead dev, I recommend DivBrainers to my entire team. The progress is visible and the challenges maintain motivation."
+      },
+      "testimonial3": {
+        "name": "Alexandre Moreau",
+        "role": "Computer Science Student",
+        "text": "As a computer science student, DivBrainers helps me enormously in my studies. The explanations are clear and the exercises are progressive."
+      }
+    },
+    "advertising": {
+      "features": [
+        "100% free and ad-free",
+        "Suitable for beginners and experienced users",
+        "Works on all screen sizes"
+      ],
+      "ctaTitle": "Ready to boost your skills?",
+      "ctaButton": "Sign up now!"
+    },
+    "footer": {
+      "copyright": "© 2025 DivBrainers. All rights reserved."
     }
   }
 }

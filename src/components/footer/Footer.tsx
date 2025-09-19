@@ -55,7 +55,7 @@ const Footer = () => {
 
         <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-3 text-sm text-gray-600 text-center">
           <iconsMap.IconLogo className="w-6 h-6" />
-          <p>© 2025 DivBrainers. All rights reserved.</p>
+          <p>{t('landing.footer.copyright')}</p>
         </div>
       </div>
     </footer>
